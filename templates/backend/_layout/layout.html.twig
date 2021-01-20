@@ -1,0 +1,116 @@
+{% extends 'backend/_layout/base.html.twig' %}
+
+{% block body %}
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div id="wrapper">
+
+        {% block header %}
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-default navbar-static-top m-b-0">
+                <div class="navbar-header">
+                    <!-- Toggle icon for mobile view -->
+                    <a class="navbar-toggle hidden-sm hidden-md hidden-lg" href="javascript:void(0)"
+                       data-toggle="collapse" data-target=".navbar-collapse">
+                        <i class="ti-menu"></i>
+                    </a>
+                    <!-- Logo -->
+                    <div class="top-left-part">
+                        <a class="logo" href="{{ path('admin_homepage' )}}">
+                            <b><img src="{{ asset('media/logo.svg') }}" alt="home" style="width: 40px"/></b>
+                            <span class="hidden-xs">
+                                <img src="{{ asset('media/shell-card.svg') }}" alt="home" style="width: 135px"/>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- /Logo -->
+                    <ul class="nav navbar-top-links navbar-left hidden-xs">
+                        <li>
+                            <a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light">
+                                <i class="icon-arrow-left-circle ti-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-top-links navbar-right pull-right">
+                        {% block header_navigation_links %}
+                            <li>
+                                <a href="{{ path('frontend_homepage') }}" target="_blank">
+                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    {{ 'label.frontend_homepage.link'|trans }}
+                                </a>
+                            </li>
+                        {% endblock %}
+
+                        {% if app.user %}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <b>{{ app.user.username }}</b>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="{{ path('admin_logout') }}">
+                                            <i class="fa fa-power-off"></i> {{ 'logout.link'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock %}
+
+        {% block sidebar_menu %}
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                    {{ knp_menu_render('main', { attributes: {class: 'nav'}}) }}
+                </div>
+            </div>
+        {% endblock %}
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+
+                {% block page_header %}
+                    <div class="row bg-title">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                            <h4 class="page-title">
+                                {% if view is defined and view.icon is not empty %}
+                                    <span class="fa fa-{{ view.icon }} text-info m-r-5"></span>
+                                {% endif %}
+                                {% block title %}
+                                    {% block page_title %}
+                                        {% if view is defined and view.title is not empty %}
+                                            {{ view.title|trans }}
+                                        {% endif %}
+                                    {% endblock %}
+                                {% endblock %}
+                            </h4>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% block message %}
+                    {{ include('backend/default/_flash_messages.html.twig') }}
+                {% endblock %}
+
+                {% block content %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="white-box">
+                                <h3 class="box-title">Blank Starter page</h3>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+            {% block footer %}
+                <footer class="footer text-center"></footer>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

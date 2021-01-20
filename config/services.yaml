@@ -1,0 +1,276 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'uk'
+    locales: ["uk", "en"]
+
+    app.locale_switcher: {"uk": "UA", "en": "EN"}
+    translation_domain.default: "messages"
+
+    routing.uuid: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+    routing.locales: 'uk|en'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Security/Provider,Kernel.php,*/Domain,Import/Application/MessageBus}'
+    FilesUploader\:
+        resource: '../bundles/files-uploader/src/*'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Action\:
+        namespace: App\
+        resource: '../src/*/Action/*'
+        tags: ['controller.service_arguments']
+    App\Api\Action\Api:
+        namespace: App\Api\Action\Api\
+        resource: '../src/Api/Action/Api/*'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    ## voters
+    App\Security\Voter\Backend\CardVoter:
+        arguments:
+            - '@security.authorization_checker'
+            - '@app.clients.infrastructure.card.repository'
+        tags:
+            - { name: security.voter }
+    ## end voters
+    Redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+    admin.menu_builder:
+        class: App\Admin\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
+    admin.menu.voter.request:
+        class: App\Admin\Menu\Voter\RequestVoter
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: knp_menu.voter }
+
+    App\Security\Application\Listener\XssResponseSubscriber:
+        arguments: ['@App\Security\Application\NonceGenerator', '%kernel.environment%']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    factory_muffin_doctrine_repository_store:
+        class: League\FactoryMuffin\Stores\RepositoryStore
+        arguments: ['@doctrine.orm.entity_manager']
+    factory_muffin_doctrine_bridge:
+        class: League\FactoryMuffin\FactoryMuffin
+        arguments:
+            - '@factory_muffin_doctrine_repository_store'
+    League\FactoryMuffin\FactoryMuffin: '@factory_muffin_doctrine_bridge'
+
+    # Translations
+
+    # collect translations on prod
+    translator.data_collector:
+        class: Symfony\Component\Translation\DataCollectorTranslator
+        decorates: translator
+        arguments: ['@translator.data_collector.inner']
+
+    App\Translations\Application\Subscriber\LocaleSubscriber:
+        class: App\Translations\Application\Subscriber\LocaleSubscriber
+        public: false
+        arguments:
+            - '%locales%'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    App\Translations\View\Form\FilterFormType:
+        arguments: ['%locales%', '%locale%']
+
+    App\Translations\Action\Backend\ListAction:
+        public: true
+        arguments:
+            - '@form.factory'
+            - '@Translation\Bundle\Service\ConfigurationManager'
+            - '@Translation\Bundle\Catalogue\CatalogueManager'
+            - '@Translation\Bundle\Catalogue\CatalogueFetcher'
+            - '@twig'
+            - '%locales%'
+
+    App\Translations\Action\Api\UpdateAction:
+        class: App\Translations\Action\Api\UpdateAction
+        public: true
+        arguments:
+            - '@Translation\Bundle\Service\StorageManager'
+            - '@Symfony\Component\Validator\Validator\ValidatorInterface'
+            - '@Translation\Bundle\Service\CacheClearer'
+
+    App\Translations\Action\Command\ParseJsonCommand:
+        arguments:
+            - '@translator'
+            - '@Translation\Bundle\Service\StorageManager'
+            - '@Translation\Bundle\Catalogue\CatalogueWriter'
+            - '@Translation\Bundle\Service\ConfigurationManager'
+            - '@Translation\Bundle\Catalogue\CatalogueManager'
+            - '@Translation\Bundle\Catalogue\CatalogueFetcher'
+            - '@Translation\Bundle\Service\CacheClearer'
+        tags:
+            - { name: console.command }
+
+    Symfony\Component\Translation\TranslatorBagInterface: '@Symfony\Contracts\Translation\TranslatorInterface'
+
+    # Exception
+    App\TwigBundle\Serializer\ApiExceptionNormalizer:
+        arguments: ['@request_stack', '%kernel.debug%']
+        tags:
+            - { name: serializer.normalizer }
+
+    App\Api\Application\Subscriber\KernelResponseSubscriber:
+        arguments: ['@App\Api\Domain\Log\UseCase\Create\Handler', '@logger', '%kernel.debug%']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Api doc
+    App\Api\Action\Backend\GenerateDocAction:
+        public: true
+        arguments: ['@nelmio_api_doc.generator_locator']
+
+    ## Security
+    app.security.provider.backend_user_provider:
+        class: App\Security\Provider\BackendUserProvider
+        arguments: ['@app.users.infrastructure.user.repository']
+
+    app.security.provider.cabinet_user_provider:
+        class: App\Security\Provider\CabinetUserProvider
+        arguments: ['@app.clients.infrastructure.user.repository']
+
+    app.security.provider.partners_user_provider:
+        class: App\Security\Provider\PartnerUserProvider
+        arguments: ['@app.partners.infrastructure.user.repository']
+
+    myself: '@App\Security\Cabinet\Myself'
+    partnerMyself: '@App\Security\Partners\MySelf'
+
+    ## file uploader
+    Doctrine\Common\Inflector\Inflector: ~
+    FilesUploader\Handler\UploadHandler:
+        public: true
+        arguments:
+            - '@oneup_flysystem.default_filesystem'
+            - '@FilesUploader\File\PathGeneratorInterface'
+            - '@FilesUploader\File\NameGeneratorInterface'
+            - '@FilesUploader\Domain\Storage\Service\Create\Handler'
+
+    FilesUploader\Action\ReadFileAction:
+        arguments: ['@oneup_flysystem.default_filesystem']
+        public: true
+
+    League\Glide\Server:
+        factory: ['League\Glide\ServerFactory', 'create']
+        arguments: [{ source: '@oneup_flysystem.default_filesystem', cache: '@oneup_flysystem.cache_filesystem', max_image_size: 4000000 }]
+
+    App\Media\Glide\Service\GlideUrlGenerator:
+        public: true
+        arguments: ['%kernel.secret%']
+
+    App\Media\View\Twig\Extension\MediaExtension:
+        public: true
+        arguments:
+            - '@App\Media\Glide\Service\GlideUrlGenerator'
+            - '@oneup_flysystem.default_filesystem'
+
+    League\Flysystem\FilesystemInterface: '@oneup_flysystem.default_filesystem'
+    ## End file uploader
+
+    Infrastructure\Interfaces\Repository\Repository:
+        autowire: false
+
+    ## Api
+    app.api.infrastructure.log.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Api\Domain\Log\log
+    app.api.infrastructure.log.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Api\Domain\Log\log
+
+    app.api.domain.log.create.handler:
+        class: App\Api\Domain\Log\UseCase\Create\Handler
+        arguments:
+            - '@app.api.infrastructure.log.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Api\Domain\Log\UseCase\Create\Handler: '@app.api.domain.log.create.handler'
+
+    ## API CRUD
+    App\Api\Crud\Action\CommandAction:
+        autowire: false
+    App\Api\Crud\Action\QueryAction:
+        autowire: false
+    App\Api\Crud\DefaultQueryRequest:
+        autowire: false
+    App\Api\Crud\DataTransformer\ListDataTransformer:
+        autowire: false
+
+    app.api.crud.action.command_action:
+        class: App\Api\Crud\Action\CommandAction
+        arguments:
+            - '@validator'
+            - '@app.api.crud.json_response'
+            - !tagged api.data_transformer
+        tags:
+            - { name: controller.service_arguments }
+
+    app.api.crud.action.query_action:
+        class: App\Api\Crud\Action\QueryAction
+        arguments:
+            - '@app.api.crud.json_response'
+            - !tagged api.data_transformer
+        tags:
+            - { name: controller.service_arguments }
+
+    app.api.crud.json_response:
+        class: App\Api\Crud\JsonResponse
+        arguments: ['@serializer']
+    ## End API CRUD
+
+    App\Api\Action\Api\V1\LastSystemUpdate\ReadAction:
+        arguments:
+            - '@app.import.infrastructure.import.repository'
+            - '@app.api.crud.json_response'
+        tags: ['controller.service_arguments']
+
+    App\Clients\Domain\User\UseCase\Documents\Handler:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.token_storage'
+
+    app.clients.users.documents.esp:
+        class: App\Clients\Action\Frontend\Document\SotaWidgetAction
+        arguments:
+            - '@twig'
+            - '@security.token_storage'
+            - 'App\Clients\Domain\User\UseCase\Documents\Handler'
+            - '@app.users.infrastructure.user.repository'

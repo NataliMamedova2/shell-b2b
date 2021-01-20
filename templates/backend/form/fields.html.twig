@@ -1,0 +1,62 @@
+{% block collection_item_widget %}
+    {{ form_errors(form) }}
+    <div class="row">
+        {% for child in form %}
+            {% set attr = child.vars.attr %}
+            {% set attr = attr|merge({class: (attr.class|default('col-md-6'))|trim}) %}
+            <div {% with { attr: attr } %}{{ block('attributes') }}{% endwith %}>
+                {{ form_row(child) }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_rest(form) }}
+{% endblock collection_item_widget %}
+
+{% block native_collection_widget_row %}
+    <div class="collection-row">
+        {% if allow_delete %}
+        <div class="row">
+            <div class="col-sm-2 m-r-20" style="padding-top: 2px; width: 40px;">
+                <label>&nbsp;</label>
+                <div>
+                    <button class="btn btn-danger waves-effect waves-light collection-delete" type="button">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                {% endif %}
+                    {{ form_row(child, { label: false }) }}
+                {% if allow_delete %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock native_collection_widget_row %}
+
+{% block collection_widget %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set allow_delete_backup = allow_delete %}
+        {% set allow_delete = true %}
+        {% set attr = attr|merge({'data-prototype': block('native_collection_widget_row'), 'data-prototype-name': prototype.vars.name, 'class': attr.class|default('') }) %}
+        {% set allow_delete = allow_delete_backup %}
+    {% endif %}
+
+    <div {{ block('widget_container_attributes') }}>
+        {{ form_errors(form) }}
+        {% for child in form %}
+            {{ block('native_collection_widget_row') }}
+        {% endfor %}
+        {{ form_rest(form) }}
+
+        {% if allow_add %}
+            <div id="button__block">
+                <button class="btn btn-success waves-effect waves-light collection-add" type="button">
+                    <span class="btn-label"><i class="fa fa-plus"></i></span>
+                    {% trans %}btn.add_item{% endtrans %}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock collection_widget %}

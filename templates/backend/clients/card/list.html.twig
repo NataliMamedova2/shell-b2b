@@ -1,0 +1,6 @@
+{% extends 'backend/crud/content/list.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/modules/cards/block-card.js') }}"></script>
+{% endblock %}

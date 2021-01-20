@@ -1,0 +1,128 @@
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% set volumeSum = view.variable('volumeSum') %}
+{% set debitSum = view.variable('debitSum') %}
+{% set isShowAddInfo = view.variable('isShowAddInfo') %}
+{% set request = view.variable('request') %}
+
+{% if isShowAddInfo %}
+    <div class="alert alert-info">
+        <h2>Сума транзакцій за період {{ request['dateFrom'] }} -
+            {{ request['dateTo'] is empty ? "now"|date("d-m-Y") : request['dateTo']|date('d-m-Y') }}
+          </h2>
+        <p style="font-size: large; font-weight: bold;">{{ ui.render_number(volumeSum) }} л.</p>
+        <p style="font-size: large; font-weight: bold;">{{ ui.render_number(debitSum) }} грн.</p>
+    </div>
+{% endif %}
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.post_date'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.company'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.card_number'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.sypply'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.volume'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.price'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.amount'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.network_station'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.type'|trans }}
+        </th>
+        {% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_MANAGER') == true or is_granted('ROLE_MANAGER_CALL_CENTER') == true %}
+            <th scope="col" data-tablesaw-priority="persist"></th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>{{ entity.postDate|localizeddate('medium', 'medium') }}</td>
+            <td data-tablesaw-no-labels>
+                {% if view.clients[entity.client1CId] is defined %}
+                    {{ view.clients[entity.client1CId].fullName }}
+                {% endif %}
+                ({{ entity.client1CId }})
+            </td>
+            <td data-tablesaw-no-labels>
+                {% if view.cards[entity.cardNumber] is defined %}
+                    <a href="{{ path('admin_clients_card_read', { id: view.cards[entity.cardNumber].id }) }}">
+                        {{ entity.cardNumber }}
+                    </a>
+                {% else %}
+                    {{ entity.cardNumber }}
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>
+                {% if view.supplies[entity.fuelCode] is defined %}
+                    {{ view.supplies[entity.fuelCode].fuelName }}
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.render_number(entity.fuelQuantity) }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.render_number(entity.price) }}
+                {{ 'label.uah_l'|trans }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.render_number(entity.debit) }}
+                {{ 'label.uah'|trans }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ entity.azsName }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.typeName, {
+                    'write-off': 'write-off'|trans,
+                    'return': 'return'|trans,
+                    'replenishment': 'replenishment'|trans
+                }, {
+                    'write-off': 'info',
+                    'return': 'success',
+                    'replenishment': 'danger'
+                }) }}
+            </td>
+            {% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_MANAGER') == true or is_granted('ROLE_MANAGER_CALL_CENTER') == true %}
+                <td data-tablesaw-no-labels>
+                    {% if view.cards[entity.cardNumber] is defined %}
+                        <a style="margin-top: 3px" href="{{ path('admin_clients_card_read', { id: view.cards[entity.cardNumber].id }) }}"
+                           class="btn btn-xs btn-info" title="{{ 'btn.edit_card'|trans }}">
+                            <i class="fa fa-credit-card" aria-hidden="true"></i>
+                            {{ 'btn.edit_card'|trans }}
+                        </a>
+                    {% endif %}
+                    {% if view.clients[entity.client1CId] is defined %}
+                        <a style="margin-top: 3px" href="{{ path('admin_clients_client_profile', { id: view.clients[entity.client1CId].id }) }}"
+                           class="btn btn-xs btn-info" title="{{ 'btn.client_profile'|trans }}">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            {{ 'btn.client_profile'|trans }}
+                        </a>
+                    {% endif %}
+                </td>
+            {% endif %}
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

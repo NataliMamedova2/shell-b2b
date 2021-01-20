@@ -1,0 +1,124 @@
+@import "../../shared";
+
+.c-button {
+  height: 36px;
+  width: auto;
+  padding: 0 15px;
+  transition: all 0.2s;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 100%;
+
+  &__label {
+    width: auto;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    text-align: center;
+    @include style-caption;
+    line-height: 1;
+    font-weight: $weight-medium;
+  }
+
+  &--primary {
+    background-color: $palette-attention;
+    color: $palette-light;
+
+    @include breakpoint-hover {
+      &:hover {
+        background-color: $palette-attention-d1;
+      }
+    }
+  }
+
+  &--primary-grey {
+    background-color: $palette-fill-grey;
+    color: $palette-dark;
+
+    @include breakpoint-hover {
+      &:hover {
+        background-color: darken($palette-fill-grey, 10%);
+      }
+    }
+  }
+
+  &--alt {
+    background-color: $palette-clear;
+    color: $palette-dark;
+    border: 1px solid $palette-line;
+
+    @include breakpoint-hover {
+      &:hover {
+        background-color: $palette-fill-grey;
+        border-color: $palette-darkgrey;
+      }
+    }
+  }
+  &--ghost {
+    background-color: $palette-clear;
+    color: $palette-dark;
+    padding: {
+      left: 0;
+      right: 0;
+    };
+
+    @include breakpoint-hover {
+      &:hover {
+        color: $palette-attention;
+      }
+    }
+  }
+
+  &--paper {
+    background-color: $palette-fill-grey;
+    border-radius: 4px;
+
+    .c-icon {
+      font-size: 16px;
+    }
+
+    @include breakpoint-hover {
+      &:hover {
+        background-color: $palette-fill-grey;
+        color: $palette-attention;
+      }
+    }
+  }
+
+  &.is-disabled {
+    color: #D9D9D9;
+    background-color: #F7F7F7;
+    pointer-events: none;
+    border-color: rgba($palette-line, 0.5);
+  }
+
+  &.is-pending {
+    opacity: 0.8;
+    pointer-events: none;
+
+    .c-icon {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+  }
+
+  &.has-icon-left {
+    padding: 0 15px 0 5px;
+    .c-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+button.c-button {
+  font-family: $family-main;
+
+  &:focus {
+    box-shadow: 0 0 4px 4px rgba(#5fa0f7, 0.7);
+  }
+}

@@ -1,0 +1,297 @@
+@import "style/shared/module";
+@import "style/global/fonts";
+@import "style/global/reset";
+@import "style/global/keyframes";
+@import "style/global/a-color";
+
+@import "components/Header/styles";
+@import "components/Logo/styles";
+@import "ui/Typography/styles";
+
+.c-button {
+  height: 44px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  line-height: 1;
+  flex: none;
+  color: $palette-dark;
+}
+
+.c-lang-selector-old {
+  width: auto;
+  height: auto;
+  position: relative;
+  background-color: $palette-light;
+
+  &__list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: none;
+    padding-top: 36px;
+
+    flex-direction: column;
+    pointer-events: none;
+
+    &:before {
+      content: "";
+      @include absolute-fill(1);
+      box-shadow: $shadow-select;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    height: auto;
+    display: block;
+    background-color: $palette-light;
+  }
+
+  &__button {
+    width: 36px;
+    height: 36px;
+    padding: 0 5px;
+    text-align: center;
+    line-height: 36px;
+    display: block;
+    font: {
+      family: $family-main;
+      size: $font-paragraph;
+      weight: $weight-medium;
+    }
+    min-width: 36px;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+
+    font-size: 12px;
+    text-transform: uppercase;
+    color: $palette-dark;
+
+    &:hover {
+      background-color: $palette-fill-grey;
+    }
+  }
+
+  &.is-active {
+    .c-lang-selector__list {
+      display: flex;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover {
+    .c-lang-selector__list {
+      display: flex;
+      pointer-events: auto;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.m-header {
+  height: 56px;
+  display: block;
+
+  &__section {
+    float: left;
+    margin-top: 9px;
+  }
+
+  &__actions {
+    float: right;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.m-old {
+  width: 100%;
+  height: auto;
+  min-height: 800px;
+  @include min-screen-height;
+  @include min-screen-height-except($header-height);
+  background-color: #fbce07;
+
+  padding: 44px 135px 100px;
+
+
+  &__content {
+    width: 100%;
+    height: auto;
+    max-width: 1170px;
+    margin: 0 auto;
+    min-height: 100px;
+    padding: 48px 90px;
+    background-color: $palette-light;
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  &__message {
+    width: 50%;
+    float: left;
+  }
+
+  &__message-wrapper {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  &__logo {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-bottom: 40px;
+  }
+  &__title {
+    display: block;
+    margin-bottom: 35px;
+    font-size: 2.25rem;
+    line-height: 1.1;
+    font-weight: $weight-medium;
+  }
+  &__desc {
+    display: block;
+  }
+
+  &__list {
+    width: 50%;
+    float: left;
+  }
+
+  &__list-title {
+    margin-bottom: 20px;
+  }
+
+  .c-text--lead {
+    font-size: 18px;
+    font-weight: $weight-medium;
+  }
+
+  @include breakpoint-across-mobile-tablet() {
+    &__list {
+      width: 100%;
+    }
+    &__message {
+      width: 100%;
+      margin-bottom: 50px;
+    }
+  }
+
+  @include breakpoint-tablet() {
+    padding: 100px 75px;
+  }
+  @include breakpoint-mobile() {
+    padding: 82px 10px 50px;
+
+    &__content {
+      padding: 48px 20px;
+    }
+
+    &__logo {
+      width: 64px;
+      height: 64px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    &__title {
+      font-size: 24px;
+    }
+  }
+}
+
+.c-browsers {
+  width: 100%;
+  height: auto;
+
+  &__item {
+    width: 100%;
+    padding: 12px 30px 12px 20px;
+    display: block;
+    margin-bottom: 15px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+  }
+  &__link {
+    display: block;
+    width: 100%;
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  &__logo {
+    display: block;
+    width: 46px;
+    height: 46px;
+    float: left;
+  }
+
+  .c-text {
+    display: block;
+    height: 46px;
+    line-height: 46px;
+    margin-left: 20px;
+    float: left;
+  }
+  .c-button {
+    float: right;
+    display: inline-block;
+    height: 44px;
+    border: none;
+    line-height: 44px;
+    padding: 0;
+    font-size: 18px;
+    font-weight: $weight-medium;
+
+    &:hover {
+      color: $palette-attention;
+    }
+  }
+
+  @include breakpoint-small() {
+    &__item {
+      width: 100%;
+      padding: 12px 15px;
+    }
+    .c-text {
+      margin-left: 15px;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    .c-button {
+      width: 100%;
+      text-align: center;
+      float: left;
+      margin: 15px auto 0;
+      background-color: $palette-attention !important;
+      color: $palette-light !important;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+@import "../../../shared";
+
+.c-bill-field {
+  padding-top: 20px;
+
+  &__item {
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 30px;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+
+    @include breakpoint-hover() {
+      &:hover {
+        .c-bill-field__icon {
+          border-color: $palette-dark;
+        }
+      }
+    }
+  }
+
+  &__label {
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  &__credit-value {
+    height: 36px;
+    display: block;
+    line-height: 36px;
+  }
+
+  &__icon {
+    @include radio-input-icon;
+    position: absolute;
+    left: 0;
+    top: 27px;
+  }
+
+  &__native {
+    @include visuallyhidden;
+
+    &:checked ~ .c-bill-field__icon {
+      border-color: $palette-dark;
+
+      &:before { opacity: 1; }
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  &__sign {
+    @include input-base;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    border: none;
+    pointer-events: none;
+    color: transparent;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+  }
+
+  &__currency {
+    color: $palette-dark;
+    display: block;
+    margin-left: 0.5ch;
+  }
+
+  @include breakpoint-tablet() {
+    display: flex;
+    flex-direction: row;
+
+    &__item {
+      width: 50%;
+      max-width: 240px;
+      margin-right: 30px;
+    }
+  }
+}

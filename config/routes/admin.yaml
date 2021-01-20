@@ -1,0 +1,268 @@
+admin_homepage:
+    path: /admin
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'backend/dashboard.html.twig'
+
+admin_translations_list:
+    path: /admin/translations/{configName}/{locale}/{domain}
+    controller: App\Translations\Action\Backend\ListAction
+    defaults:
+        configName: 'frontend'
+        locale: '%locale%'
+        domain: 'frontend'
+
+admin_api_translations_update:
+    path: /admin/api/translations/update/{configName}/{locale}/{domain}
+    controller: App\Translations\Action\Api\UpdateAction
+    defaults:
+        configName: 'frontend'
+        locale: '%locale%'
+        domain: 'frontend'
+
+## import
+admin_import_files_list:
+    path: /admin/import/files/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'App\Import\Action\Backend\ListAction\QueryRequest'
+        paginator: 'app.import.infrastructure.file.paginator'
+
+## api-log
+admin_api_log_list:
+    path: /admin/api/log/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'App\Api\Action\Backend\LogListAction\QueryRequest'
+        paginator: 'app.api.infrastructure.log.paginator'
+## Users
+admin_users_user_list:
+    path: /admin/users/user/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'app.users.action.backend.list_action.query_request'
+        paginator: 'app.users.infrastructure.user.paginator'
+admin_users_user_new:
+    path: /admin/users/user/new
+    methods: [GET]
+    controller: 'crud.action.empty_action'
+admin_users_user_read:
+    path: /admin/users/user/read/{id}
+    methods: [GET]
+    controller: 'crud.action.read_action'
+    requirements:
+        id: "%routing.uuid%"
+        repository: "app.users.infrastructure.user.repository"
+admin_users_user_update:
+    path: /admin/users/user/update/{id}
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'App\Users\Domain\User\UseCase\Update\HandlerRequest'
+        handler: 'app.users.domain.update.handler'
+        redirectTo: 'admin_users_user_read'
+admin_users_user_create:
+    path: /admin/users/user/create
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        request: 'App\Users\Domain\User\UseCase\Create\HandlerRequest'
+        handler: 'app.users.domain.create.handler'
+        redirectTo: 'admin_users_user_read'
+admin_users_user_delete:
+    path: /admin/users/user/delete/{id}
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        request: 'App\Users\Domain\User\UseCase\Delete\HandlerRequest'
+        handler: 'app.users.domain.delete.handler'
+        redirectTo: 'admin_users_user_list'
+## End Users
+
+## clients/companies
+admin_clients_client_list:
+    path: /admin/clients/client/list
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Client\ListAction\ListAction'
+    requirements:
+        request: 'App\Clients\Action\Backend\Client\ListAction\QueryRequest'
+        paginator: 'app.clients.infrastructure.client.paginator'
+admin_clients_client_profile:
+    path: /admin/clients/client/profile/{id}
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Client\ProfileAction\ProfileAction'
+    requirements:
+        id: "%routing.uuid%"
+admin_clients_profile_update:
+    path: /admin/clients/client/profile/update/{id}
+    methods: [POST]
+    controller: 'App\Clients\Action\Backend\Client\UpdateProfileAction\UpdateAction'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.clients.domain.client.use_case.update_profile.handler_request'
+        redirectTo: 'admin_clients_client_profile'
+admin_clients_client_document:
+    path: /admin/clients/client/{id}/document
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Client\DocumentAction\DocumentAction'
+    requirements:
+        id: "%routing.uuid%"
+admin_clients_client_document_upload:
+    path: /admin/clients/client/{id}/document/upload
+    methods: [POST]
+    controller: 'App\Clients\Action\Backend\Client\DocumentAction\UploadAction'
+    requirements:
+        id: "%routing.uuid%"
+        redirectTo: 'admin_clients_client_document'
+## clients users
+admin_clients_user_list:
+    path: /admin/clients/user/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'app.clients.action.backend.user.list_action.query_request'
+        paginator: 'app.clients.infrastructure.user.paginator'
+admin_partners_user_list:
+    path: /admin/partners/user/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'app.partners.action.backend.user.list_action.query_request'
+        paginator: 'app.partners.infrastructure.user.paginator'
+admin_clients_user_read:
+    path: /admin/clients/user/read/{id}
+    methods: [GET]
+    controller: 'crud.action.read_action'
+    requirements:
+        id: "%routing.uuid%"
+        repository: "app.clients.infrastructure.user.repository"
+admin_clients_user_update:
+    path: /admin/clients/user/update/{id}
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'App\Clients\Domain\User\UseCase\Update\HandlerRequest'
+        handler: 'app.clients.domain.user.use_case.update.handler'
+        redirectTo: 'admin_clients_user_read'
+admin_api_clients_user_change_status:
+    path: /admin/api/clients/user/change-status/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.clients.action.backend.user.change_status.handler_request'
+        handler: 'app.clients.domain.user.use_case.change_status.handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+admin_clients_user_delete:
+    path: /admin/clients/user/delete/{id}
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        request: 'App\Clients\Domain\User\UseCase\Delete\HandlerRequest'
+        handler: 'app.clients.domain.user.use_case.delete.handler'
+        redirectTo: 'admin_clients_user_list'
+## End Clients
+
+## Feedback
+admin_feedback_list:
+    path: /admin/feedback/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'App\Feedback\Action\Backend\ListAction\QueryRequest'
+        paginator: 'app.feedback.infrastructure.feedback.paginator'
+## End Feedback
+
+## cards
+admin_clients_card_list:
+    path: /admin/clients/card/list
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Card\ListAction\ListAction'
+    requirements:
+        request: 'App\Clients\Action\Backend\Card\ListAction\QueryRequest'
+admin_clients_card_limits_list:
+    path: /admin/clients/card/{id}/limits
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Card\LimitsAction\ListAction'
+admin_clients_card_read:
+    path: /admin/clients/card/read/{id}
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Card\ReadAction\ReadAction'
+    requirements:
+        id: "%routing.uuid%"
+admin_clients_card_update:
+    path: /admin/clients/card/update/{id}
+    methods: [POST]
+    controller: 'App\Clients\Action\Backend\Card\UpdateAction\UpdateAction'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.clients.action.backend.card.update_action.handler_request'
+        redirectTo: 'admin_clients_card_read'
+admin_clients_card_block:
+    path: /admin/clients/card/{id}/block
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.clients.action.backend.card.block_action.handler_request'
+        handler: 'App\Clients\Domain\Card\UseCase\AddStopList\Handler'
+        redirectTo: 'admin_clients_card_list'
+## end cards
+## Transactions
+admin_transaction_card_list:
+    path: /admin/clients/transaction/card/list
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Transaction\ListAction\ListAction'
+    requirements:
+        request: 'App\Clients\Action\Backend\Transaction\ListAction\QueryRequest'
+admin_transaction_card_export:
+    path: /admin/clients/transaction/card/export
+    methods: [GET]
+    controller: 'App\Clients\Action\Backend\Transaction\CreateReportAction\CreateReportAction'
+    requirements:
+        request: 'App\Clients\Action\Backend\Transaction\ListAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\GetReportTransactionsHandler'
+admin_api_transactions_supplies_list:
+    path: /admin/api/v1/transactions/supplies
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Clients\Action\Backend\Transaction\SuppliesListAction\QueryRequest'
+        handler: 'app.api.action.service.transaction_card.supplies.list_service'
+        transformer: 'app.api.resource.transaction_card.supplies_list.data_transformer'
+## End Transactions
+
+##fuel replacement
+admin_fuel_replacement_list:
+    path: /admin/fuel_replacement/list
+    methods: [GET]
+    controller: 'crud.action.list_action'
+    requirements:
+        request: 'App\Clients\Action\Backend\ReplacementFuelType\ListAction\QueryRequest'
+        paginator: 'app.clients.infrastructure.fuel.replacement_type.paginator'
+admin_fuel_replacement_new:
+    path: /admin/fuel_replacement/new
+    methods: [GET]
+    controller: 'crud.action.empty_action'
+admin_fuel_replacement_create:
+    path: /admin/fuel_replacement/create
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        request: 'App\Clients\Domain\Fuel\Type\UseCase\CreateReplacementFuelType\HandlerRequest'
+        handler: 'app.clients.domain.fuel.replacement_typ.use_case.create.handler'
+        redirectTo: 'admin_fuel_replacement_list'
+admin_fuel_replacement_delete:
+    path: /admin/fuel_replacement/delete/{id}
+    methods: [POST]
+    controller: 'crud.action.command_action'
+    requirements:
+        request: 'App\Clients\Domain\Fuel\Type\UseCase\DeleteReplacementFuelType\HandlerRequest'
+        handler: 'app.clients.domain.fuel.replacement_typ.use_case.delete.handler'
+        redirectTo: 'admin_fuel_replacement_list'
+##end fuel replacement

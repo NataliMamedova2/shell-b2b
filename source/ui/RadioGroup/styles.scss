@@ -1,0 +1,56 @@
+@import "../../shared";
+
+.c-radio-group {
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding-top: 10px;
+
+  &.is-vertical {
+    flex-direction: column;
+    .c-radio-group__item:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+  &.is-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: -10px;
+
+    .c-radio-group__item {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__item {
+    width: auto;
+    display: flex;
+    align-items: flex-start;
+
+    @include breakpoint-hover() {
+      &:hover {
+        .c-radio-group__icon {
+          border-color: $palette-dark;
+        }
+      }
+    }
+  }
+  &__icon {
+   @include radio-input-icon;
+
+    margin-top: 2px;
+  }
+  &__label {
+    width: auto;
+    padding-left: 10px;
+  }
+  &__native {
+
+    &:checked ~ .c-radio-group__icon {
+      border-color: $palette-dark;
+
+      &:before { opacity: 1; }
+    }
+  }
+}

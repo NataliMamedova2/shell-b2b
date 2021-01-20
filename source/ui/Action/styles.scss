@@ -1,0 +1,18 @@
+@import "../../shared";
+
+.c-action {
+  width: auto;
+  display: flex;
+  align-items: center;
+
+  .c-text {
+    width: auto;
+    padding-left: 8px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background-color: $palette-fill-grey;
+  }
+}

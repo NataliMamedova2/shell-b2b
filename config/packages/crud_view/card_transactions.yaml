@@ -1,0 +1,43 @@
+## card_transactions
+crud:
+    view:
+        contents:
+            admin_transaction_card_list:
+                template: '/backend/clients/transaction/list.html.twig'
+                data:
+                    static:
+                        title: 'header.transactions_list'
+                        icon: 'list'
+                    global:
+                        'result:paginator': 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Clients\View\Form\Transaction\FilterFormType
+                        template: '/backend/clients/transaction/filter.html.twig'
+                        data:
+                            global:
+                                'result:allowExport': 'allowExport'
+                                'result:managers': 'managers'
+                                'result:isShowManagerFilter': 'isShowManagerFilter'
+                                'result:filterValueForManager': 'filterValueForManager'
+                                'data': 'request'
+                            static:
+                                actionRoute: 'admin_transaction_card_list'
+                    table:
+                        template: '/backend/clients/transaction/table.html.twig'
+                        data:
+                            parent: 'paginator'
+                            global:
+                                'result:clients': 'clients'
+                                'result:cards': 'cards'
+                                'result:supplies': 'supplies'
+                                'result:volumeSum': 'volumeSum'
+                                'result:debitSum': 'debitSum'
+                                'result:isShowAddInfo': 'isShowAddInfo'
+                                'data': 'request'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+                        data:
+                            parent: 'paginator'

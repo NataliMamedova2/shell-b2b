@@ -1,0 +1,78 @@
+{% extends "backend/crud/block/filter.html.twig" %}
+
+{% set allowExport = view.variable('allowExport') %}
+
+{% set managers = view.variable('managers') %}
+{% set isShowManagerFilter = view.variable('isShowManagerFilter') %}
+{% set filterValueForManager = view.variable('filterValueForManager') %}
+{% set request = view.variable('request') %}
+
+{% block form_body %}
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form_row(form.clientId) }}
+        </div>
+        <div class="col-sm-10">
+            {{ form_row(form.clientName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            {{ form_row(form.cardNumber) }}
+        </div>
+        <div class="col-sm-9">
+            {{ form_row(form.azsName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            {{ form_row(form.dateFrom) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.dateTo) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.type) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            {{ form_row(form.supplyTypes) }}
+        </div>
+        <div class="col-sm-8">
+            {{ form_row(form.supplies) }}
+            {{ form_row(form.limit) }}
+        </div>
+    </div>
+    {% if isShowManagerFilter %}
+        <div class="row">
+            <div class="form-group"><label class="" for="manager">Менеджер</label>
+                <select id="manager" name="manager"
+                        class="form-control" {% if filterValueForManager is not empty %} disabled {% endif %}>
+                    <option value="" {% if (request['manager'] is not defined or request['manager'] is empty) and filterValueForManager is empty %} selected {% endif %}></option>
+                    {% for managerId, managerName in managers %}
+                        <option
+                                {% if filterValueForManager is not empty and filterValueForManager == managerId %}
+                                    selected
+                                {% elseif request['manager'] is defined and request['manager'] == managerId %}
+                                    selected
+                                {% endif %}
+
+                                value="{{ managerId }}">{{ managerName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block add_actions %}
+    <a class="btn btn-info export-btn" {% if not allowExport %} disabled {% endif %} data-href="{{ path('admin_transaction_card_export') }}">
+         <span class="btn-label">
+             <i class="fa fa-table"></i>
+         </span>
+        Експорт в Excel
+    </a>
+{% endblock %}
+

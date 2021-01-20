@@ -1,0 +1,60 @@
+@import "../../shared";
+
+.c-callout {
+  width: 100%;
+  height: auto;
+  display: flex;
+
+
+  .c-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 24px;
+  }
+
+  &--simple {
+    align-items: center;
+
+    .c-callout__text {
+      padding-left: 15px;
+      max-width: 170px;
+      font-size: 12px;
+    }
+    .c-icon {
+      color: #CCCCCC;
+    }
+  }
+
+  &--default {
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: $corner-default;
+    padding: 10px 20px 30px;
+    background-color: $palette-fill-grey;
+    .c-icon {
+      margin-bottom: 8px;
+    }
+    .c-callout__text {
+      max-width: 250px;
+    }
+  }
+
+  &--inform {
+    background-color: $palette-fill-grey;
+    border-radius: $corner-default;
+    padding: 20px;
+    flex-direction: row;
+
+    .c-icon {
+      width: 32px;
+      height: 22px;
+      color: $palette-darkgrey;
+    }
+    .c-callout__text {
+      width: calc(100% - 32px);
+      max-width: 320px;
+      padding-left: 10px;
+      font-size: 15px;
+    }
+  }
+}

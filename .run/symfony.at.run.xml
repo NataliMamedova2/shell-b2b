@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="symfony.at" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" singleton="false" filter_connections="FILTER" server_name="symfony.cx" session_id="PHPSTORM">
+    <method v="2" />
+  </configuration>
+</component>

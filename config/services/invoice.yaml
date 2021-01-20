@@ -1,0 +1,95 @@
+## invoice
+services:
+    app.clients.infrastructure.invoice.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Invoice\Invoice
+    app.clients.infrastructure.invoice_item.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Invoice\Item
+
+    App\Clients\Domain\Invoice\Service\InvoiceSettings:
+        class: App\Clients\Infrastructure\Invoice\Service\InvoiceSettings
+        arguments: ['@app.clients.infrastructure.shell_info.repository']
+
+    App\Clients\Domain\Invoice\Service\NumberGenerator:
+        class: App\Clients\Infrastructure\Invoice\Service\NumberGenerator
+        arguments:
+            - '@app.clients.infrastructure.shell_info.repository'
+            - '@app.clients.infrastructure.invoice.repository'
+
+    ## actions
+    app.api.action.api.v1.invoice.credit_debt_action.credit_debt_service:
+        public: true
+        class: App\Api\Action\Api\V1\Invoice\CreditDebtAction\CreditDebtService
+        arguments:
+            - '@App\Security\Cabinet\Myself'
+            - '@app.clients.infrastructure.client_info.repository'
+
+    App\Api\DataTransformer\DownloadDocumentDataTransformer:
+        public: true
+        class: App\Api\DataTransformer\DownloadDocumentDataTransformer
+        arguments:
+            - '@router'
+
+    ### create by amount
+    app.api.action.api.v1.invoice.amount_action.handler_request:
+        public: true
+        class: App\Clients\Domain\Invoice\UseCase\CreateFromAmount\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Invoice\AmountAction\HandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@serializer'
+
+    App\Clients\Domain\Invoice\UseCase\CreateFromAmount\Handler:
+        public: true
+        class: App\Clients\Domain\Invoice\UseCase\CreateFromAmount\Handler
+        arguments:
+            - '@app.clients.infrastructure.invoice.repository'
+            - '@App\Clients\Domain\Invoice\Service\NumberGenerator'
+            - '@App\Clients\Domain\Invoice\Service\InvoiceSettings'
+            - '@App\Clients\Infrastructure\Document\Service\CreateInvoiceFileService'
+            - '@app.clients.infrastructure.fuel.price.repository'
+            - '@app.clients.infrastructure.document.repository'
+            - '@doctrine.orm.entity_manager'
+
+    ### create by supplies
+    app.api.action.api.v1.invoice.supplies_action.handler_request:
+        public: true
+        class: App\Clients\Domain\Invoice\UseCase\CreateFromSupplies\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Invoice\SuppliesAction\HandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@myself'
+
+    App\Clients\Domain\Invoice\UseCase\CreateFromSupplies\Handler:
+        public: true
+        class: App\Clients\Domain\Invoice\UseCase\CreateFromSupplies\Handler
+        arguments:
+            - '@app.clients.infrastructure.invoice.repository'
+            - '@App\Clients\Domain\Invoice\Service\NumberGenerator'
+            - '@App\Clients\Domain\Invoice\Service\InvoiceSettings'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.fuel.price.repository'
+            - '@App\Clients\Infrastructure\Document\Service\CreateInvoiceFileService'
+            - '@app.clients.infrastructure.document.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Clients\Infrastructure\Document\Service\CreateInvoiceFileService:
+        arguments:
+            - '@app.clients.infrastructure.shell_info.repository'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@knp_snappy.pdf'
+            - '@twig'
+            - '@FilesUploader\File\PathGeneratorInterface'
+            - '%kernel.project_dir%'
+            - '%kernel.project_dir%/storage/source/'

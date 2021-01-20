@@ -1,0 +1,19 @@
+{% macro email(email) %}
+    <a href="mailto:{{ email }}">{{ email }}</a>
+{% endmacro email %}
+
+{% macro phone(phone) %}
+    <a href="tel:{{ phone }}">{{ phone }}</a>
+{% endmacro phone %}
+
+{% macro link(url, title, openInNewTab = false) %}
+    {% set urlTitle =  url|slice(0, 50) %}
+
+    {% if title is empty and url|length > 50 %}
+        {% set urlTitle =  url|slice(0, 50) %}...
+    {% endif %}
+
+    {% set title = title|default(urlTitle) %}
+
+    <a href="{{ url }}" target="{{ openInNewTab == false ? '_self' : '_blank' }}">{{ title }}</a>
+{% endmacro link %}

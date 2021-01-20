@@ -1,0 +1,38 @@
+{
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "axios": "^0.19.0"
+    },
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.27.0",
+        "bootstrap": "3.3.6",
+        "bootstrap-datepicker": "^1.9.0",
+        "bootstrap-select": "^1.13.10",
+        "bootstrap-tagsinput": "^0.7.1",
+        "copy-webpack-plugin": "^5.0.3",
+        "core-js": "^3.0.0",
+        "cropperjs": "^1.5.3",
+        "html5sortable": "^0.9.16",
+        "jquery": "^3.4.1",
+        "jquery-slimscroll": "^1.3.8",
+        "metismenu": "1.1.3",
+        "node-sass": "^4.12.0",
+        "popper.js": "^1.15.0",
+        "query-string": "^6.8.3",
+        "sass-loader": "^7.1.0",
+        "select2": "^4.0.10",
+        "switchery": "^0.0.2",
+        "tablesaw": "^3.1.2",
+        "tinymce": "^5.0.11",
+        "toastr": "^2.1.4",
+        "url-parse": "^1.4.7",
+        "webpack-notifier": "^1.6.0"
+    }
+}

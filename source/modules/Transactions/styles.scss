@@ -1,0 +1,90 @@
+@import "../../shared";
+
+.m-transactions-list {
+  &__score {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-left: 30px;
+
+    .c-text {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  &__body {
+    .c-tabs {
+      margin-bottom: 20px;
+    }
+    .c-tabs__item {
+      max-width: 360px;
+    }
+  }
+
+  &__tabs {
+    .c-tabs__item:not(.is-active) {
+      background-color: $palette-fill-grey-d1;
+
+      @include breakpoint-hover() {
+        &:hover {
+          background-color: $palette-fill-grey-d2;
+        }
+      }
+    }
+  }
+
+  @include breakpoint-mobile() {
+
+    &__score {
+      align-items: flex-start;
+      padding-left: 0;
+
+      .c-text {
+        text-align: left;
+      }
+    }
+
+   .c-page-header__actions {
+     flex-direction: column-reverse;
+     align-items: flex-start;
+   }
+    .c-tabs {
+      padding: 0 10px;
+
+      &__item:not(:last-child) {}
+      margin-bottom: 15px;
+    }
+  }
+
+  .m-filters {
+    margin-bottom: 10px;
+  }
+}
+
+
+.c-station-selector {
+  width: 100%;
+
+  &__list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2px 0;
+  }
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 5px 0;
+
+    .c-icon {
+      width: 22px;
+    }
+    .c-text {
+      width: calc(100% - 22px);
+      padding-right: 10px;
+    }
+  }
+}

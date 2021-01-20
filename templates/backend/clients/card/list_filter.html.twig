@@ -1,0 +1,21 @@
+{% extends "backend/crud/block/filter.html.twig" %}
+
+{% block form_body %}
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form_row(form.clientId) }}
+        </div>
+        <div class="col-sm-10">
+            {{ form_row(form.clientName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            {{ form_row(form.cardNumber) }}
+        </div>
+        <div class="col-sm-9">
+            {{ form_row(form.status) }}
+            {{ form_row(form.limit) }}
+        </div>
+    </div>
+{% endblock %}

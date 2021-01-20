@@ -1,0 +1,3579 @@
+nelmio_api_doc:
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+    documentation:
+        schemes: [https]
+        info:
+            title: Shell B2B Api documentation
+            description: |
+                # Cross-Origin Resource Sharing
+                This API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https://www.w3.org/TR/cors/).
+                And that allows cross-domain communication from the browser.
+                All responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.
+
+                # Authentication
+                Api offers authentication:
+                  - JWT (JSON Web Token)
+
+                <SecurityDefinitions />
+            version: 1.0.0
+            x-logo:
+                url: '/media/shell-card.svg'
+        # format of bodies a client can send (Content-Type)
+        consumes:
+            - application/json
+        # format of the responses to the client (Accepts)
+        produces:
+            - application/json
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                in: header
+                name: Authorization
+                description: '**Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.ey....**'
+        tags:
+            -   name: Partner_Auth
+                description: ''
+            -   name: PartnerInvoice
+                description: ''
+            -   name: Client Auth
+                description: ''
+            -   name: Dashboard
+                description: 'Main Dashboard info'
+            -   name: Company
+                description: Everything about Company
+            -   name: Company Users
+                description: ''
+            -   name: Partner Users
+                description: ''
+            -   name: Drivers
+                description: ''
+            -   name: Fuel Cards
+                description: ''
+            -   name: Invoice
+                description: ''
+            -   name: Transactions
+                description: ''
+            -   name: Documents
+                description: ''
+            -   name: PartnerDocuments
+                description: ''
+            -   name: SotaIntegration
+                description: 'get Users ans Clients Sota Token'
+            -   name: PartnersSotaIntegration
+                description: 'get Partners Sota Token'
+            -   name: Search
+                description: ''
+            -   name: Discount
+                description: ''
+            -   name: System info
+                description: ''
+            -   name: Feedback
+                description: User feedback
+            -   name: News
+                description: 'News list from marketing'
+            -   name: Translations
+                description: Static translations
+        paths:
+            /api/v1/oauth:
+                post:
+                    summary: Get token
+                    description: '**[POST]:** /api/v1/oauth'
+                    operationId: oauth
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            required: true
+                            description: Client credentials
+                            schema:
+                                type: object
+                                properties:
+                                    username:
+                                        type: string
+                                        description: 'The user login (login or email)'
+                                        example: 'john'
+                                    password:
+                                        type: string
+                                        description: 'The user password'
+                                        example: '111'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    token:
+                                        type: string
+                                        description: JWT
+                                        example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NzEyMTQxOTg....'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+                        - Client Auth
+            /api/v1/partners/oauth:
+                post:
+                    summary: Get token
+                    description: '**[POST]:** /api/v1/partners/oauth'
+                    operationId: oauth
+                    parameters:
+                        - name: JSON Payload
+                          in: body
+                          required: true
+                          description: Partner credentials
+                          schema:
+                              type: object
+                              properties:
+                                  username:
+                                      type: string
+                                      description: 'The user login (login or email)'
+                                      example: 'john'
+                                  password:
+                                      type: string
+                                      description: 'The user password'
+                                      example: '111'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    token:
+                                        type: string
+                                        description: JWT
+                                        example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NzEyMTQxOTg....'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+                        - Partner Auth
+            /api/v1/password-recovery:
+                post:
+                    summary: Password recovery
+                    description: '**[POST]:** /api/v1/password-recovery'
+                    operationId: password-recovery
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            required: true
+                            description: Login or email
+                            schema:
+                                type: object
+                                properties:
+                                    username:
+                                        type: string
+                                        description: 'The user login (login or email). For test use one of: **admin|manager|accountant|john**'
+                                        example: 'john'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+                        - Client Auth
+                        - Partner Auth
+            /api/v1/me:
+                get:
+                    summary: '[Me]: Profile'
+                    description: '**[GET]:** /api/v1/me'
+                    operationId: user-profile
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Me'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/partners/me:
+                get:
+                    summary: '[Me]: Profile'
+                    description: '**[GET]:** /api/v1/partners/me'
+                    operationId: partner-profile
+                    security:
+                        - Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Me'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Partner Users
+            /api/v1/me/update:
+                post:
+                    summary: '[Me]: Update'
+                    description: '**[POST]:** /api/v1/me/update'
+                    operationId: user-profile-update
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            description: User profile information
+                            schema:
+                                type: object
+                                required:
+                                    - username
+                                    - firstName
+                                    - lastName
+                                    - email
+                                properties:
+                                    username:
+                                        description: User supplied username
+                                        type: string
+                                        example: John78
+                                        minLength: 4
+                                    firstName:
+                                        description: User first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: User last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: User middle name
+                                        type: string
+                                        example: Smith
+                                    email:
+                                        description: User email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    password:
+                                        type: string
+                                        description: >-
+                                            User password, MUST contain a mix of upper and lower case letters,
+                                            as well as digits
+                                        format: password
+                                        minLength: 6
+                                        example: drowssaP123
+                                    phone:
+                                        description: User phone number in international format
+                                        type: string
+                                        example: +12025550192
+                                        nullable: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    username:
+                                        description: User supplied username
+                                        type: string
+                                        example: John78
+                                        minLength: 4
+                                    firstName:
+                                        description: User first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: User last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: User middle name
+                                        type: string
+                                        example: Smith
+                                    email:
+                                        description: User email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    role:
+                                        allOf:
+                                            -   $ref: '#/definitions/UserRole'
+                                    status:
+                                        type: string
+                                        enum:
+                                            - active
+                                            - blocked
+                                    password:
+                                        type: string
+                                        description: >-
+                                            User password, MUST contain a mix of upper and lower case letters,
+                                            as well as digits
+                                        format: password
+                                        minLength: 6
+                                        example: drowssaP123
+                                    phone:
+                                        description: User phone number in international format
+                                        type: string
+                                        example: +12025550192
+                                        nullable: true
+                                    createdAt:
+                                        type: string
+                                        format: date-time
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+                        - Company Users
+            /api/v1/company/dashboard:
+                get:
+                    summary: Dashboard
+                    description: '**[GET]:** /api/v1/company/dashboard'
+                    operationId: company-dashboard
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    usersCount:
+                                        type: int
+                                    driversCount:
+                                        type: int
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company
+            /api/v1/dashboard:
+                get:
+                    summary: Main dasboard info
+                    description: '**[GET]:** /api/v1/dashboard'
+                    operationId: main-dashboard
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    balance:
+                                        type: object
+                                        description: Client balance or "null"
+                                        properties:
+                                            value:
+                                                type: int
+                                                description: Client balance amount (* 100)
+                                                example: 156646
+                                            sign:
+                                                type: string
+                                                description: Client balance sign ("-" or "+')
+                                                example: "+"
+                                    balanceUpdate:
+                                        type: object
+                                        description: Client balance update info or "null"
+                                        properties:
+                                            balance:
+                                                type: object
+                                                properties:
+                                                    value:
+                                                        type: int
+                                                        description: Last update balance amount (* 100)
+                                                        example: 156646
+                                                    sign:
+                                                        type: string
+                                                        description: Balance sign ("-" or "+')
+                                                        example: "+"
+                                            dateTime:
+                                                type: dateTime
+                                                description: Last balance update date & time
+                                    creditLimit:
+                                        type: int
+                                        description: Client credit limit amount (* 100)
+                                        example: 100000
+                                    availableBalance:
+                                        type: int
+                                        description: Client available amount (* 100)
+                                        example: 9843354
+                                    lastMonthDiscountSum:
+                                        type: int
+                                        description: Last month discount sum (* 100)
+                                        example: 450000
+                                    cardsStatistic:
+                                        type: object
+                                        description: Card statistic or "null"
+                                        properties:
+                                            day:
+                                                type: int
+                                                description: day amount (* 100)
+                                                example: 10000
+                                            week:
+                                                type: int
+                                                description: week amount (* 100)
+                                                example: 99999
+                                            month:
+                                                type: int
+                                                description: week amount (* 100)
+                                                example: 200000
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Dashboard
+            /api/v1/company/profile:
+                get:
+                    summary: Profile
+                    description: '**[GET]:** /api/v1/company/profile'
+                    operationId: company-profile
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Company'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company
+            /api/v1/company/profile/update:
+                post:
+                    summary: Update profile
+                    description: '**[POST]:** /api/v1/company/profile/update'
+                    operationId: company-profile-update
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            description: The Company info for update
+                            schema:
+                                type: object
+                                properties:
+                                    name:
+                                        description: The name given to a pet
+                                        example: Auchan Ukraine
+                                        type: string
+                                        maxLength: 30
+                                    accountingEmail:
+                                        description: The name given to a pet
+                                        example: example@mail.com
+                                        type: string
+                                        format: email
+                                    accountingPhone:
+                                        example: +380963332211
+                                        type: string
+                                        format: phone
+                                    postalAddress:
+                                        example: 01001 м. Київ
+                                        type: string
+                                        maxLength: 250
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Company'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company
+            /api/v1/company/employees:
+                get:
+                    summary: List
+                    description: '**[GET]:** /api/v1/company/employees?sort=lastLoggedAt&order=asc'
+                    operationId: company-users
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: status
+                            in: query
+                            description: Employee status
+                            type: string
+                            enum:
+                                - active
+                                - blocked
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - createdAt
+                                - status
+                                - name
+                                - role
+                                - lastLoggedAt
+                            default: 'createdAt'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                properties:
+                                                    totalCount:
+                                                        description: total number of items in the list of results
+                                                        example: 12
+                                                        type: number
+                                                    currentPage:
+                                                        description: current page number
+                                                        example: 1
+                                                        type: number
+                                            activeCount:
+                                                type: integer
+                                                description: Count active employees
+                                                example: 12
+                                            blockedCount:
+                                                type: integer
+                                                description: Count blocked employees
+                                                example: 12
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/Employee'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/company/employees/{id}:
+                get:
+                    summary: Read
+                    description: '**[GET]:** /api/v1/company/employees/{id}'
+                    operationId: company-employees-read
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Employee'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/company/employees/create:
+                post:
+                    summary: Create
+                    description: '**[POST]:** /api/v1/company/employees/create'
+                    operationId: company-employees-create
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            description: Create new employer.
+                            schema:
+                                type: object
+                                required:
+                                    - username
+                                    - email
+                                    - firstName
+                                    - lastName
+                                    - role
+                                    - password
+                                properties:
+                                    username:
+                                        description: User supplied username
+                                        type: string
+                                        example: John78
+                                    email:
+                                        description: User email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    firstName:
+                                        description: User first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: User last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: User middle name
+                                        type: string
+                                        example: Smith
+                                    role:
+                                        description: User role
+                                        type: enum
+                                        enum:
+                                            - admin
+                                            - manager
+                                            - accountant
+                                    password:
+                                        type: string
+                                        description: >-
+                                            User password, MUST contain a mix of upper and lower case letters,
+                                            as well as digits
+                                        format: password
+                                        minLength: 6
+                                        example: drowssaP123
+                                    phone:
+                                        description: User phone number
+                                        type: string
+                                        example: '+380963332211'
+                                        nullable: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Employee'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/company/employees/update/{id}:
+                post:
+                    summary: Update
+                    description: '**[POST]:** /api/v1/company/employees/update/{id}'
+                    operationId: company-employees-update
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Employee unique id
+                            type: string
+                            required: true
+                        -   name: JSON Payload
+                            in: body
+                            description: The employer to update.
+                            schema:
+                                required:
+                                    - username
+                                    - email
+                                    - firstName
+                                    - lastName
+                                    - role
+                                properties:
+                                    username:
+                                        description: User supplied username
+                                        type: string
+                                        example: John78
+                                    email:
+                                        description: User email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    firstName:
+                                        description: User first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: User last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: User middle name
+                                        type: string
+                                        example: Smith
+                                    role:
+                                        description: User role
+                                        type: enum
+                                        enum:
+                                            - admin
+                                            - manager
+                                            - accountant
+                                    password:
+                                        type: string
+                                        description: >-
+                                            User password, MUST contain a mix of upper and lower case letters,
+                                            as well as digits
+                                        format: password
+                                        minLength: 6
+                                        example: drowssaP123
+                                    phone:
+                                        description: User phone number
+                                        type: string
+                                        example: '+380963332211'
+                                        nullable: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Employee'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/company/employees/delete/{id}:
+                post:
+                    summary: Delete
+                    description: '**[POST]:** /api/v1/company/employees/delete/{id}'
+                    operationId: company-employees-delete
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Employee unique id
+                            type: string
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/company/employees/change-status/{id}:
+                post:
+                    summary: Change status
+                    description: '**[POST]:** /api/v1/company/employees/change-status/{id}'
+                    operationId: company-employees-change-status
+                    security:
+                        -   Bearer: ['admin']
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Employee unique id
+                            type: string
+                            required: true
+                        -   name: status
+                            in: body
+                            schema:
+                                type: object
+                                properties:
+                                    status:
+                                        type: string
+                                        enum:
+                                            - active
+                                            - blocked
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Company Users
+            /api/v1/drivers:
+                get:
+                    summary: List
+                    description: '**[GET]:** /api/v1/drivers'
+                    operationId: drivers-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: status
+                            in: query
+                            description: Direver status
+                            type: string
+                            enum:
+                                - active
+                                - blocked
+                        -   name: search
+                            in: query
+                            description: Search by email, firstName, lastName, middleName, car number, phone number
+                            type: string
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - name
+                                - email
+                                - status
+                                - note
+                            default: 'name'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                properties:
+                                                    totalCount:
+                                                        description: total number of items in the list of results
+                                                        example: 12
+                                                        type: number
+                                                    currentPage:
+                                                        description: current page number
+                                                        example: 1
+                                                        type: number
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/Driver'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/{id}:
+                get:
+                    summary: Read
+                    description: '**[GET]:** /api/v1/drivers/{id}'
+                    operationId: drivers-read
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Driver'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/search:
+                get:
+                    summary: Search
+                    description: '**[GET]:** /api/v1/drivers/search'
+                    operationId: drivers-search-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: q
+                            in: query
+                            description: Parameter for search by email, firstName, lastName, middleName, car number, phone number
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            description: Driver ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        name:
+                                            description: Driver full name"
+                                            example: John Dou
+                                            type: string
+
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/create:
+                post:
+                    summary: Create
+                    description: '**[POST]:** /api/v1/drivers/create'
+                    operationId: drivers-create
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            description: Create new driver.
+                            schema:
+                                type: object
+                                required:
+                                    - firstName
+                                    - lastName
+                                    - phones
+                                    - status
+                                properties:
+                                    firstName:
+                                        description: Driver first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: Driver last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: Driver middle name
+                                        type: string
+                                        example: Smith
+                                    email:
+                                        description: Driver email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    phones:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/PhoneNumberItem'
+                                    carsNumbers:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/CarNumberItem'
+                                    status:
+                                        type: string
+                                        enum:
+                                            - active
+                                            - blocked
+                                    note:
+                                        type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Driver'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/update/{id}:
+                post:
+                    summary: Update
+                    description: '**[POST]:** /api/v1/drivers/update/{id}'
+                    operationId: drivers-update
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Driver unique id
+                            type: string
+                            required: true
+                        -   name: JSON Payload
+                            in: body
+                            description: Create new driver.
+                            schema:
+                                type: object
+                                required:
+                                    - firstName
+                                    - lastName
+                                    - phones
+                                    - status
+                                properties:
+                                    firstName:
+                                        description: Driver first name
+                                        type: string
+                                        example: John
+                                    lastName:
+                                        description: Driver last name
+                                        type: string
+                                        example: Smith
+                                    middleName:
+                                        description: Driver middle name
+                                        type: string
+                                        example: Smith
+                                    email:
+                                        description: Driver email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    phones:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/PhoneNumberItem'
+                                    carsNumbers:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/CarNumberItem'
+                                    status:
+                                        type: string
+                                        enum:
+                                            - active
+                                            - blocked
+                                    note:
+                                        type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/Driver'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/delete/{id}:
+                post:
+                    summary: Delete
+                    description: '**[POST]:** /api/v1/drivers/delete/{id}'
+                    operationId: drivers-delete
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Driver unique id
+                            type: string
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/drivers/change-status/{id}:
+                post:
+                    summary: Change status
+                    description: '**[POST]:** /api/v1/drivers/change-status/{id}'
+                    operationId: drivers-change-status
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Driver unique id
+                            type: string
+                            required: true
+                        -   name: status
+                            in: body
+                            schema:
+                                type: object
+                                properties:
+                                    status:
+                                        type: string
+                                        enum:
+                                            - active
+                                            - blocked
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Drivers
+            /api/v1/fuel-cards:
+                get:
+                    summary: List
+                    description: '**[GET]:** /api/v1/fuel-cards'
+                    operationId: fuel-cards-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: status
+                            in: query
+                            description: Fuel Card status
+                            type: string
+                            enum:
+                                - active
+                                - blocked
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - cardNumber
+                                - status
+                            default: 'cardNumber'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                        -   name: queryString
+                            in: query
+                            description: Search by query string
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                            activeCount:
+                                                type: integer
+                                                description: Count active fuel cards
+                                                example: 12
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/FuelCardList'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/{id}:
+                get:
+                    summary: Read
+                    description: '**[GET]:** /api/v1/fuel-cards/{id}'
+                    operationId: fuel-cards-read
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/FuelCardRead'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/update/{id}:
+                post:
+                    summary: Update
+                    description: '**[POST]:** /api/v1/fuel-cards/update/{id}'
+                    operationId: fuel-cards-update
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                properties:
+                                    totalLimits:
+                                        type: object
+                                        properties:
+                                            day:
+                                                type: integer
+                                                description: "Ліміт ТМЦ на добу в грн. * 100"
+                                                example: 10000000
+                                            week:
+                                                type: integer
+                                                description: "Ліміт ТМЦ в тиждень в грн. * 100"
+                                                example: 70000000
+                                            month:
+                                                type: integer
+                                                description: "Ліміт ТМЦ на місяць в грн. *100"
+                                                example: 300000000
+                                    startUseTime:
+                                        type: string
+                                        format: "hh:ii"
+                                        description: "Час початку обслуг"
+                                        example: "00:00"
+                                    endUseTime:
+                                        type: string
+                                        format: "hh:ii"
+                                        description: "Час закінчено обслуг"
+                                        example: "23:59"
+                                    serviceDays:
+                                        type: array
+                                        items:
+                                            type: string
+                                            enum:
+                                                - "mon"
+                                                - "tue"
+                                                - "wed"
+                                                - "thu"
+                                                - "fri"
+                                                - "sat"
+                                                - "sun"
+                                    fuelLimits:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    example: '550e8400-e29b-41d4-a716-446655440000'
+                                                dayLimit:
+                                                    description: "Ліміт ТМЦ типу Х в добу в л або шт. *100"
+                                                    example: 1000000
+                                                    type: integer
+                                                weekLimit:
+                                                    description: "Ліміт ТМЦ типу Х в місяць в л або шт. *100"
+                                                    example: 7000000
+                                                    type: integer
+                                                monthLimit:
+                                                    description: "Ліміт ТМЦ типу Х в тиждень в л або шт. *100"
+                                                    example: 30000000
+                                                    type: integer
+                                    goodsLimits:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    example: '550e8400-e29b-41d4-a716-446655440000'
+                                                dayLimit:
+                                                    description: "Ліміт ТМЦ типу Х в добу в л або шт. *100"
+                                                    example: 1000000
+                                                    type: integer
+                                                weekLimit:
+                                                    description: "Ліміт ТМЦ типу Х в місяць в л або шт. *100"
+                                                    example: 7000000
+                                                    type: integer
+                                                monthLimit:
+                                                    description: "Ліміт ТМЦ типу Х в тиждень в л або шт. *100"
+                                                    example: 30000000
+                                                    type: integer
+                                    servicesLimits:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    example: '550e8400-e29b-41d4-a716-446655440000'
+                                                dayLimit:
+                                                    description: "Ліміт ТМЦ типу Х в добу в л або шт. *100"
+                                                    example: 1000000
+                                                    type: integer
+                                                weekLimit:
+                                                    description: "Ліміт ТМЦ типу Х в місяць в л або шт. *100"
+                                                    example: 7000000
+                                                    type: integer
+                                                monthLimit:
+                                                    description: "Ліміт ТМЦ типу Х в тиждень в л або шт. *100"
+                                                    example: 30000000
+                                                    type: integer
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                $ref: '#/definitions/FuelCardRead'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/{id}/limits:
+                get:
+                    summary: Limits
+                    description: '**[GET]:** /api/v1/fuel-cards/{id}/limits'
+                    operationId: fuel-cards-limits-read
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                        -   name: type
+                            in: query
+                            description: Product type
+                            type: string
+                            enum:
+                                - fuel
+                                - goods
+                                - service
+                            default: fuel
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    card:
+                                        $ref: '#/definitions/FuelCardRead'
+                                    moneyLimits:
+                                        $ref: '#/definitions/LimitItem'
+                                    limits:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/LimitItem'
+                        '404':
+                            description: not found
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/stop-list/{id}/add:
+                post:
+                    summary: Add to stop-list
+                    description: '**[POST]:** /api/v1/fuel-cards/stop-list/{id}/add'
+                    operationId: fuel-cards-stop-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            required: true
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/order-new-card:
+                post:
+                    summary: Order new cards
+                    description: '**[POST]:** /api/v1/fuel-cards/order-new-card'
+                    operationId: fuel-cards-order-new-card
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                required:
+                                    - count
+                                    - name
+                                    - phone
+                                properties:
+                                    count:
+                                        description: Number of new fuel cards
+                                        type: string
+                                        example: 2
+                                        maxLength: 3
+                                    name:
+                                        description: Driver last name
+                                        type: string
+                                        example: Smith
+                                        maxLength: 164
+                                    phone:
+                                        type: string
+                                        format: phone
+                                        maxLength: 13
+                                        example: '+380963332211'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        type: boolean
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/fuel-cards/change-driver/{id}:
+                post:
+                    summary: Set driver to card
+                    description: '**[POST]:** /api/v1/fuel-cards/change-driver/{id}'
+                    operationId: fuel-cards-change-driver
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: id
+                            in: path
+                            $ref: '#/definitions/Id'
+                            description: Driver ID
+                            required: true
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                required:
+                                    - driverId
+                                properties:
+                                    driverId:
+                                        description: Driver ID
+                                        type: string
+                                        example: '550e8400-e29b-41d4-a716-446655440000'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DriverShort'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Fuel Cards
+            /api/v1/invoice/credit-debt:
+                get:
+                    summary: Credit debt
+                    description: '**[GET]:** /api/v1/invoice/credit-debt'
+                    operationId: invoice-credit-debt
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    amount:
+                                        type: integer
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Invoice
+            /api/v1/partners/invoice/credit-debt:
+                get:
+                    summary: Partners Credit debt
+                    description: '**[GET]:** /api/v1/partners/invoice/credit-debt'
+                    operationId: partner-invoice-credit-debt
+                    security:
+                        - Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    amount:
+                                        type: integer
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerInvoice
+            /api/v1/supplies:
+                get:
+                    summary: List of supplies(ТМЦ)
+                    description: '**[GET]:** /api/v1/supplies'
+                    operationId: supplies-list
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Fuel ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        name:
+                                            description: Fuel name
+                                            example: "Дизельне Паливо VP ДП-Евро5-ВО"
+                                            type: string
+                                        price:
+                                            description: 'Вартість ТМЦ *100'
+                                            example: 2199
+                                            type: integer
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Invoice
+            /api/v1/invoice/amount:
+                post:
+                    summary: Create from amount
+                    description: '**[POST]:** /api/v1/invoice/amount'
+                    operationId: invoice-amount-create
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                required:
+                                    - amount
+                                properties:
+                                    amount:
+                                        description: Invoice amount
+                                        type: integer
+                                        example: 2000
+                                        minimum: 1
+                                        maximum: 1000000
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DocumentDownload'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Invoice
+            /api/v1/partners/invoice/amount:
+                post:
+                    summary: Create from amount
+                    description: '**[POST]:** /api/v1/partners/invoice/amount'
+                    operationId: partner-invoice-amount-create
+                    security:
+                        - Bearer: []
+                    parameters:
+                        - name: JSON Payload
+                          in: body
+                          schema:
+                              type: object
+                              required:
+                                  - amount
+                              properties:
+                                  amount:
+                                      description: Invoice amount
+                                      type: integer
+                                      example: 2000
+                                      minimum: 1
+                                      maximum: 1000000
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DocumentDownload'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerInvoice
+            /api/v1/invoice/supplies:
+                post:
+                    summary: Create from supplies(ТМЦ)
+                    description: '**[POST]:** /api/v1/invoice/supplies'
+                    operationId: invoice-supplies-create
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    description: Fuel ID
+                                                    example: '550e8400-e29b-41d4-a716-446655440000'
+                                                volume:
+                                                    description: "Count or liters"
+                                                    example: 100
+                                                    type: integer
+                                                    minimum: 1
+                                                    maximum: 50000
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DocumentDownload'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Invoice
+            /api/v1/goods/search:
+                get:
+                    summary: Goods
+                    description: '**[GET]:** /api/v1/goods/search?q=text'
+                    operationId: search-goods-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: q
+                            in: query
+                            description: Parameter for search by name
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Goods ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        name:
+                                            description: Goods name
+                                            example: "Нейтралізатор газів Shell AdBLUE 20л"
+                                            type: string
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Search
+            /api/v1/fuel/search:
+                get:
+                    summary: Fuel
+                    description: '**[GET]:** /api/v1/fuel/search?q=text'
+                    operationId: search-fuel-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: q
+                            in: query
+                            description: Parameter for search by name
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Fuel ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        name:
+                                            description: Fuel name
+                                            example: "Бензин А-92-Евро5-Е5"
+                                            type: string
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Search
+            /api/v1/services/search:
+                get:
+                    summary: Services
+                    description: '**[GET]:** /api/v1/services/search?q=text'
+                    operationId: search-services-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: q
+                            in: query
+                            description: Parameter for search by name
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Service ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        name:
+                                            description: Service name
+                                            example: "Шиномонтаж"
+                                            type: string
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Search
+            /api/v1/transactions/company:
+                get:
+                    summary: Company transactions
+                    description: '**[GET]:** /api/v1/transactions/company'
+                    operationId: company-transactions
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - createdAt
+                                - amount
+                                - type
+                            default: 'createdAt'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                            accountBalance:
+                                                type: object
+                                                description: Account balance
+                                                properties:
+                                                    value:
+                                                        type: int
+                                                        description: Client balance amount (* 100)
+                                                        example: 156646
+                                                    sign:
+                                                        type: string
+                                                        description: Client balance sign ("-" or "+')
+                                                        example: "+"
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/CompanyTransaction'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/transactions/card:
+                get:
+                    summary: Card transactions
+                    description: '**[GET]:** /api/v1/transactions/card?sort=cardNumber&order=asc'
+                    operationId: card-transactions
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - createdAt
+                                - cardNumber
+                                - fuelName
+                                - volume
+                                - amount
+                                - price
+                                - networkStation
+                                - status
+                            default: 'createdAt'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                        -   name: dateFrom
+                            in: query
+                            description: 'по даті - початок періоду (2019-12-23)'
+                            type: string
+                            format: 'Y-m-d'
+                        -   name: dateTo
+                            in: query
+                            description: 'по даті - кінець періоду (2019-12-23)'
+                            type: string
+                            format: 'Y-m-d'
+                        -   name: cardNumber
+                            in: query
+                            description: 'по номеру картки'
+                            type: string
+                        -   name: regions[]
+                            in: query
+                            description: 'по регіону (мультиселект). Array of codes from "/api/v1/transactions/regions"'
+                            type: string
+                        -   name: supplyTypes[]
+                            in: query
+                            description: 'по групі ТМЦ (пальне/товари/послуги). Array'
+                            type: string
+                            enum:
+                                - fuel
+                                - goods
+                                - service
+                        -   name: supplies[]
+                            in: query
+                            description: 'по ТМЦ (мультиселект). Array of codes from "/api/v1/transactions/supplies"'
+                            type: string
+                        -   name: networkStations[]
+                            in: query
+                            description: 'по АЗС (мультиселект). Array of codes from "/api/v1/transactions/network-stations"'
+                            type: string
+                        -   name: status
+                            in: query
+                            description: 'по статусу (списання/повернення/поповнення)'
+                            type: string
+                            enum:
+                                - write-off
+                                - return
+                                - replenishment
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                            accountBalance:
+                                                type: object
+                                                description: Account balance
+                                                properties:
+                                                    value:
+                                                        type: int
+                                                        description: Client balance amount (* 100)
+                                                        example: 156646
+                                                    sign:
+                                                        type: string
+                                                        description: Client balance sign ("-" or "+')
+                                                        example: "+"
+                                            filters:
+                                                type: object
+                                                description: 'Selected filters data'
+                                                properties:
+                                                    supplies:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected supplies'
+                                                            $ref: '#/definitions/Supply'
+                                                    regions:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected regions'
+                                                            $ref: '#/definitions/Region'
+                                                    networkStations:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected network stations'
+                                                            $ref: '#/definitions/NetworkStation'
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/CardTransaction'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/partners/transactions/card:
+                get:
+                    summary: Card transactions
+                    description: '**[GET]:** /api/v1/partners/transactions/card?sort=cardNumber&order=asc'
+                    operationId: partners-card-transactions
+                    security:
+                        - Bearer: []
+                    parameters:
+                        - name: page
+                          in: query
+                          description: Page number
+                          type: string
+                          format: number
+                        - name: sort
+                          in: query
+                          description: Field for sort
+                          type: string
+                          enum:
+                              - createdAt
+                              - cardNumber
+                              - fuelName
+                              - clientPrice
+                              - clientSum
+                              - volume
+                              - amount
+                              - price
+                              - networkStation
+                              - status
+                          default: 'createdAt'
+                        - name: order
+                          in: query
+                          description: Order by field
+                          type: string
+                          enum:
+                              - asc
+                              - desc
+                          default: 'desc'
+                        - name: dateFrom
+                          in: query
+                          description: 'по даті - початок періоду (2019-12-23)'
+                          type: string
+                          format: 'Y-m-d'
+                        - name: dateTo
+                          in: query
+                          description: 'по даті - кінець періоду (2019-12-23)'
+                          type: string
+                          format: 'Y-m-d'
+                        - name: cardNumber
+                          in: query
+                          description: 'по номеру картки'
+                          type: string
+                        - name: regions[]
+                          in: query
+                          description: 'по регіону (мультиселект). Array of codes from "/api/v1/transactions/regions"'
+                          type: string
+                        - name: supplyTypes[]
+                          in: query
+                          description: 'по групі ТМЦ (пальне/товари/послуги). Array'
+                          type: string
+                          enum:
+                              - fuel
+                              - goods
+                              - service
+                        - name: supplies[]
+                          in: query
+                          description: 'по ТМЦ (мультиселект). Array of codes from "/api/v1/transactions/supplies"'
+                          type: string
+                        - name: networkStations[]
+                          in: query
+                          description: 'по АЗС (мультиселект). Array of codes from "/api/v1/transactions/network-stations"'
+                          type: string
+                        - name: status
+                          in: query
+                          description: 'по статусу (списання/повернення/поповнення)'
+                          type: string
+                          enum:
+                              - write-off
+                              - return
+                              - replenishment
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                            accountBalance:
+                                                type: object
+                                                description: Account balance
+                                                properties:
+                                                    value:
+                                                        type: int
+                                                        description: Client balance amount (* 100)
+                                                        example: 156646
+                                                    sign:
+                                                        type: string
+                                                        description: Client balance sign ("-" or "+')
+                                                        example: "+"
+                                            filters:
+                                                type: object
+                                                description: 'Selected filters data'
+                                                properties:
+                                                    supplies:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected supplies'
+                                                            $ref: '#/definitions/Supply'
+                                                    regions:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected regions'
+                                                            $ref: '#/definitions/Region'
+                                                    networkStations:
+                                                        type: array
+                                                        items:
+                                                            description: 'Selected network stations'
+                                                            $ref: '#/definitions/NetworkStation'
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/CardTransaction'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerTransactions
+            /api/v1/transactions/card/report:
+                get:
+                    summary: Export card transactions
+                    description: '**[GET]:** /api/v1/transactions/card/report?sort=cardNumber&order=asc'
+                    operationId: export-card-transactions
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - createdAt
+                                - cardNumber
+                                - fuelName
+                                - volume
+                                - amount
+                                - price
+                                - networkStation
+                                - status
+                            default: 'createdAt'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                        -   name: dateFrom
+                            in: query
+                            description: 'по даті - початок періоду (2019-12-23)'
+                            type: string
+                            format: 'Y-m-d'
+                        -   name: dateTo
+                            in: query
+                            description: 'по даті - кінець періоду (2019-12-23)'
+                            type: string
+                            format: 'Y-m-d'
+                        -   name: cardNumber
+                            in: query
+                            description: 'по номеру картки'
+                            type: string
+                        -   name: regions[]
+                            in: query
+                            description: 'по регіону (мультиселект). Array of codes from "/api/v1/transactions/regions"'
+                            type: string
+                        -   name: supplyTypes[]
+                            in: query
+                            description: 'по групі ТМЦ (пальне/товари/послуги). Array'
+                            type: string
+                            enum:
+                                - fuel
+                                - goods
+                                - service
+                        -   name: supplies[]
+                            in: query
+                            description: 'по ТМЦ (мультиселект). Array of codes from "/api/v1/transactions/supplies"'
+                            type: string
+                        -   name: networkStations[]
+                            in: query
+                            description: 'по АЗС (мультиселект). Array of codes from "/api/v1/transactions/network-stations"'
+                            type: string
+                        -   name: status
+                            in: query
+                            description: 'по статусу (списання/повернення/поповнення)'
+                            type: string
+                            enum:
+                                - write-off
+                                - return
+                                - replenishment
+                    responses:
+                        '200':
+                            description: XLS file
+                            schema:
+                                type: file
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/transactions/company/report:
+                get:
+                    summary: Export company transactions
+                    description: '**[GET]:** /api/v1/transactions/company/report'
+                    operationId: export-company-transactions
+                    security:
+                        - Bearer: []
+                    parameters:
+                        - name: page
+                          in: query
+                          description: Page number
+                          type: string
+                          format: number
+                        - name: sort
+                          in: query
+                          description: Field for sort
+                          type: string
+                          enum:
+                              - createdAt
+                              - amount
+                              - type
+                          default: 'createdAt'
+                        - name: order
+                          in: query
+                          description: Order by field
+                          type: string
+                          enum:
+                              - asc
+                              - desc
+                          default: 'desc'
+                        - name: dateFrom
+                          in: query
+                          description: 'по даті - початок періоду (2019-12-23)'
+                          type: string
+                          format: 'Y-m-d'
+                        - name: dateTo
+                          in: query
+                          description: 'по даті - кінець періоду (2019-12-23)'
+                          type: string
+                          format: 'Y-m-d'
+                        - name: type
+                          in: query
+                          description: 'по типу (списання по карткам/поповнення/нарахування дисконту)'
+                          type: string
+                          enum:
+                              - write-off
+                              - refill
+                              - discount
+                    responses:
+                        '200':
+                            description: XLS file
+                            schema:
+                                type: file
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/transactions/regions:
+                get:
+                    summary: Regions list
+                    description: '**[GET]:** /api/v1/transactions/regions'
+                    operationId: card-transactions-regions
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/Region'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/transactions/network-stations:
+                get:
+                    summary: Azs list
+                    description: '**[GET]:** /api/v1/transactions/network-stations'
+                    operationId: card-transactions-network-stations
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: q
+                            in: query
+                            description: 'Search text'
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/NetworkStation'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/transactions/supplies:
+                get:
+                    summary: Supplies list
+                    description: '**[GET]:** /api/v1/transactions/supplies'
+                    operationId: card-transactions-supplies
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: type[]
+                            in: query
+                            type: string
+                            enum:
+                                - fuel
+                                - goods
+                                - service
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/Supply'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Transactions
+            /api/v1/documents:
+                get:
+                    summary: Client documents
+                    description: '**[GET]:** /api/v1/documents'
+                    operationId: client-documents
+                    security:
+                        -   Bearer: ['admin', 'accountant']
+                    parameters:
+                        -   name: page
+                            in: query
+                            description: Page number
+                            type: string
+                            format: number
+                        -   name: sort
+                            in: query
+                            description: Field for sort
+                            type: string
+                            enum:
+                                - createdAt
+                            default: 'createdAt'
+                        -   name: order
+                            in: query
+                            description: Order by field
+                            type: string
+                            enum:
+                                - asc
+                                - desc
+                            default: 'desc'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/Document'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Documents
+            /api/v1/partners/documents:
+                get:
+                    summary: Partners documents
+                    description: '**[GET]:** /api/v1/partners'
+                    operationId: partner-documents
+                    security:
+                        - Bearer: ['partner']
+                    parameters:
+                        - name: page
+                          in: query
+                          description: Page number
+                          type: string
+                          format: number
+                        - name: sort
+                          in: query
+                          description: Field for sort
+                          type: string
+                          enum:
+                              - createdAt
+                          default: 'createdAt'
+                        - name: order
+                          in: query
+                          description: Order by field
+                          type: string
+                          enum:
+                              - asc
+                              - desc
+                          default: 'desc'
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    meta:
+                                        type: object
+                                        description: pagination metadata
+                                        properties:
+                                            pagination:
+                                                type: object
+                                                $ref: '#/definitions/Pagination'
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/definitions/Document'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerDocuments
+            /api/v1/sota:
+                get:
+                    summary: Get client token
+                    description: '**[GET]:** /api/v1/sota'
+                    operationId: integration-sota
+                    security:
+                        - Bearer: ['admin', 'manager']
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    data:
+                                        type: string
+                                        items:
+                                            $ref: '#/definitions/Token'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - SotaIntegration
+            /api/v1/partners/sota:
+                get:
+                    summary: Get partner token
+                    description: '**[GET]:** /api/v1/partners/sota'
+                    operationId: integration-sota
+                    security:
+                        - Bearer: ['partner']
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    data:
+                                        type: string
+                                        items:
+                                            $ref: '#/definitions/Token'
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnersSotaIntegration
+            /api/v1/documents/download/{id}:
+                get:
+                    summary: Download document
+                    description: '**[GET]:** /api/v1/documents/download/{id}'
+                    operationId: download-documents
+                    security:
+                        -   Bearer: ['admin', 'accountant']
+                    parameters:
+                        -   name: id
+                            in: path
+                            description: Document unique id
+                            type: string
+                            required: true
+                    responses:
+                        200:
+                            description: XLS file
+                            schema:
+                                type: file
+                        401:
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Documents
+            /api/v1/partners/documents/download/{id}:
+                get:
+                    summary: Download partner document
+                    description: '**[GET]:** /api/v1/partners/documents/download/{id}'
+                    operationId: partner-download-documents
+                    security:
+                        - Bearer: ['partner']
+                    parameters:
+                        - name: id
+                          in: path
+                          description: Document unique id
+                          type: string
+                          required: true
+                    responses:
+                        200:
+                            description: XLS file
+                            schema:
+                                type: file
+                        401:
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerDocuments
+            /api/v1/documents/act-checking:
+                post:
+                    summary: Act checking
+                    description: '**[POST]:** /api/v1/documents/act-checking'
+                    operationId: documents-act-checking
+                    security:
+                        -   Bearer: ['admin', 'accountant']
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            schema:
+                                type: object
+                                required:
+                                    - dateFrom
+                                    - dateTo
+                                properties:
+                                    dateFrom:
+                                        description: 'початок періоду (2019-12)'
+                                        type: string
+                                        format: 'Y-m'
+                                    dateTo:
+                                        description: 'кінець періоду (2019-12)'
+                                        type: string
+                                        format: 'Y-m'
+                    responses:
+                        200:
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DocumentDownload'
+                        401:
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Documents
+            /api/v1/partners/documents/act-checking:
+                post:
+                    summary: Act checking
+                    description: '**[POST]:** /api/v1/partners/documents/act-checking'
+                    operationId: partners-documents-act-checking
+                    security:
+                        - Bearer: ['partner']
+                    parameters:
+                        - name: JSON Payload
+                          in: body
+                          schema:
+                              type: object
+                              required:
+                                  - dateFrom
+                                  - dateTo
+                              properties:
+                                  dateFrom:
+                                      description: 'початок періоду (2019-12)'
+                                      type: string
+                                      format: 'Y-m'
+                                  dateTo:
+                                      description: 'кінець періоду (2019-12)'
+                                      type: string
+                                      format: 'Y-m'
+                    responses:
+                        200:
+                            description: successful operation
+                            schema:
+                                $ref: '#/definitions/DocumentDownload'
+                        401:
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - PartnerDocuments
+            /api/v1/discounts:
+                get:
+                    summary: Client discounts
+                    description: '**[GET]:** /api/v1/discounts'
+                    operationId: client-discounts
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 100
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Discount ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        sum:
+                                            description: Discount summ (* 100)
+                                            example: 1476250
+                                            type: int
+                                        date:
+                                            type: dateTime
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                    tags:
+                        - Discount
+            /api/v1/feedback:
+                post:
+                    summary: Feedback
+                    description: '**[POST]:** /api/v1/feedback'
+                    operationId: feedback
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: JSON Payload
+                            in: body
+                            description: Feedback form data
+                            schema:
+                                type: object
+                                required:
+                                    - email
+                                    - name
+                                    - category
+                                    - comment
+                                properties:
+                                    email:
+                                        description: User email address
+                                        type: string
+                                        format: email
+                                        example: john.smith@example.com
+                                    name:
+                                        description: User name
+                                        type: string
+                                        example: John Dou
+                                        maxLength: 30
+                                    category:
+                                        description: Feedback category from form select
+                                        type: string
+                                        enum:
+                                            - general-question
+                                            - financial-issue
+                                            - new-card-order
+                                            - complaints
+                                    comment:
+                                        type: string
+                                        description: User comment text
+                                        maxLength: 500
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        description: Success status
+                                        type: boolean
+                                        example: true
+                        '401':
+                            description: unauthorized
+                            schema:
+                                $ref: '#/definitions/Unauthorized'
+                        '400':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+            /api/v1/sota-clients/client:
+                get:
+                    summary: Get client info for sota api
+                    description: '**[GET]:** /api/v1/sota-clients/client?token=12311313'
+                    operationId: sota-client-info
+                    parameters:
+                        - name: token
+                          in: query
+                          type: string
+                          format: number
+                          default: 0
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    data:
+                                        type: string
+                                        items:
+                                            $ref: '#/definitions/ClientInfo'
+                        '401':
+                            description: bad request
+                            schema:
+                                $ref: '#/definitions/ValidationErrors'
+                    tags:
+                        - SotaIntegration
+            /api/v1/last-system-update:
+                get:
+                    summary: Get last system update time
+                    description: '**[GET]:** /api/v1/last-system-update'
+                    operationId: last-system-update
+                    security:
+                        -   Bearer: []
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: object
+                                properties:
+                                    dateTime:
+                                        type: string
+                                        format: date-time
+                    tags:
+                        - System info
+            /api/v1/news:
+                get:
+                    summary: News list
+                    description: '**[GET]:** https://shell-market.test.aurocraft.com/api/v1/news?search=text&limit=10&offset=0'
+                    operationId: news-list
+                    security:
+                        -   Bearer: []
+                    parameters:
+                        -   name: limit
+                            in: query
+                            type: string
+                            format: number
+                            default: 20
+                        -   name: offset
+                            in: query
+                            type: string
+                            format: number
+                            default: 0
+                        -   name: search
+                            in: query
+                            description: Parameter for search by title
+                            type: string
+                    responses:
+                        '200':
+                            description: successful operation
+                            schema:
+                                type: array
+                                items:
+                                    properties:
+                                        id:
+                                            description: Service ID
+                                            allOf:
+                                                -   $ref: '#/definitions/Id'
+                                        title:
+                                            description: Article title
+                                            example: "Article title"
+                                            type: string
+                                        type:
+                                            example: "article"
+                                            type: enum
+                                            enum:
+                                                - artile
+                                                - archive
+                                        preview:
+                                            example: "https://shell-market.test.aurocraft.com/image/83/5d/835dd889adb07323fdc83af4a89f6b124df0cd65_1569853010.jpeg?crop=1920,1080,0,202&w=360&s=cccaa70785e6fa43d5274a80b89ec042"
+                                            type: string
+                                            description: "Path to preview image"
+                                        link:
+                                            example: "https://shell-market.test.aurocraft.com/news/maiesh-neobkhidnist-zariadzhati-avtomobil"
+                                            type: string
+                                            description: "Link to read article"
+                    tags:
+                        - News
+        definitions:
+            Id:
+                readOnly: true
+                type: string
+                example: '550e8400-e29b-41d4-a716-446655440000'
+            UserRole:
+                readOnly: true
+                description: User role
+                type: enum
+                enum:
+                    - admin
+                    - manager
+                    - accountant
+            Token:
+                readOnly: true
+                type: string
+                example: '550e8400-e29b-41d4-a716-446655440000'
+            Roles:
+                readOnly: true
+                type: enum
+                enum:
+                    - admin
+                    - manager
+                    - accountant
+            Pagination:
+                readOnly: true
+                type: object
+                required:
+                    - totalCount
+                    - currentPage
+                properties:
+                    totalCount:
+                        description: total number of pages
+                        example: 12
+                        type: number
+                    currentPage:
+                        description: current page number
+                        example: 1
+                        type: number
+            Error:
+                type: object
+                required:
+                    - code
+                    - message
+                properties:
+                    code:
+                        type: string
+                    message:
+                        type: string
+            ValidationErrors:
+                type: object
+                properties:
+                    errors:
+                        type: object
+                        properties:
+                            propertyName:
+                                example: [This value should not be blank.]
+                                type: array
+            Unauthorized:
+                type: object
+                required:
+                    - code
+                    - message
+                properties:
+                    code:
+                        type: integer
+                        description: Exception code
+                        example: 401
+                    message:
+                        type: string
+                        description: Exception message
+                        example: 'JWT Token not found'
+            Company:
+                type: object
+                properties:
+                    name:
+                        description: The name given to a pet
+                        example: Auchan Ukraine
+                        type: string
+                    legalName:
+                        description: Legal company name
+                        example: ТОВ "Auchan Ukraine"
+                        type: string
+                    accountingEmail:
+                        description: The name given to a pet
+                        example: example@mail.com
+                        type: string
+                        format: email
+                    accountingPhone:
+                        example: '+380963332211'
+                        type: string
+                        format: phone
+                    directorEmail:
+                        description: The name given to a pet
+                        example: example@mail.com
+                        type: string
+                        format: email
+                    postalAddress:
+                        example: 01001 м. Київ
+                        type: string
+            Me:
+                type: object
+                properties:
+                    username:
+                        description: Login
+                        example: john
+                        type: string
+                    email:
+                        description: Unique user email
+                        example: john@mail.com
+                        type: string
+                        format: email
+                    firstName:
+                        example: John
+                        type: string
+                    middleName:
+                        example: Ben
+                        type: string
+                    lastName:
+                        example: Dou
+                        type: string
+                    phone:
+                        example: '+380963332211'
+                        type: string
+                        format: phone
+                    role:
+                        allOf:
+                            -   $ref: '#/definitions/UserRole'
+                    status:
+                        type: string
+                        enum:
+                            - active
+                            - blocked
+                    createdAt:
+                        type: string
+                        format: date-time
+                    manager:
+                        type: object
+                        properties:
+                            name:
+                                description: Manager full name
+                                example: Григорій Безкоровайний
+                                type: string
+                            avatar:
+                                type: string
+                                format: link
+                                description: Link to file
+                                example: '/image/9e/31/9e314fe3ac95fc55f9d8bb8881cbf1d30b852db6_1563173111.jpeg?crop=189,89,211,68&s=13790bc7b255e48e51a9cfd20bed5c47'
+                            phone:
+                                type: string
+                                format: phone
+                                example: '+380963332211'
+                            email:
+                                type: string
+                                format: email
+                                example: grisha@mail.com
+                    company:
+                        type: object
+                        properties:
+                            name:
+                                example: Auchan Ukraine
+                                type: string
+                            contractNumber:
+                                example: "0001234"
+                                type: string
+                            contractDate:
+                                example: "2012-11-19"
+                                type: string
+                                format: date
+            Employee:
+                type: object
+                properties:
+                    id:
+                        description: Employee ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    username:
+                        description: User supplied username
+                        type: string
+                        example: John78
+                    email:
+                        description: User email address
+                        type: string
+                        format: email
+                        example: john.smith@example.com
+                    firstName:
+                        description: User first name
+                        type: string
+                        example: John
+                    lastName:
+                        description: User last name
+                        type: string
+                        example: Smith
+                    middleName:
+                        description: User middle name
+                        type: string
+                        example: Smith
+                    role:
+                        description: User role
+                        type: enum
+                        enum:
+                            - admin
+                            - manager
+                            - accountant
+                    phone:
+                        description: User phone number
+                        type: string
+                        example: '+380963332211'
+                        nullable: true
+                    status:
+                        type: string
+                        enum:
+                            - active
+                            - blocked
+                    createdAt:
+                        type: string
+                        format: date-time
+                    lastLoggedAt:
+                        type: string
+                        format: date-time
+            Driver:
+                type: object
+                properties:
+                    id:
+                        description: Driver ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    email:
+                        description: Driver email
+                        example: john@mail.com
+                        type: string
+                        format: email
+                    firstName:
+                        example: John
+                        type: string
+                    middleName:
+                        example: Ben
+                        type: string
+                    lastName:
+                        example: Dou
+                        type: string
+                    phones:
+                        type: array
+                        items:
+                            $ref: '#/definitions/PhoneNumberItem'
+                    carsNumbers:
+                        type: array
+                        items:
+                            $ref: '#/definitions/CarNumberItem'
+                    status:
+                        type: string
+                        enum:
+                            - active
+                            - blocked
+                    note:
+                        type: string
+            DriverShort:
+                type: object
+                properties:
+                    id:
+                        description: Driver ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    firstName:
+                        example: John
+                        type: string
+                    middleName:
+                        example: Ben
+                        type: string
+                    lastName:
+                        example: Dou
+                        type: string
+                    carsNumbers:
+                        type: array
+                        items:
+                            $ref: '#/definitions/CarNumberItem'
+            CarNumberItem:
+                type: object
+                properties:
+                    number:
+                        description: Car number
+                        example: AI000000
+                        type: string
+            PhoneNumberItem:
+                type: object
+                properties:
+                    number:
+                        description: Phone number
+                        example: '+380976543311'
+                        type: string
+            FuelCardList:
+                type: object
+                properties:
+                    id:
+                        description: FuelCard ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    cardNumber:
+                        example: '2101033009'
+                        type: string
+                    onModeration:
+                        type: boolean
+                        default: false
+                        example: true
+                    status:
+                        type: string
+                        enum:
+                            - active
+                            - blocked
+                    driver:
+                        type: object
+                        x-nullable: true
+                        description: Driver object or null
+                        allOf:
+                            -   $ref: '#/definitions/DriverShort'
+            FuelCardRead:
+                type: object
+                properties:
+                    id:
+                        allOf:
+                              -   $ref: '#/definitions/Id'
+                    cardNumber:
+                        description: Card number
+                        example: '2101031263'
+                        type: string
+                    status:
+                        type: string
+                        enum:
+                            - active
+                            - blocked
+                    onModeration:
+                        type: boolean
+                        default: false
+                        example: true
+                    driver:
+                        type: object
+                        x-nullable: true
+                        description: Driver object or null
+                        allOf:
+                            -   $ref: '#/definitions/DriverShort'
+                    totalLimits:
+                        type: object
+                        properties:
+                            day:
+                                type: integer
+                                description: "Ліміт ТМЦ на добу в грн. * 100"
+                                example: 10000000
+                            week:
+                                type: integer
+                                description: "Ліміт ТМЦ в тиждень в грн. * 100"
+                                example: 70000000
+                            month:
+                                type: integer
+                                description: "Ліміт ТМЦ на місяць в грн. *100"
+                                example: 300000000
+                    startUseTime:
+                        type: string
+                        format: "hh:ii"
+                        description: "Час початку обслуг"
+                        example: "00:00"
+                    endUseTime:
+                        type: string
+                        format: "hh:ii"
+                        description: "Час закінчено обслуг"
+                        example: "23:59"
+                    serviceDays:
+                        type: array
+                        items:
+                            type: string
+                            enum:
+                                - "mon"
+                                - "tue"
+                                - "wed"
+                                - "thu"
+                                - "fri"
+                                - "sat"
+                                - "sun"
+                    fuelLimits:
+                        type: array
+                        items:
+                            $ref: '#/definitions/FuelLimit'
+                    goodsLimits:
+                        type: array
+                        items:
+                            $ref: '#/definitions/FuelLimit'
+                    servicesLimits:
+                        type: array
+                        items:
+                            $ref: '#/definitions/FuelLimit'
+            CompanyTransaction:
+                type: object
+                required:
+                    - number
+                    - amount
+                    - type
+                properties:
+                    id:
+                        description: Transaction ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    amount:
+                        example: 12423
+                        description: 'Сума з ПДВ в грн. *100'
+                    type:
+                        type: string
+                        enum:
+                            - refill
+                            - discount
+                            - write-off-cards
+                    createdAt:
+                        type: string
+                        format: date-time
+            CardTransaction:
+                type: object
+                properties:
+                    id:
+                        description: Transaction ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    cardNumber:
+                        description: Transaction number
+                        example: '2101031263'
+                        type: string
+                    fuelName:
+                        description: Fuel name
+                        example: 'ДП'
+                        type: string
+                    volume:
+                        description: 'Кількість ТМЦ в л або шт. *100'
+                        example: 9990
+                        type: string
+                    networkStation:
+                        description: Network station name
+                        example: 'АЗС №R1106 Запорізька обл., м.Василівка, віул. Леніна, 2А'
+                        type: string
+                    amount:
+                        example: 12423
+                        description: 'Сума з ПДВ в грн. *100'
+                    price:
+                        example: 2423
+                        description: 'Stella price * 100'
+                    status:
+                        type: string
+                        enum:
+                            - write-off
+                            - return
+                            - replenishment
+                    createdAt:
+                        type: string
+                        format: date-time
+            Region:
+                type: object
+                properties:
+                    code:
+                        description: Region code
+                        example: "КВЦ0000001"
+                        type: string
+                    name:
+                        description: Region name
+                        example: "Чернігівська обл."
+                        type: string
+            Supply:
+                type: object
+                properties:
+                    code:
+                        description: Supply code
+                        example: "КВЦ0000006"
+                        type: string
+                    name:
+                        description: Supply name
+                        example: "Бензин А-95"
+                        type: string
+            NetworkStation:
+                type: object
+                properties:
+                    code:
+                        description: Azs code
+                        example: "00-0000282"
+                        type: string
+                    name:
+                        description: Azs name
+                        example: "АЗС Socar № 102"
+                        type: string
+            Document:
+                type: object
+                required:
+                    - number
+                    - amount
+                    - file
+                    - type
+                    - status
+                    - createdAt
+                properties:
+                    id:
+                        description: Document unique ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    number:
+                        description: Document number
+                        example: 'СФ-WWW2101031'
+                        type: string
+                    file:
+                        type: object
+                        properties:
+                            name:
+                                description: File name
+                                example: '23456789876543.pdf'
+                            link:
+                                description: Download file link
+                                example: 'https://localhost/d/23456789876543.pdf'
+                    amount:
+                        type: integet
+                        example: 12423
+                        description: '*100'
+                    type:
+                        type: string
+                        enum:
+                            - invoice
+                            - act-checking
+                            - appendix-petroleum-products
+                            - card-invoice
+                            - acceptance-transfer-act
+                    status:
+                        type: string
+                        enum:
+                            - formed-automatically
+                            - formed-by-request
+                    createdAt:
+                        type: string
+                        format: date-time
+            DocumentDownload:
+                type: object
+                required:
+                    - name
+                    - link
+                properties:
+                    name:
+                        description: File name
+                        example: '23456789876543.pdf'
+                    link:
+                        type: string
+                        description: 'Url to file'
+                        example: "http://localhost:8088/documents/download/160d19ca-1a29-4aa4-a6a6-a3e27d74783c"
+            ClientInfo:
+                type: object
+                properties:
+                   id:
+                        description: unique ID
+                        allOf:
+                            - $ref: '#/definitions/Id'
+                   name:
+                       description: 'Client name'
+                       type: string
+                   email:
+                       description: 'Client email'
+                       type: string
+                   phone:
+                       description: 'Client phone'
+                   orgs:
+                       type: object
+                       properties:
+                           name:
+                               description: 'Company name'
+                               type: string
+                           edrpou:
+                               description: 'Company edrpou'
+                               type: string
+
+            Search:
+                type: object
+                properties:
+                    id:
+                        description: unique ID
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    name:
+                        description: 'Product name'
+                        example: 'Нейтралізатор газів Shell AdBLUE 20л'
+                        type: string
+            FuelLimit:
+                type: object
+                properties:
+                    id:
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    name:
+                        description: 'Fuel|Product|Service name'
+                        example: "Нейтралізатор газів Shell AdBLUE 20л"
+                        type: string
+                    dayLimit:
+                        description: "Ліміт ТМЦ типу Х в добу в л або шт. *100"
+                        example: 1000000
+                        type: integer
+                    weekLimit:
+                        description: "Ліміт ТМЦ типу Х в місяць в л або шт. *100"
+                        example: 7000000
+                        type: integer
+                    monthLimit:
+                        description: "Ліміт ТМЦ типу Х в тиждень в л або шт. *100"
+                        example: 30000000
+                        type: integer
+            LimitItem:
+                type: object
+                properties:
+                    id:
+                        allOf:
+                            -   $ref: '#/definitions/Id'
+                    name:
+                        type: string
+                        description: "Product name"
+                        example: "Бензин VP А-95"
+                    day:
+                        type: object
+                        properties:
+                            total:
+                                type: initeger
+                                description: "Total limit"
+                                example: 1000000
+                            left:
+                                type: initeger
+                                description: "How much is left"
+                                example: 200000
+                    week:
+                        type: object
+                        properties:
+                            total:
+                                type: initeger
+                                description: "Total limit"
+                                example: 1000000
+                            left:
+                                type: initeger
+                                description: "How much is left"
+                                example: 200000
+                    month:
+                        type: object
+                        properties:
+                            total:
+                                type: initeger
+                                description: "Total limit"
+                                example: 1000000
+                            left:
+                                type: initeger
+                                description: "How much is left"
+                                example: 200000
+        parameters:
+            page:
+                parameter: page
+                name: page
+                description: "Page number"
+                type: integer
+                in: query
+                required: false
+                default: 1

@@ -1,0 +1,40 @@
+{% extends 'backend/crud/content/read.html.twig' %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{{ view.client.fullName }}</h3>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="row p-b-20">
+        <div class="col-sm-12">
+            <a href="{{ path('admin_clients_card_list', { clientId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.view_cards'|trans }}">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                {{ 'btn.view_cards'|trans }}
+            </a>
+            <a href="{{ path('admin_transaction_card_list', { clientId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.transactions'|trans }}">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                {{ 'btn.transactions'|trans }}
+            </a>
+            <a href="{{ path('admin_clients_user_list', { client1cId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.clients_user'|trans }}">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                {{ 'btn.clients_user'|trans }}
+            </a>
+            <a href="{{ path('admin_clients_client_profile', { id: view.client.id }) }}"
+               class="btn btn btn-info" title="{{ 'btn.profile'|trans }}">
+                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                {{ 'btn.profile'|trans }}
+            </a>
+        </div>
+    </div>
+
+    {{ view_render('form', view) }}
+
+{% endblock %}

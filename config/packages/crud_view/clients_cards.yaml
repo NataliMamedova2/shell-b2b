@@ -1,0 +1,77 @@
+## clients cards
+crud:
+    view:
+        contents:
+            admin_clients_card_list:
+                template: '/backend/clients/card/list.html.twig'
+                data:
+                    static:
+                        title: 'header.cards_list'
+                        icon: 'credit-card'
+                    global:
+                        'result': 'result'
+                        'result:paginator': 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Clients\View\Form\Card\FilterFormType
+                        template: '/backend/clients/card/list_filter.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_card_list'
+                    table:
+                        template: '/backend/clients/card/table.html.twig'
+                        data:
+                            parent:
+                                'result:paginator': 'paginator'
+                                'result:clients': 'clients'
+                                'result:limitsCardNumbersOnModeration': 'limitsCardNumbersOnModeration'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+                        data:
+                            global:
+                                'result:paginator': 'paginator'
+
+            admin_clients_card_limits_list:
+                template: '/backend/clients/card/limits_list.html.twig'
+                data:
+                    static:
+                        title: 'header.cards_limits_list'
+                        icon: 'credit-card'
+                    global:
+                        'result:card': 'card'
+                        'result:limits': 'limits'
+                        'result:moneyLimits': 'moneyLimits'
+                        'result:haveFuelLimits': 'haveFuelLimits'
+                        'result:haveGoodsLimits': 'haveGoodsLimits'
+                        'result:haveServicesLimits': 'haveServicesLimits'
+                        'result:haveLimitsOnModeration': 'haveLimitsOnModeration'
+
+            admin_clients_card_read:
+                template: '/backend/clients/card/read.html.twig'
+                data:
+                    static:
+                        title: 'header.cards_update'
+                        icon: 'credit-card'
+                    global:
+                        result:card: 'card'
+                        result:haveLimitsOnModeration: 'haveLimitsOnModeration'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Clients\View\Form\Card\UpdateFormType
+                        template: '/backend/clients/card/form.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_card_update'
+                            parent:
+                                card: 'card'
+                                haveLimitsOnModeration: 'haveLimitsOnModeration'
+            admin_clients_card_update:
+                extend: 'admin_clients_card_read'
+            admin_clients_card_block:
+                flash_message:
+                    type: 'success'
+                    message: 'message.card_blocked.success'

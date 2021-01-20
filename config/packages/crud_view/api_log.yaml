@@ -1,0 +1,28 @@
+## api_log
+crud:
+    view:
+        contents:
+            admin_api_log_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.api_log_list'
+                        icon: 'bug'
+                    global:
+                        result: 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Api\View\Form\LogFilterFormType
+                        template: '/backend/api/log/list_filter.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_api_log_list'
+                    table:
+                        template: '/backend/api/log/table.html.twig'
+                        data:
+                            global:
+                                result: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'

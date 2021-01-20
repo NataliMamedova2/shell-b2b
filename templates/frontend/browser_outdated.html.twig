@@ -1,0 +1,46 @@
+{% extends 'frontend/_layout/outdated.html.twig' %}
+{% trans_default_domain 'frontend' %}
+
+{% block title %}{% trans %}Sign Up{% endtrans %}{% endblock %}
+
+{% set browsers = [
+    { icon: "/media/firefox.png", title: "Firefox", url: "https://www.mozilla.org/uk/firefox/new/" },
+    { icon: "/media/chrome.png", title: "Chrome", url: "https://www.google.com/intl/uk/chrome/" },
+    { icon: "/media/opera.png", title: "Opera", url: "https://www.opera.com/uk/download" }
+] %}
+
+{% block body %}
+    <div class="m-old">
+        <div class="m-old__content">
+            <div class="m-old__message">
+                <div class="m-old__message-wrapper">
+                    <img src="{{ asset('/media/old-logo.png') }}" class="m-old__logo" alt="" width="100" height="100"/>
+                    <h1 class="m-old__title c-text c-text--h4-medium a-color-dark">
+                        {% trans %}Sorry, your browser needs updating{% endtrans %}
+                    </h1>
+                    <p class="m-old__desk c-text c-text--paragraph a-color-dark">
+                        {% trans %}For the quality of service you need an update.{% endtrans %}
+                    </p>
+                </div>
+            </div>
+            <div class="m-old__list">
+                <p class="m-old__list-title c-text c-text--paragraph a-color-dark">
+                    {% trans %}Select a browser:{% endtrans %}
+                </p>
+                <ul class="c-browsers">
+                    {% for browser in browsers %}
+                        <li class="c-browsers__item">
+                            <a href="{{ browser.url }}" class="c-browsers__link" target="_blank" rel="nofollow">
+                                <img class="c-browsers__logo" src="{{ browser.icon }}" alt="">
+                                <p class="c-text c-text--lead a-color-dark">{{ browser.title }}</p>
+                                <div class="c-button c-button--ghost">
+                                    {% trans %}Download{% endtrans %}
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

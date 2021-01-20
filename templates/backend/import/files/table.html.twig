@@ -1,0 +1,130 @@
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.file_name'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.success_count'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.errors_count'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.elapsed'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.status'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist" class="date">
+            {{ 'label.created_at'|trans }}
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}" {% if entity.result.errorCount > 0 %}style="color: #a94442"{% endif %}>
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>
+                {{ entity.fullName }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.result.successCount }}</td>
+            <td data-tablesaw-no-labels>{{ entity.result.errorCount }}</td>
+            <td data-tablesaw-no-labels>
+                {% if entity.result.elapsed is not empty %}
+                    {{ entity.result.elapsed|date("%I:%S") }}
+                {% else %}
+                    00:00
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.status, {}, {
+                    'started': 'default',
+                    'copied': 'purple',
+                    'in-progress': 'info',
+                    'done': 'success',
+                    'error': 'warning',
+                    'failed': 'error'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.createdAt|localizeddate('medium', 'medium') }}</td>
+            <td>
+                <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#{{ entity.id }}" aria-expanded="false">
+                    Show
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" style="margin: 0; max-width: 100px; overflow: hidden; padding: 0; text-overflow: ellipsis; white-space: normal;">
+                <div class="collapse" id="{{ entity.id }}">
+                    <div class="p-10">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>
+                                    <label>Total Processed: <code>{{ entity.result.totalProcessedCount }}</code></label>
+                                </p>
+                                <p>
+                                    <label>Memory Usage: <code>{{ entity.result.memoryUsage / 1024 / 1024 }} MiB</code></label>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                {% if entity.result.startTime is not empty %}
+                                    <p>
+                                        <label>Start Time: <code>{{ entity.result.startTime|localizeddate('medium', 'medium') }}</code></label>
+                                    </p>
+                                    <p>
+                                        <label>End Time: <code>{{ entity.result.endTime|localizeddate('medium', 'medium') }}</code></label>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <label>
+                                        Download file:
+                                        <a href="{{ path('storage_download_imported_file', { path: entity.destFileMetaData.path }) }}">
+                                            {{ entity.destFileMetaData.path }}
+                                        </a>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+
+                        {% if entity.result.exceptions|length > 0 %}
+                            <h2>Exceptions:</h2>
+                            <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    {% for exceptionKey, exception in entity.result.exceptions %}
+                                        <div class="panel-heading" role="tab" id="heading_{{ entity.id }}_{{ exceptionKey }}" style="text-transform: none;">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ entity.id }}_{{ exceptionKey }}" aria-expanded="false" aria-controls="collapse_{{ entity.id }}_{{ exceptionKey }}" >
+                                                    {{ exception.message }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse_{{ entity.id }}_{{ exceptionKey }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{{ entity.id }}_{{ exceptionKey }}">
+                                            <div class="panel-body">
+                                                <pre>{{ exception|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

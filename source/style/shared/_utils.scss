@@ -1,0 +1,84 @@
+@mixin button-behaviour() {
+  cursor: pointer;
+  user-select: none;
+}
+
+@mixin absolute-fill($z: 1) {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $z;
+
+  @content;
+}
+
+@mixin object-cover() {
+  object-fit: cover;
+  object-position: center;
+
+  /*min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);*/
+}
+@mixin object-contain() {
+  object-fit: contain;
+  object-position: center;
+}
+
+@mixin bg-cover() {
+  background: {
+    size: cover;
+    position: center;
+    repeat: no-repeat;
+    color: transparent;
+  }
+
+  @content;
+}
+
+@mixin bg-contain() {
+  background: {
+    size: contain;
+    position: center;
+    repeat: no-repeat;
+    color: transparent;
+  }
+
+  @content;
+}
+
+@mixin animation-performance-cross {
+  perspective: 99999px;
+  transform-style: preserve-3d;
+}
+
+@mixin improve-font-rendering {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin screen-height {
+  height: 100vh;
+  height: var(--windowHeight);
+}
+
+@mixin min-screen-height {
+  min-height: 100vh;
+  min-height: var(--windowHeight);
+}
+
+@mixin screen-height-except($v) {
+  height: calc(100vh - #{$v});
+  height: calc(var(--windowHeight) - #{$v});
+}
+
+@mixin min-screen-height-except($v) {
+  min-height: calc(100vh - #{$v});
+  min-height: calc(var(--windowHeight) - #{$v});
+}

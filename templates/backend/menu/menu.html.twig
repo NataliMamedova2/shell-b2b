@@ -1,0 +1,66 @@
+{% extends '@KnpMenu/menu.html.twig' %}
+{% block root %}
+    {%- set listAttributes = item.childrenAttributes|merge({'class': 'nav', 'data-widget': 'tree', 'id': 'side-menu'}) %}
+    {%- set request        = item.extra('request') ?: app.request %}
+    {{ block('list') -}}
+{% endblock %}
+
+{% block item %}
+    {% set options = options|merge({currentClass: "active", ancestorClass: "active"}) %}
+    {%- do item.setChildrenAttribute('class', (item.childrenAttribute('class')~' nav nav-second-level')|trim) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block linkElement %}
+    {%- set classes = ['waves-effect'] %}
+    {%- if matcher.isCurrent(item) %}
+        {%- set classes = classes|merge(['active']) %}
+    {%- endif %}
+
+    {%- do item.setLinkAttribute('class', classes|join(' ')) %}
+
+    {% if item.extra('on_top') is defined and not item.extra('on_top') %}
+        {% set icon = item.extra('icon')|default(item.level > 1 ? '<i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;' : '') %}
+    {% else %}
+        {% set icon = item.extra('icon') %}
+    {% endif %}
+
+    {% set is_link = true %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block spanElement %}
+    {%- if item.uri is empty and item.children|length == 0 %}
+        <li class="nav-small-cap">{{ block('label') }}</li>
+    {%- else %}
+        <a href="#" class="waves-effect">
+            {% set icon = item.extra('icon')|default('') %}
+            {{ icon|raw }}
+            <span class="hide-menu">
+                {{ block('label') }}
+                {%- if item.extra('keep_open') is not defined or not item.extra('keep_open') -%}
+                    <span class="fa arrow"></span>
+                {%- endif -%}
+            </span>
+        </a>
+    {%- endif %}
+{% endblock %}
+
+{% block label %}
+    {% if is_link is defined and is_link %}
+        {{ icon|default|raw }}
+    {% endif %}
+
+    <span class="hide-menu">
+        {% if options.allow_safe_labels and item.extra('safe_label', false) %}
+            {{ item.label|raw }}
+        {% else %}
+            {{ item.label }}
+        {% endif %}
+
+        {%- if item.children|length > 0 %}
+            <span class="fa arrow"></span>
+        {%- endif %}
+    </span>
+{% endblock %}

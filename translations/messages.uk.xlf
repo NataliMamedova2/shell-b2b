@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="uk" trgLang="uk">
+  <file id="messages.uk">
+    <unit id="JpTvVYe" name="menu.dashboard_label">
+      <segment>
+        <source>menu.dashboard_label</source>
+        <target>Dashboard</target>
+      </segment>
+    </unit>
+    <unit id="UfIPxPh" name="menu.user_label">
+      <segment>
+        <source>menu.user_label</source>
+        <target>Користувачі</target>
+      </segment>
+    </unit>
+    <unit id="g.1WTi0" name="menu.translations_label">
+      <segment>
+        <source>menu.translations_label</source>
+        <target>Переклади</target>
+      </segment>
+    </unit>
+    <unit id="LwYepsq" name="menu.api_label">
+      <segment>
+        <source>menu.api_label</source>
+        <target>API</target>
+      </segment>
+    </unit>
+    <unit id="iB1vVmX" name="menu.api_doc_label">
+      <segment>
+        <source>menu.api_doc_label</source>
+        <target>Documentation</target>
+      </segment>
+    </unit>
+    <unit id="1wg4d2S" name="header.api_log_list">
+      <segment>
+        <source>header.api_log_list</source>
+        <target>Log</target>
+      </segment>
+    </unit>
+    <unit id="O59lP5d" name="label.role">
+      <segment>
+        <source>label.role</source>
+        <target>Роль</target>
+      </segment>
+    </unit>
+    <unit id="hzhzbqw" name="label.status">
+      <segment>
+        <source>label.status</source>
+        <target>Статус</target>
+      </segment>
+    </unit>
+    <unit id="6_gBi2x" name="label.key">
+      <segment>
+        <source>label.key</source>
+        <target>Ключ</target>
+      </segment>
+    </unit>
+    <unit id="zB7DGiM" name="label.translation">
+      <segment>
+        <source>label.translation</source>
+        <target>Переклад</target>
+      </segment>
+    </unit>
+    <unit id="Wp0eJEy" name="label.frontend_homepage.link">
+      <segment>
+        <source>label.frontend_homepage.link</source>
+        <target>Перейти на сайт</target>
+      </segment>
+    </unit>
+    <unit id="ejSYtDx" name="logout.link">
+      <segment>
+        <source>logout.link</source>
+        <target>Вихід</target>
+      </segment>
+    </unit>
+    <unit id="D2N6_cP" name="label.email">
+      <segment>
+        <source>label.email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="9lbD3Vs" name="label.full_name">
+      <segment>
+        <source>label.full_name</source>
+        <target>Ім'я</target>
+      </segment>
+    </unit>
+    <unit id="v5SWCuI" name="label.created_at">
+      <segment>
+        <source>label.created_at</source>
+        <target>Дата створення</target>
+      </segment>
+    </unit>
+    <unit id="tn0mjNL" name="label.last_logged_at">
+      <segment>
+        <source>label.last_logged_at</source>
+        <target>Останній вхід</target>
+      </segment>
+    </unit>
+    <unit id="DXNFV9R" name="label.edit">
+      <segment>
+        <source>label.edit</source>
+        <target>Редагувати</target>
+      </segment>
+    </unit>
+    <unit id="BiPY0TX" name="label.delete">
+      <segment>
+        <source>label.delete</source>
+        <target>Видалити</target>
+      </segment>
+    </unit>
+    <unit id="DdjpYAg" name="shown %currentPage% to %totalOnPage% of %totalCount% entries">
+      <segment>
+        <source>shown %currentPage% to %totalOnPage% of %totalCount% entries</source>
+        <target>Shown %currentPage% to %totalOnPage% of %totalCount% entries</target>
+      </segment>
+    </unit>
+    <unit id="qP8TKMm" name="modal_header.delete_entity">
+      <segment>
+        <source>modal_header.delete_entity</source>
+        <target>Видалення запису</target>
+      </segment>
+    </unit>
+    <unit id="iOWo5Gx" name="modal_delete.are_you_sure_text?">
+      <segment>
+        <source>modal_delete.are_you_sure_text?</source>
+        <target>Ви впевнені що хочете видалити запис?</target>
+      </segment>
+    </unit>
+    <unit id="Jd_qITE" name="btn.close">
+      <segment>
+        <source>btn.close</source>
+        <target>Закрити</target>
+      </segment>
+    </unit>
+    <unit id="Kx69suG" name="btn.delete">
+      <segment>
+        <source>btn.delete</source>
+        <target>Видалити</target>
+      </segment>
+    </unit>
+    <unit id="NS4ikNF" name="btn.add_item">
+      <segment>
+        <source>btn.add_item</source>
+        <target>Добавити</target>
+      </segment>
+    </unit>
+    <unit id="LvBEDuk" name="btn.block_user">
+      <segment>
+        <source>btn.block_user</source>
+        <target> Блокувати користувача</target>
+      </segment>
+    </unit>
+    <unit id="k5.7eUm" name="btn.unblock_user">
+      <segment>
+        <source>btn.unblock_user</source>
+        <target> Розблокувати користувача</target>
+      </segment>
+    </unit>
+    <unit id="Erh9Ey4" name="confirm.change_user_status">
+      <segment>
+        <source>confirm.change_user_status</source>
+        <target>Змінити статус користувача?</target>
+      </segment>
+    </unit>
+    <unit id="I7Uo2De" name="message.user_active_successfully">
+      <segment>
+        <source>message.user_active_successfully</source>
+        <target>Дані успішно збережено</target>
+      </segment>
+    </unit>
+    <unit id="78mYW9I" name="message.user_blocked_successfully">
+      <segment>
+        <source>message.user_blocked_successfully</source>
+        <target>Дані успішно збережено</target>
+      </segment>
+    </unit>
+    <unit id="EElE89U" name="no_result">
+      <segment>
+        <source>no_result</source>
+        <target>Нічого не знайдено</target>
+      </segment>
+    </unit>
+    <unit id="S_Vw6L1" name="label.yes">
+      <segment>
+        <source>label.yes</source>
+        <target>+</target>
+      </segment>
+    </unit>
+    <unit id="bdYD32t" name="label.no">
+      <segment>
+        <source>label.no</source>
+        <target>-</target>
+      </segment>
+    </unit>
+    <unit id="hqDZF8R" name="dashboard.heading">
+      <segment>
+        <source>dashboard.heading</source>
+        <target>Dashboard</target>
+      </segment>
+    </unit>
+    <unit id="lqTZL7R" name="partners.dashboard.heading">
+      <segment>
+        <source>partners.dashboard.heading</source>
+        <target>Dashboard</target>
+      </segment>
+    </unit>
+    <unit id="zwkc9lP" name="menu.partners_users">
+      <segment>
+        <source>menu.partners_users</source>
+        <target>Партнери</target>
+      </segment>
+     </unit>
+    <unit id="Rg.OcpV" name="translations.heading">
+      <segment>
+        <source>translations.heading</source>
+        <target>Переклади</target>
+      </segment>
+    </unit>
+    <unit id="Rd0n9wc" name="filter.title">
+      <segment>
+        <source>filter.title</source>
+        <target>Фільтр</target>
+      </segment>
+    </unit>
+    <unit id="nkLSi.t" name="btn.filter">
+      <segment>
+        <source>btn.filter</source>
+        <target>Фільтрувати</target>
+      </segment>
+    </unit>
+    <unit id="2ONZ_fh" name="link.reset_filter">
+      <segment>
+        <source>link.reset_filter</source>
+        <target>Скинути</target>
+      </segment>
+    </unit>
+    <unit id="lCAp4Qe" name="btn.show_all">
+      <segment>
+        <source>btn.show_all</source>
+        <target>Показати всі</target>
+      </segment>
+    </unit>
+    <unit id="ufVoaGF" name="btn.show_empty">
+      <segment>
+        <source>btn.show_empty</source>
+        <target>Показати порожні</target>
+      </segment>
+    </unit>
+    <unit id="nh_gBtE" name="btn_save">
+      <segment>
+        <source>btn_save</source>
+        <target>Зберегти</target>
+      </segment>
+    </unit>
+    <unit id="rC5BZDk" name="menu.companies_label">
+      <segment>
+        <source>menu.companies_label</source>
+        <target>Компанії</target>
+      </segment>
+    </unit>
+    <unit id="fEmcXHb" name="label.company_name">
+      <segment>
+        <source>label.company_name</source>
+        <target>Назва компанії</target>
+      </segment>
+    </unit>
+    <unit id="pnGDFmf" name="label.type">
+      <segment>
+        <source>label.type</source>
+        <target>Тип</target>
+      </segment>
+    </unit>
+    <unit id="V2A5cgs" name="prepayment">
+      <segment>
+        <source>prepayment</source>
+        <target>передплата</target>
+      </segment>
+    </unit>
+    <unit id="9X4Ur4V" name="credit-line">
+      <segment>
+        <source>credit-line</source>
+        <target>кредитна лінія</target>
+      </segment>
+    </unit>
+    <unit id="7MSHOha" name="credit">
+      <segment>
+        <source>credit</source>
+        <target>кредит</target>
+      </segment>
+    </unit>
+    <unit id="u6ZrgqI" name="in-work">
+      <segment>
+        <source>in-work</source>
+        <target>в роботі</target>
+      </segment>
+    </unit>
+    <unit id="xcgzHvg" name="in-blacklist">
+      <segment>
+        <source>in-blacklist</source>
+        <target>в чорному списку</target>
+      </segment>
+    </unit>
+    <unit id="DZM47Ka" name="label.1c_id">
+      <segment>
+        <source>label.1c_id</source>
+        <target>Клієнт Id (1С)</target>
+      </segment>
+    </unit>
+    <unit id="0O3Bzl5" name="label.manager">
+      <segment>
+        <source>label.manager</source>
+        <target>Менеджер</target>
+      </segment>
+    </unit>
+    <unit id="YgvLzSx" name="label.updated_at">
+      <segment>
+        <source>label.updated_at</source>
+        <target>Дата оновлення</target>
+      </segment>
+    </unit>
+    <unit id="7jfRn_1" name="label.company">
+      <segment>
+        <source>label.company</source>
+        <target>Компанія</target>
+      </segment>
+    </unit>
+    <unit id=".VNJYXp" name="label.registered">
+      <segment>
+        <source>label.registered</source>
+        <target>зареєстрований</target>
+      </segment>
+    </unit>
+    <unit id="_q1QD62" name="btn.register_new">
+      <segment>
+        <source>btn.register_new</source>
+        <target>Зареєструвати</target>
+      </segment>
+    </unit>
+    <unit id="XMsOCmS" name="general-question">
+      <segment>
+        <source>general-question</source>
+        <target>general-question</target>
+      </segment>
+    </unit>
+    <unit id="QM127tg" name="financial-issue">
+      <segment>
+        <source>financial-issue</source>
+        <target>financial-issue</target>
+      </segment>
+    </unit>
+    <unit id="SmuLs.2" name="new-card-order">
+      <segment>
+        <source>new-card-order</source>
+        <target>new-card-order</target>
+      </segment>
+    </unit>
+    <unit id="h9zwx_Q" name="complaints">
+      <segment>
+        <source>complaints</source>
+        <target>complaints</target>
+      </segment>
+    </unit>
+    <unit id="A9JlQ5K" name="label.category">
+      <segment>
+        <source>label.category</source>
+        <target>Категорія</target>
+      </segment>
+    </unit>
+    <unit id="WqTho4C" name="label.comment">
+      <segment>
+        <source>label.comment</source>
+        <target>Коментар</target>
+      </segment>
+    </unit>
+    <unit id="eIQEeT7" name="menu.feedback_label">
+      <segment>
+        <source>menu.feedback_label</source>
+        <target>Зворотній зв'язок</target>
+      </segment>
+    </unit>
+    <unit id="F6D1doQ" name="btn.resend_link">
+      <segment>
+        <source>btn.resend_link</source>
+        <target>Відправити посилання повторно</target>
+      </segment>
+    </unit>
+    <unit id="iZ2qN5k" name="menu.import_files">
+      <segment>
+        <source>menu.import_files</source>
+        <target>Імпорт</target>
+      </segment>
+    </unit>
+    <unit id="NW7J2ed" name="label.file_name">
+      <segment>
+        <source>label.file_name</source>
+        <target>Файл</target>
+      </segment>
+    </unit>
+    <unit id="txiunCw" name="label.success_count">
+      <segment>
+        <source>label.success_count</source>
+        <target>К-сть успішних</target>
+      </segment>
+    </unit>
+    <unit id="DPmL1fU" name="label.errors_count">
+      <segment>
+        <source>label.errors_count</source>
+        <target>К-сть помилок</target>
+      </segment>
+    </unit>
+    <unit id="PuOsEOC" name="label.elapsed">
+      <segment>
+        <source>label.elapsed</source>
+        <target>Час імпорту</target>
+      </segment>
+    </unit>
+    <unit id="OCP8N4X" name="label.middle_name">
+      <segment>
+        <source>label.middle_name</source>
+        <target>Побатькові</target>
+      </segment>
+    </unit>
+    <unit id="7NfWx5U" name="label.client_1c_id">
+      <segment>
+        <source>label.client_1c_id</source>
+        <target>Клієнт Id (1C)</target>
+      </segment>
+    </unit>
+    <unit id="8pNrKPC" name="label.manager_1c_id">
+      <segment>
+        <source>label.manager_1c_id</source>
+        <target>Менеджер Id (1C)</target>
+      </segment>
+    </unit>
+    <unit id="LDhDPrF" name="label.username">
+      <segment>
+        <source>label.username</source>
+        <target>Логін</target>
+      </segment>
+    </unit>
+    <unit id="WxAnbP0" name="label.password_repeat">
+      <segment>
+        <source>label.password_repeat</source>
+        <target>Повторіть пароль</target>
+      </segment>
+    </unit>
+    <unit id="g03c_vw" name="label.phone">
+      <segment>
+        <source>label.phone</source>
+        <target>Телефон</target>
+      </segment>
+    </unit>
+    <unit id="wdgeAR6" name="placeholder.choose_client">
+      <segment>
+        <source>placeholder.choose_client</source>
+        <target>Виберіть клієнта</target>
+      </segment>
+    </unit>
+    <unit id="LL_iMpo" name="header.users_list">
+      <segment>
+        <source>header.users_list</source>
+        <target>Список користувачів</target>
+      </segment>
+    </unit>
+    <unit id="4ybUh2z" name="btn.new_entity">
+      <segment>
+        <source>btn.new_entity</source>
+        <target>Створити</target>
+      </segment>
+    </unit>
+    <unit id="5pluL.Z" name="header.users_create">
+      <segment>
+        <source>header.users_create</source>
+        <target>Створення коритувача</target>
+      </segment>
+    </unit>
+    <unit id="3kTxWk." name="Max. file size: 10M. Allowed types: *.jpeg, *.png">
+      <segment>
+        <source>Max. file size: 10M. Allowed types: *.jpeg, *.png</source>
+        <target>Max. file size: 10M. Allowed types: *.jpeg, *.png</target>
+      </segment>
+    </unit>
+    <unit id="jGl25bV" name="admin">
+      <segment>
+        <source>admin</source>
+        <target>адмін</target>
+      </segment>
+    </unit>
+    <unit id="buSkac1" name="manager">
+      <segment>
+        <source>manager</source>
+        <target>менеджер</target>
+      </segment>
+    </unit>
+    <unit id="Up0JkD." name="manager-call-center">
+      <segment>
+        <source>manager-call-center</source>
+        <target>менеджер call-центру</target>
+      </segment>
+    </unit>
+    <unit id="KdjJnsJ" name="accountant">
+      <segment>
+        <source>accountant</source>
+        <target>бугалтер</target>
+      </segment>
+    </unit>
+    <unit id="loeWEWU" name="active">
+      <segment>
+        <source>active</source>
+        <target>активний</target>
+      </segment>
+    </unit>
+    <unit id="0QImGLm" name="inactive">
+      <segment>
+        <source>inactive</source>
+        <target>не активний</target>
+      </segment>
+    </unit>
+    <unit id="cJX4Lup" name="btn.save_and_edit">
+      <segment>
+        <source>btn.save_and_edit</source>
+        <target>Зберегти</target>
+      </segment>
+    </unit>
+    <unit id="1POJcTS" name="btn.save_and_back">
+      <segment>
+        <source>btn.save_and_back</source>
+        <target>Зберегти і повернутись</target>
+      </segment>
+    </unit>
+    <unit id="aSvkWN." name="btn.back">
+      <segment>
+        <source>btn.back</source>
+        <target>Назад</target>
+      </segment>
+    </unit>
+    <unit id="DbXE8SZ" name="header.companies_list">
+      <segment>
+        <source>header.companies_list</source>
+        <target>Список компаній</target>
+      </segment>
+    </unit>
+    <unit id="geHHFri" name="header.users_update">
+      <segment>
+        <source>header.users_update</source>
+        <target>Редагування користувача</target>
+      </segment>
+    </unit>
+    <unit id="ZDNlJ7M" name="+80976544433">
+      <segment>
+        <source>+80976544433</source>
+        <target>+80976544433</target>
+      </segment>
+    </unit>
+    <unit id="uaTKk8o" name="header.feedback_list">
+      <segment>
+        <source>header.feedback_list</source>
+        <target>Зворотній зв'язок</target>
+      </segment>
+    </unit>
+    <unit id="vkaekv3" name="header.import_files_list">
+      <segment>
+        <source>header.import_files_list</source>
+        <target>Список файлів</target>
+      </segment>
+    </unit>
+    <unit id="mEDsKHk" name="label.locale">
+      <segment>
+        <source>label.locale</source>
+        <target>Мова</target>
+      </segment>
+    </unit>
+    <unit id="gxFqzxj" name="uk">
+      <segment>
+        <source>uk</source>
+        <target>uk</target>
+      </segment>
+    </unit>
+    <unit id="29OknQ2" name="en">
+      <segment>
+        <source>en</source>
+        <target>en</target>
+      </segment>
+    </unit>
+    <unit id="9pvowqn" name="label.password">
+      <segment>
+        <source>label.password</source>
+        <target>Пароль</target>
+      </segment>
+    </unit>
+    <unit id="YLtB0yP" name="save_data.success">
+      <segment>
+        <source>save_data.success</source>
+        <target>Дані успішно збережено</target>
+      </segment>
+    </unit>
+    <unit id="creScxS" name="save_data.error">
+      <segment>
+        <source>save_data.error</source>
+        <target>При збереженні виникли помилки</target>
+      </segment>
+    </unit>
+    <unit id="H1qEi4d" name="label.date">
+      <segment>
+        <source>label.date</source>
+        <target>Date</target>
+      </segment>
+    </unit>
+    <unit id="MAas0lZ" name="label.resource">
+      <segment>
+        <source>label.resource</source>
+        <target>Resource</target>
+      </segment>
+    </unit>
+    <unit id="FnBDEbJ" name="label.response.code">
+      <segment>
+        <source>label.response.code</source>
+        <target>Response code</target>
+      </segment>
+    </unit>
+    <unit id="uZyRdCp" name="label.ip_address">
+      <segment>
+        <source>label.ip_address</source>
+        <target>IP</target>
+      </segment>
+    </unit>
+    <unit id="WaOmymj" name="menu.api_log_label">
+      <segment>
+        <source>menu.api_log_label</source>
+        <target>API log</target>
+      </segment>
+    </unit>
+    <unit id="EesABWo" name="label.balance">
+      <segment>
+        <source>label.balance</source>
+        <target>Баланс</target>
+      </segment>
+    </unit>
+    <unit id="aglwuCV" name="label.last_name">
+      <segment>
+        <source>label.last_name</source>
+        <target>Прізвище</target>
+      </segment>
+    </unit>
+    <unit id="H7kee_F" name="label.first_name">
+      <segment>
+        <source>label.first_name</source>
+        <target>Ім'я</target>
+      </segment>
+    </unit>
+    <unit id="aXPd3T7" name="blocked">
+      <segment>
+        <source>blocked</source>
+        <target>заблокований</target>
+      </segment>
+    </unit>
+    <unit id="sanlYRB" name="registered">
+      <segment>
+        <source>registered</source>
+        <target>зареєстрований</target>
+      </segment>
+    </unit>
+    <unit id="_0QY0uc" name="not-registered">
+      <segment>
+        <source>not-registered</source>
+        <target>не зареєстрований</target>
+      </segment>
+    </unit>
+    <unit id="OFezrso" name="resend-register-link">
+      <segment>
+        <source>resend-register-link</source>
+        <target>відправити повторно</target>
+      </segment>
+    </unit>
+    <unit id="boYtkXe" name="label.card_number">
+      <segment>
+        <source>label.card_number</source>
+        <target>Номер картки</target>
+      </segment>
+    </unit>
+    <unit id="pX9GLca" name="label.method">
+      <segment>
+        <source>label.method</source>
+        <target>Method</target>
+      </segment>
+    </unit>
+    <unit id="_br8grp" name="200 OK">
+      <segment>
+        <source>200 OK</source>
+        <target>200 OK</target>
+      </segment>
+    </unit>
+    <unit id="U2.Sit_" name="400 Bad request">
+      <segment>
+        <source>400 Bad request</source>
+        <target>400 Bad request</target>
+      </segment>
+    </unit>
+    <unit id="xD9.Yx5" name="401 Unauthorized">
+      <segment>
+        <source>401 Unauthorized</source>
+        <target>401 Unauthorized</target>
+      </segment>
+    </unit>
+    <unit id="NZUbbpz" name="404 Not found">
+      <segment>
+        <source>404 Not found</source>
+        <target>404 Not found</target>
+      </segment>
+    </unit>
+    <unit id="abmTO7Q" name="405 Method not allowed">
+      <segment>
+        <source>405 Method not allowed</source>
+        <target>405 Method not allowed</target>
+      </segment>
+    </unit>
+    <unit id="Kw6Swq9" name="500 Server Error">
+      <segment>
+        <source>500 Server Error</source>
+        <target>500 Server Error</target>
+      </segment>
+    </unit>
+    <unit id="mu5rG83" name="POST">
+      <segment>
+        <source>POST</source>
+        <target>POST</target>
+      </segment>
+    </unit>
+    <unit id="FOMM0WP" name="GET">
+      <segment>
+        <source>GET</source>
+        <target>GET</target>
+      </segment>
+    </unit>
+    <unit id="A0lK.UJ" name="started">
+      <segment>
+        <source>started</source>
+        <target>started</target>
+      </segment>
+    </unit>
+    <unit id="_zBZPKM" name="copied">
+      <segment>
+        <source>copied</source>
+        <target>copied</target>
+      </segment>
+    </unit>
+    <unit id="7Rhm0MX" name="in-progress">
+      <segment>
+        <source>in-progress</source>
+        <target>in-progress</target>
+      </segment>
+    </unit>
+    <unit id="pMPtBKl" name="done">
+      <segment>
+        <source>done</source>
+        <target>done</target>
+      </segment>
+    </unit>
+    <unit id="ygD8z7Q" name="error">
+      <segment>
+        <source>error</source>
+        <target>error</target>
+      </segment>
+    </unit>
+    <unit id="XSipD0S" name="failed">
+      <segment>
+        <source>failed</source>
+        <target>failed</target>
+      </segment>
+    </unit>
+    <unit id="SouK2bc" name="label.filename">
+      <segment>
+        <source>label.filename</source>
+        <target>Ім'я файлу</target>
+      </segment>
+    </unit>
+    <unit id="IQJ6XXu" name="label.extension">
+      <segment>
+        <source>label.extension</source>
+        <target>Розширення</target>
+      </segment>
+    </unit>
+    <unit id="NAmY0Cc" name="+380976544433">
+      <segment>
+        <source>+380976544433</source>
+        <target>+380976544433</target>
+      </segment>
+    </unit>
+    <unit id="nJYnRDh" name="label.register_status">
+      <segment>
+        <source>label.register_status</source>
+        <target>Статус реєстрації</target>
+      </segment>
+    </unit>
+    <unit id="LYbJ9c5" name="menu.clients_users">
+      <segment>
+        <source>menu.clients_users</source>
+        <target>Користувачі порталу</target>
+      </segment>
+    </unit>
+    <unit id="YZprUcC" name="label.send-restore-pass-link">
+      <segment>
+        <source>label.send-restore-pass-link</source>
+        <target>Відновити пароль</target>
+      </segment>
+    </unit>
+    <unit id="rmh0zpb" name="label.send-restore-pass-link-successful">
+      <segment>
+        <source>label.send-restore-pass-link-successful</source>
+        <target>Посилання на відновлення паролю відправлено успішно</target>
+      </segment>
+    </unit>
+    <unit id="pkBOs6r" name="label.close">
+      <segment>
+        <source>label.close</source>
+        <target>Закрити</target>
+      </segment>
+    </unit>
+    <unit id="fzJN4n5" name="label.send-restore-pass-link-error">
+      <segment>
+        <source>label.send-restore-pass-link-error</source>
+        <target>Помилка при відправленні посилання на відновлення паролю</target>
+      </segment>
+    </unit>
+    <unit id="2w.dXJZ" name="header.cards_list">
+      <segment>
+        <source>header.cards_list</source>
+        <target>Картки</target>
+      </segment>
+    </unit>
+    <unit id="ujolTLg" name="menu.clients_cards">
+      <segment>
+        <source>menu.clients_cards</source>
+        <target>Картки</target>
+      </segment>
+    </unit>
+    <unit id="yoJkYab" name="label.on_moderation">
+      <segment>
+        <source>label.on_moderation</source>
+        <target>на модерації</target>
+      </segment>
+    </unit>
+    <unit id="BvQ4.vU" name="btn.view_limits">
+      <segment>
+        <source>btn.view_limits</source>
+        <target>Статус лімітів</target>
+      </segment>
+    </unit>
+    <unit id="i9E3ZsZ" name="btn.block_card">
+      <segment>
+        <source>btn.block_card</source>
+        <target>Заблокувати</target>
+      </segment>
+    </unit>
+    <unit id="gLc_zOD" name="modal_header.block_card">
+      <segment>
+        <source>modal_header.block_card</source>
+        <target>Блокування картки</target>
+      </segment>
+    </unit>
+    <unit id="t2IOE_l" name="modal_block_card.are_you_sure_text?">
+      <segment>
+        <source>modal_block_card.are_you_sure_text?</source>
+        <target>Ви впевнені що хочете заблокувати картку?</target>
+      </segment>
+    </unit>
+    <unit id="AtUVW0t" name="header.cards_update">
+      <segment>
+        <source>header.cards_update</source>
+        <target>Редагування картки</target>
+      </segment>
+    </unit>
+    <unit id="h8wrBob" name="btn.list">
+      <segment>
+        <source>btn.list</source>
+        <target>Список</target>
+      </segment>
+    </unit>
+    <unit id="DoQC9lK" name="label.total_limits">
+      <segment>
+        <source>label.total_limits</source>
+        <target>Загальні ліміти</target>
+      </segment>
+    </unit>
+    <unit id="ZgXOr0X" name="label.day_uah">
+      <segment>
+        <source>label.day_uah</source>
+        <target>День, грн.</target>
+      </segment>
+    </unit>
+    <unit id="0dZoGPy" name="label.week_uah">
+      <segment>
+        <source>label.week_uah</source>
+        <target>Тиждень, грн.</target>
+      </segment>
+    </unit>
+    <unit id="V1weEAS" name="label.month_uah">
+      <segment>
+        <source>label.month_uah</source>
+        <target>Місяць, грн.</target>
+      </segment>
+    </unit>
+    <unit id="7JPrqyC" name="label.service_days">
+      <segment>
+        <source>label.service_days</source>
+        <target>Дні обслуговування</target>
+      </segment>
+    </unit>
+    <unit id="5tPvxqv" name="mon">
+      <segment>
+        <source>mon</source>
+        <target>Пн.</target>
+      </segment>
+    </unit>
+    <unit id="0kMWGGi" name="tue">
+      <segment>
+        <source>tue</source>
+        <target>Вв.</target>
+      </segment>
+    </unit>
+    <unit id="MYqt.oX" name="wed">
+      <segment>
+        <source>wed</source>
+        <target>Ср.</target>
+      </segment>
+    </unit>
+    <unit id="7b0m8Hp" name="thu">
+      <segment>
+        <source>thu</source>
+        <target>Чт.</target>
+      </segment>
+    </unit>
+    <unit id="gWIJzrJ" name="fri">
+      <segment>
+        <source>fri</source>
+        <target>Пт.</target>
+      </segment>
+    </unit>
+    <unit id="M57_q3C" name="sat">
+      <segment>
+        <source>sat</source>
+        <target>Сб.</target>
+      </segment>
+    </unit>
+    <unit id="J3VvBQ4" name="sun">
+      <segment>
+        <source>sun</source>
+        <target>Нд.</target>
+      </segment>
+    </unit>
+    <unit id="OueJRWP" name="label.start_use_time">
+      <segment>
+        <source>label.start_use_time</source>
+        <target>Час початку обслуговування</target>
+      </segment>
+    </unit>
+    <unit id="NesI9rd" name="label.end_use_time">
+      <segment>
+        <source>label.end_use_time</source>
+        <target>Час закінчення обслуговування</target>
+      </segment>
+    </unit>
+    <unit id="Ds5Iasq" name="label.fuel_limits">
+      <segment>
+        <source>label.fuel_limits</source>
+        <target>Ліміти на пальне</target>
+      </segment>
+    </unit>
+    <unit id="ebmhVFl" name="label.fuel">
+      <segment>
+        <source>label.fuel</source>
+        <target>Пальне</target>
+      </segment>
+    </unit>
+    <unit id="c_JSO8l" name="select.fuel">
+      <segment>
+        <source>select.fuel</source>
+        <target>Оберіть пальне</target>
+      </segment>
+    </unit>
+    <unit id="6C6Eac3" name="label.day_l">
+      <segment>
+        <source>label.day_l</source>
+        <target>День, л.</target>
+      </segment>
+    </unit>
+    <unit id="lKvXDkc" name="label.week_l">
+      <segment>
+        <source>label.week_l</source>
+        <target>Тиждень, л.</target>
+      </segment>
+    </unit>
+    <unit id="iJWlpJD" name="label.month_l">
+      <segment>
+        <source>label.month_l</source>
+        <target>Місяць, л.</target>
+      </segment>
+    </unit>
+    <unit id="UsRuRJI" name="label.goods_limits">
+      <segment>
+        <source>label.goods_limits</source>
+        <target>Товари</target>
+      </segment>
+    </unit>
+    <unit id="AfEnnWR" name="select.goods">
+      <segment>
+        <source>select.goods</source>
+        <target>Оберіть товар</target>
+      </segment>
+    </unit>
+    <unit id="w6mYZXV" name="label.service_limits">
+      <segment>
+        <source>label.service_limits</source>
+        <target>Послуги</target>
+      </segment>
+    </unit>
+    <unit id="_XW3vWj" name="select.service">
+      <segment>
+        <source>select.service</source>
+        <target>Оберіть послугу</target>
+      </segment>
+    </unit>
+    <unit id="EA.wfut" name="btn.view_cards">
+      <segment>
+        <source>btn.view_cards</source>
+        <target>Картки</target>
+      </segment>
+    </unit>
+    <unit id="NTfq3m0" name="header.cards_limits_list">
+      <segment>
+        <source>header.cards_limits_list</source>
+        <target>Статус лімітів по картці</target>
+      </segment>
+    </unit>
+    <unit id="6lrCxko" name="btn.edit">
+      <segment>
+        <source>btn.edit</source>
+        <target>Редагувати</target>
+      </segment>
+    </unit>
+    <unit id="pgsTps." name="label.work_days">
+      <segment>
+        <source>label.work_days</source>
+        <target>Дні обслуговування</target>
+      </segment>
+    </unit>
+    <unit id="kwJHigz" name="label.work_hours">
+      <segment>
+        <source>label.work_hours</source>
+        <target>Години обслуговування</target>
+      </segment>
+    </unit>
+    <unit id="tBcGoWM" name="tab.fuel">
+      <segment>
+        <source>tab.fuel</source>
+        <target>ТМЦ</target>
+      </segment>
+    </unit>
+    <unit id="Pt3JbDD" name="tab.goods">
+      <segment>
+        <source>tab.goods</source>
+        <target>Товари</target>
+      </segment>
+    </unit>
+    <unit id="jsJf4Bx" name="tab.services">
+      <segment>
+        <source>tab.services</source>
+        <target>Послуги</target>
+      </segment>
+    </unit>
+    <unit id="qvpx8yY" name="label.limit">
+      <segment>
+        <source>label.limit</source>
+        <target>Ліміт</target>
+      </segment>
+    </unit>
+    <unit id="BLML59B" name="label.per_day">
+      <segment>
+        <source>label.per_day</source>
+        <target>В день</target>
+      </segment>
+    </unit>
+    <unit id="mL7Jpq0" name="label.per_week">
+      <segment>
+        <source>label.per_week</source>
+        <target>В тиждень</target>
+      </segment>
+    </unit>
+    <unit id="I18LP0r" name="label.per_month">
+      <segment>
+        <source>label.per_month</source>
+        <target>В місяць</target>
+      </segment>
+    </unit>
+    <unit id="E4Jt2MT" name="label.left">
+      <segment>
+        <source>label.left</source>
+        <target>Залишок</target>
+      </segment>
+    </unit>
+    <unit id="xgGWEBE" name="message.card_blocked.success">
+      <segment>
+        <source>message.card_blocked.success</source>
+        <target>Картку успішно заблоковано</target>
+      </segment>
+    </unit>
+    <unit id="ebqwMhI" name="message.user_deleted.success">
+      <segment>
+        <source>message.user_deleted.success</source>
+        <target>Користувача успішно видалено</target>
+      </segment>
+    </unit>
+    <unit id="GMVbcj8" name="header.transactions_list">
+      <segment>
+        <source>header.transactions_list</source>
+        <target>Транзакції</target>
+      </segment>
+    </unit>
+    <unit id="LI5HrR5" name="menu.transactions_label">
+      <segment>
+        <source>menu.transactions_label</source>
+        <target>Транзакції</target>
+      </segment>
+    </unit>
+    <unit id="Dew2Uca" name="menu.documents_esp">
+      <segment>
+        <source>menu.documents_esp</source>
+        <target>Документи ЕЦП</target>
+      </segment>
+    </unit>
+    <unit id="3wPkUlT" name="label.network_station">
+      <segment>
+        <source>label.network_station</source>
+        <target>АЗС</target>
+      </segment>
+    </unit>
+    <unit id="o04Sy4K" name="label.date_from">
+      <segment>
+        <source>label.date_from</source>
+        <target>Початок періоду</target>
+      </segment>
+    </unit>
+    <unit id="6nrnz6M" name="label.date_to">
+      <segment>
+        <source>label.date_to</source>
+        <target>Кінець періоду</target>
+      </segment>
+    </unit>
+    <unit id="cYfwZ16" name="return">
+      <segment>
+        <source>return</source>
+        <target>повернення</target>
+      </segment>
+    </unit>
+    <unit id="8eAfyBo" name="write-off">
+      <segment>
+        <source>write-off</source>
+        <target>списання</target>
+      </segment>
+    </unit>
+    <unit id="INU.Ici" name="write-off-cards">
+      <segment>
+        <source>write-off-cards</source>
+        <target>Списання по карткам</target>
+      </segment>
+    </unit>
+    <unit id="IhYXMYv" name="discount">
+      <segment>
+        <source>discount</source>
+        <target>Нарахування дисконту</target>
+      </segment>
+    </unit>
+    <unit id="..4a7PQ" name="refill">
+      <segment>
+        <source>refill</source>
+        <target>Поповнення</target>
+      </segment>
+    </unit>
+    <unit id="H4b42Gk" name="replenishment">
+      <segment>
+        <source>replenishment</source>
+        <target>поповнення</target>
+      </segment>
+    </unit>
+    <unit id="SFjUmQ4" name="label.supply_types">
+      <segment>
+        <source>label.supply_types</source>
+        <target>Група ТМЦ</target>
+      </segment>
+    </unit>
+    <unit id="rL5L.Hf" name="fuel">
+      <segment>
+        <source>fuel</source>
+        <target>пальне</target>
+      </segment>
+    </unit>
+    <unit id="CJhX_cQ" name="goods">
+      <segment>
+        <source>goods</source>
+        <target>товари</target>
+      </segment>
+    </unit>
+    <unit id="nfawJqj" name="service">
+      <segment>
+        <source>service</source>
+        <target>послуги</target>
+      </segment>
+    </unit>
+    <unit id="2FufQpQ" name="label.supplies">
+      <segment>
+        <source>label.supplies</source>
+        <target>ТМЦ</target>
+      </segment>
+    </unit>
+    <unit id="Iakr9i7" name="label.sypply">
+      <segment>
+        <source>label.sypply</source>
+        <target>ТМЦ</target>
+      </segment>
+    </unit>
+    <unit id="s3rmzpu" name="label.volume">
+      <segment>
+        <source>label.volume</source>
+        <target>Об’єм</target>
+      </segment>
+    </unit>
+    <unit id="arTFX42" name="label.price">
+      <segment>
+        <source>label.price</source>
+        <target>Ціна</target>
+      </segment>
+    </unit>
+    <unit id="6x24VVR" name="label.amount">
+      <segment>
+        <source>label.amount</source>
+        <target>Сума за ціною АЗС, грн</target>
+      </segment>
+    </unit>
+    <unit id="yPlsyX." name="label.post_date">
+      <segment>
+        <source>label.post_date</source>
+        <target>Дата</target>
+      </segment>
+    </unit>
+    <unit id="smRxZEm" name="label.uah_l">
+      <segment>
+        <source>label.uah_l</source>
+        <target>грн., л</target>
+      </segment>
+    </unit>
+    <unit id="eDserer" name="label.uah">
+      <segment>
+        <source>label.uah</source>
+        <target>грн.</target>
+      </segment>
+    </unit>
+    <unit id="BZoR1tN" name="label.goods">
+      <segment>
+        <source>label.goods</source>
+        <target>Товар</target>
+      </segment>
+    </unit>
+    <unit id="rUqMZNj" name="label.service">
+      <segment>
+        <source>label.service</source>
+        <target>Послуга</target>
+      </segment>
+    </unit>
+    <unit id="9cMxqGU" name="label.day_pieces">
+      <segment>
+        <source>label.day_pieces</source>
+        <target>День, шт.</target>
+      </segment>
+    </unit>
+    <unit id="Fm9zXfF" name="label.week_pieces">
+      <segment>
+        <source>label.week_pieces</source>
+        <target>Тиждень, шт.</target>
+      </segment>
+    </unit>
+    <unit id="l7rCUKG" name="label.month_pieces">
+      <segment>
+        <source>label.month_pieces</source>
+        <target>Місяць, шт.</target>
+      </segment>
+    </unit>
+    <unit id="bjHB7wO" name="btn.profile">
+      <segment>
+        <source>btn.profile</source>
+        <target>Профіль</target>
+      </segment>
+    </unit>
+    <unit id="LESYFaN" name="header.client_profile">
+      <segment>
+        <source>header.client_profile</source>
+        <target>Профіль</target>
+      </segment>
+    </unit>
+    <unit id="NoG06hp" name="label.accounting_email">
+      <segment>
+        <source>label.accounting_email</source>
+        <target>Email бухгалтера</target>
+      </segment>
+    </unit>
+    <unit id="_5gPHzY" name="label.postal_address">
+      <segment>
+        <source>label.postal_address</source>
+        <target>Поштова адреса</target>
+      </segment>
+    </unit>
+    <unit id="0FwYstm" name="btn.transactions">
+      <segment>
+        <source>btn.transactions</source>
+        <target>Транзакції</target>
+      </segment>
+    </unit>
+    <unit id="9kPAva9" name="btn.clients_user">
+      <segment>
+        <source>btn.clients_user</source>
+        <target>Користувачі</target>
+      </segment>
+    </unit>
+    <unit id="APIvv55" name="label.accounting_phone">
+      <segment>
+        <source>label.accounting_phone</source>
+        <target>Телефон бухгалтера</target>
+      </segment>
+    </unit>
+    <unit id="ggz366a" name="btn.client_profile">
+      <segment>
+        <source>btn.client_profile</source>
+        <target>Компанія</target>
+      </segment>
+    </unit>
+    <unit id="F.isLM." name="btn.edit_card">
+      <segment>
+        <source>btn.edit_card</source>
+        <target>Картка</target>
+      </segment>
+    </unit>
+    <unit id="pRUngrQ" name="btn.upload_file">
+      <segment>
+        <source>btn.upload_file</source>
+        <target>Завантажити документ</target>
+      </segment>
+    </unit>
+    <unit id="33HcTL_" name="header.document_upload">
+      <segment>
+        <source>header.document_upload</source>
+        <target>Завантаження документа</target>
+      </segment>
+    </unit>
+    <unit id="Utbj3k_" name="invoice">
+      <segment>
+        <source>invoice</source>
+        <target>Рахунок-фактура</target>
+      </segment>
+    </unit>
+    <unit id="71V0RVp" name="act-checking">
+      <segment>
+        <source>act-checking</source>
+        <target>Акт звірки</target>
+      </segment>
+    </unit>
+    <unit id="BGiW2J5" name="appendix-petroleum-products">
+      <segment>
+        <source>appendix-petroleum-products</source>
+        <target>Акт виборки нафтопродуктів</target>
+      </segment>
+    </unit>
+    <unit id="OjzbWFM" name="card-invoice">
+      <segment>
+        <source>card-invoice</source>
+        <target>Видаткова накладна</target>
+      </segment>
+    </unit>
+    <unit id="IOPMzfc" name="acceptance-transfer-act">
+      <segment>
+        <source>acceptance-transfer-act</source>
+        <target>Акт прійому-передачі</target>
+      </segment>
+    </unit>
+    <unit id="VicYq9d" name="label.document">
+      <segment>
+        <source>label.document</source>
+        <target>Документ</target>
+      </segment>
+    </unit>
+    <unit id="v5XJzj8" name="label.volume_l">
+      <segment>
+        <source>label.volume_l</source>
+        <target>л.</target>
+      </segment>
+    </unit>
+    <unit id="mIToGSb" name="Max. file size: 10M. Allowed types: *.pdf, *.xls">
+      <segment>
+        <source>Max. file size: 10M. Allowed types: *.pdf, *.xls</source>
+        <target>Max. file size: 10M. Allowed types: *.pdf, *.xls</target>
+      </segment>
+    </unit>
+    <unit id="Y27mTNE" name="menu.fuel_replacement">
+      <segment>
+        <source>menu.fuel_replacement</source>
+        <target>menu.fuel_replacement</target>
+      </segment>
+    </unit>
+    <unit id="kFSnLpH" name="header.replacement_fuel_type_list">
+      <segment>
+        <source>header.replacement_fuel_type_list</source>
+        <target>header.replacement_fuel_type_list</target>
+      </segment>
+    </unit>
+    <unit id="AQ.FTt9" name="header.replacement_fuel_type_create">
+      <segment>
+        <source>header.replacement_fuel_type_create</source>
+        <target>header.replacement_fuel_type_create</target>
+      </segment>
+    </unit>
+    <unit id="nBlWlUy" name="label.fuelCode">
+      <segment>
+        <source>label.fuelCode</source>
+        <target>label.fuelCode</target>
+      </segment>
+    </unit>
+    <unit id="dLRSn_J" name="label.fuelReplacementCode">
+      <segment>
+        <source>label.fuelReplacementCode</source>
+        <target>label.fuelReplacementCode</target>
+      </segment>
+    </unit>
+    <unit id="gNT_2W6" name="label.fuel_code">
+      <segment>
+        <source>label.fuel_code</source>
+        <target>label.fuel_code</target>
+      </segment>
+    </unit>
+    <unit id="IqxwNmi" name="label.replacement_fuel_code">
+      <segment>
+        <source>label.replacement_fuel_code</source>
+        <target>label.replacement_fuel_code</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

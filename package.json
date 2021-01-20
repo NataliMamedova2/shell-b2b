@@ -1,0 +1,132 @@
+{
+  "name": "shell-b2b",
+  "version": "1.0.0",
+  "description": "1. [Quick start (docker-compose)](docs/quick-start.md) 2. [Frontend](#frontend-up-and-go) 3. [Deployment steps](#deployment-steps) 4. [Tests](docs/tests.md) 5. [Block builder structure](docs/content-builder.md)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "webpack -d --watch --config webpack.config.dev.js",
+    "build": "webpack -p --config webpack.config.prod.js",
+    "test": "jest",
+    "lint": "eslint './source/**/*.{ts,tsx}' --fix",
+    "test:start": "jest --watchAll",
+    "analyze": "webpack -p --config webpack.config.analyze.js",
+    "translation:clear": "rimraf public/locales",
+    "translation:extract": "i18next 'source/**/*.{ts,tsx}' --config 'i18next-parser.config.js'",
+    "translation": "npm-run-all --sequential translation:clear translation:extract"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/aurocraft/shell-b2b.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/aurocraft/shell-b2b#readme",
+  "dependencies": {
+    "@sentry/browser": "^5.9.1",
+    "@types/classnames": "^2.2.9",
+    "@types/file-saver": "^2.0.1",
+    "@types/lodash": "^4.14.149",
+    "@types/lodash-es": "^4.17.3",
+    "@types/node": "12.7.9",
+    "@types/react": "16.9.4",
+    "@types/react-dom": "16.9.1",
+    "@types/react-flatpickr": "^3.8.0",
+    "@types/react-paginate": "^6.2.1",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/react-select": "^3.0.9",
+    "@types/react-textarea-autosize": "^4.3.4",
+    "@types/uuid": "^3.4.5",
+    "axios": "^0.19.0",
+    "classnames": "^2.2.6",
+    "core-js": "^3.4.4",
+    "date-fns": "^2.4.1",
+    "file-saver": "^2.0.2",
+    "flatpickr": "^4.6.3",
+    "i18next": "^18.0.1",
+    "i18next-xhr-backend": "^3.2.0",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
+    "mobx": "^4.15.0",
+    "mobx-react": "^6.1.3",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-focus-lock": "^2.2.1",
+    "react-i18next": "^11.0.0",
+    "react-paginate": "^6.3.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0",
+    "react-select": "^3.0.8",
+    "react-textarea-autosize": "^7.1.0",
+    "smoothscroll-polyfill": "^0.4.4",
+    "url-search-params-polyfill": "^7.0.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "browserslist": "^4.6.2",
+    "autoprefixer": "^9.6.5",
+    "cssnano": "^4.1.10",
+    "css-loader": "^3.2.0",
+    "dotenv-webpack": "^1.7.0",
+    "typescript": "3.7.5",
+    "eslint": "^6.8.0",
+    "eslint-loader": "3.0.2",
+    "eslint-config-react-app": "^5.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "file-loader": "^4.2.0",
+    "i18next-parser": "^1.0.0",
+    "jest": "^25.1.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "npm-run-all": "^4.1.5",
+    "path": "^0.12.7",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-jest": "^25.0.0",
+    "ts-loader": "^6.2.1",
+    "tslint": "^5.20.0",
+    "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-merge": "^4.1.5"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "grid": true
+      },
+      "postcss-flexbugs-fixes": {},
+      "cssnano": {}
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "ie 11",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      ">0.2%",
+      "ie 11",
+      "not dead",
+      "not op_mini all"
+    ]
+  }
+}

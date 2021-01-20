@@ -1,0 +1,33 @@
+@import "../../../shared";
+
+.m-documents-for-sign {
+  padding-bottom: 0;
+}
+.m-documents-for-sign__iframe {
+  width: 100%;
+  height: 100vh;
+}
+
+.m-documents-for-sign__iframe-wrapper {
+  height: 100vh;
+  width: calc(100% + 60px);
+  margin-left: -30px;
+}
+.m-documents-for-sign__loader-wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding: 50px 0;
+
+  .c-icon {
+    margin-right: 10px;
+  }
+}
+
+@include breakpoint-mobile() {
+  .m-documents-for-sign__iframe-wrapper {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+  }
+}

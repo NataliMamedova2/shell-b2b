@@ -1,0 +1,13 @@
+services:
+    App\Api\Action\Api\V1\Dashboard\InfoAction:
+        class: App\Api\Action\Api\V1\Dashboard\InfoAction
+        arguments:
+            - '@App\Security\Cabinet\Myself'
+            - '@App\Clients\Infrastructure\ClientInfo\Service\Balance\BalanceService'
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.clients.infrastructure.refill_balance.repository'
+            - '@app.clients.infrastructure.discount.repository'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@App\Api\Crud\Interfaces\Response'
+        tags:
+            - { name: controller.service_arguments }

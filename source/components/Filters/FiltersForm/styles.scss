@@ -1,0 +1,97 @@
+@import "../../../shared";
+
+.c-filters-form {
+  $filter-toolbars-height: 54px;
+  $filter-side-padding: 35px;
+  $filter-buttons-around-margin: 10px;
+
+
+  &__header {
+    height: $filter-toolbars-height;
+    width: 100%;
+    padding: 10px $filter-side-padding;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-bottom: 1px solid $palette-line;
+
+    .c-text {
+      font-size: 12px;
+    }
+  }
+
+  .c-form {
+    width: 100%;
+    height: calc(100% - #{$filter-toolbars-height});
+  }
+
+  .c-callout {
+    padding: 10px 20px;
+    background-color: $palette-fill-grey;
+    border-radius: $corner-default;
+
+    .c-text {
+      max-width: 220px;
+    }
+  }
+
+  .c-form__groups {
+    width: 100%;
+    height: calc(100% - #{$filter-toolbars-height});
+    padding: 30px $filter-side-padding;
+
+    @include vertical-scroll;
+    @include styled-scrollbar;
+  }
+
+  .c-form__actions {
+    width: 100%;
+    height: $filter-toolbars-height;
+    padding: 0 #{$filter-side-padding - $filter-buttons-around-margin}; // 10px is margin around each button
+    border-top: 1px solid $palette-line;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0;
+
+    .c-button {
+      margin: 5px $filter-buttons-around-margin;
+    }
+  }
+
+  .c-popup__close {
+    right: 12px;
+    top: 12px;
+  }
+
+  .c-popup__content {
+    height: 100%;
+  }
+
+  .c-popup__wrapper {
+    height: calc(100% - 30px);
+    width: 360px;
+    margin: 15px 15px 15px auto;
+  }
+
+  @include breakpoint-tablet-up() {
+    .c-popup__wrapper {
+      margin: 15px 15px 15px calc(100% - 375px);
+    }
+  }
+
+  @include breakpoint-mobile() {
+    .c-popup__wrapper {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  @include breakpoint-hover() {
+    .c-icon.is-actionable:hover {
+      color: $palette-attention;
+    }
+  }
+}

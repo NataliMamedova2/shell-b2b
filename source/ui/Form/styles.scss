@@ -1,0 +1,112 @@
+@import "../../shared";
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+
+  &__col {
+    width: 100%;
+  }
+  &__row {
+    width: 100%;
+    flex: none;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+  }
+  &__section {}
+  &__actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+
+    .c-button {
+      margin-right: 20px;
+      min-width: 130px;
+    }
+  }
+
+  &__groups {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  &__group {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 25px 0 20px;
+    border-bottom: 1px solid $palette-line;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__group-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .c-tooltip {
+      margin-left: 10px;
+    }
+  }
+
+  @include breakpoint-mobile-up {
+
+    &__col {
+      padding: 0 15px;
+    }
+
+    &__row {
+      width: calc(100% + 30px);
+      margin-left: -15px;
+      margin-bottom: 20px;
+      &.has-cols-1 .c-form__col {
+        width: 100%;
+      }
+      &.has-cols-2 .c-form__col {
+        width: 50%;
+      }
+      &.has-cols-3 .c-form__col {
+        width: 33.333%;
+      }
+    }
+  }
+
+  @include breakpoint-mobile() {
+    &__row {
+      flex-direction: column;
+    }
+    &__col {
+      margin-bottom: 20px;
+    }
+
+    &__actions {
+
+      .c-button {
+        margin-right: 0;
+        margin-bottom: 10px;
+        min-width: 120px;
+
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+
+      .c-score {
+        width: 100%;
+        flex: none;
+        order: -1;
+      }
+    }
+  }
+}

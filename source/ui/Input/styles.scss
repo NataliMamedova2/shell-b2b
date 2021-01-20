@@ -1,0 +1,10 @@
+@import "../../shared";
+
+.c-input {
+  @include input-base;
+
+  &--readonly {
+    border: none;
+    padding: 0;
+  }
+}

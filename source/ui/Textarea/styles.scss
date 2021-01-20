@@ -1,0 +1,8 @@
+@import "../../shared";
+
+.c-textarea {
+  @include input-base;
+
+  padding: 12px;
+  resize: none;
+}

@@ -1,0 +1,111 @@
+## fuel_card
+services:
+    app.clients.infrastructure.driver.paginator:
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Driver\Driver
+    app.clients.infrastructure.driver.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Driver\Driver
+
+    ## crud services
+    app.service.drivers.paginator_service:
+        public: true
+        class: App\Api\Crud\Service\PaginatorService
+        arguments: ['@app.clients.infrastructure.driver.paginator']
+
+    app.service.drivers.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.driver.repository']
+
+    app.service.drivers.read_service:
+        public: true
+        class: App\Api\Crud\Service\ReadService
+        arguments: ['@app.clients.infrastructure.driver.repository']
+
+    ## domain handlers
+    App\Clients\Domain\Driver\UseCase\Create\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.driver.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    App\Clients\Domain\Driver\UseCase\Update\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.driver.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    App\Clients\Domain\Driver\UseCase\ChangeStatus\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.driver.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    App\Clients\Domain\Driver\UseCase\Delete\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.driver.repository'
+            - '@doctrine.orm.default_entity_manager'
+    ## end domain handlers
+
+    ## api requests
+    app.api.action.api.v1.drivers.create_handler_request:
+        public: true
+        class: App\Clients\Domain\Driver\UseCase\Create\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Drivers\CreateHandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@serializer'
+
+    app.api.action.api.v1.drivers.update_handler_request:
+        public: true
+        class: App\Clients\Domain\Driver\UseCase\Update\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Drivers\UpdateHandlerRequestFactory'
+    App\Api\Action\Api\V1\Drivers\UpdateHandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@app.clients.infrastructure.driver.repository'
+            - '@serializer'
+
+    app.api.action.api.v1.drivers.change_status_handler_request:
+        public: true
+        class: App\Clients\Domain\Driver\UseCase\ChangeStatus\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Drivers\ChangeStatusHandlerRequestFactory'
+    App\Api\Action\Api\V1\Drivers\ChangeStatusHandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@app.clients.infrastructure.driver.repository'
+
+    App\Api\Action\Api\V1\Drivers\DeleteHandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@app.clients.infrastructure.driver.repository'
+    app.api.action.api.v1.drivers.delete_handler_request:
+        public: true
+        class: App\Clients\Domain\Driver\UseCase\Delete\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Drivers\DeleteHandlerRequestFactory'
+    ## end api requests
+
+    app.api.resource.driver.data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ObjectDataTransformer
+        arguments:
+            - '@serializer'
+            - '@App\Api\Resource\Driver'
+    app.api.resource.driver.search_data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\DriverSearch'

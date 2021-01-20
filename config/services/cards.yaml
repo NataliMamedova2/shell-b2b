@@ -1,0 +1,179 @@
+## fuel_card
+services:
+    app.clients.infrastructure.card.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Card\Card
+    app.clients.infrastructure.card.repository:
+        public: true
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Card\Card
+
+    app.clients.infrastructure.card.limits.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\FuelLimit\FuelLimit
+
+    App\Clients\Domain\Card\UseCase\Update\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Clients\Domain\Card\UseCase\ChangeDriver\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    App\Clients\Domain\Card\UseCase\DeleteDriver\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@doctrine.orm.default_entity_manager'
+    App\Api\DataTransformer\CardReadDataTransformer:
+        public: true
+        class: App\Api\DataTransformer\CardReadDataTransformer
+        arguments:
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@myself'
+
+    ## list action
+    App\Api\Action\Api\V1\FuelCard\ListAction\ListService:
+        public: true
+        class: App\Api\Action\Api\V1\FuelCard\ListAction\ListService
+        arguments:
+            - '@app.clients.infrastructure.card.paginator'
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@myself'
+    ## end
+
+    ## read action
+    App\Api\Action\Api\V1\FuelCard\ReadAction\ReadService:
+        public: true
+        class: App\Api\Action\Api\V1\FuelCard\ReadAction\ReadService
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@myself'
+            - '@App\Api\DataTransformer\CardReadDataTransformer'
+    ## end
+    ## list limits
+    App\Api\Action\Api\V1\FuelCard\LimitsAction\ListService:
+        public: true
+        class: App\Api\Action\Api\V1\FuelCard\LimitsAction\ListService
+        arguments:
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@App\Api\DataTransformer\CardReadDataTransformer'
+            - '@myself'
+    ## end
+    ## update
+    App\Api\Action\Api\V1\FuelCard\UpdateAction\HandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@app.clients.infrastructure.card.repository'
+            - '@myself'
+            - '@serializer'
+    app.api.action.api.v1.fuel_card.update_action.handler_request:
+        public: true
+        class: 'App\Clients\Domain\Card\UseCase\Update\HandlerRequest'
+        factory: '@App\Api\Action\Api\V1\FuelCard\UpdateAction\HandlerRequestFactory'
+
+    app.api.action.api.v1.fuel_card.change_driver.handler_request:
+        public: true
+        class: App\Clients\Domain\Card\UseCase\ChangeDriver\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\FuelCard\ChangeDriverAction\HandlerRequestFactory'
+    App\Api\Action\Api\V1\FuelCard\ChangeDriverAction\HandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@myself'
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.driver.repository'
+
+    app.api.action.api.v1.fuel_card.delete_driver.handler_request:
+        public: true
+        class: App\Clients\Domain\Card\UseCase\DeleteDriver\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\FuelCard\DeleteDriverAction\HandlerRequestFactory'
+
+    App\Api\Action\Api\V1\FuelCard\DeleteDriverAction\HandlerRequestFactory:
+        arguments:
+           - '@request_stack'
+           - '@myself'
+           - '@app.clients.infrastructure.card.repository'
+           - '@app.clients.infrastructure.driver.repository'
+
+    ## Backend actions
+    App\Clients\Action\Backend\Card\ListAction\ListAction:
+        arguments:
+            - '@app.clients.infrastructure.card.paginator'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@crud.service.target_route'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Card\LimitsAction\ListAction:
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@security.authorization_checker'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Card\BlockAction\HandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@app.clients.infrastructure.card.repository'
+            - '@security.authorization_checker'
+    app.clients.action.backend.card.block_action.handler_request:
+        public: true
+        class: 'App\Clients\Domain\Card\UseCase\AddStopList\HandlerRequest'
+        factory: '@App\Clients\Action\Backend\Card\BlockAction\HandlerRequestFactory'
+
+    App\Clients\Action\Backend\Card\ReadAction\ReadAction:
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@security.authorization_checker'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Card\UpdateAction\UpdateAction:
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@validator'
+            - '@App\Clients\Domain\Card\UseCase\Update\Handler'
+            - '@session.flash_bag'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Card\UpdateAction\HandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@app.clients.infrastructure.card.repository'
+            - '@security.authorization_checker'
+            - '@serializer'
+    app.clients.action.backend.card.update_action.handler_request:
+        public: true
+        class: 'App\Clients\Domain\Card\UseCase\Update\HandlerRequest'
+        factory: '@App\Clients\Action\Backend\Card\UpdateAction\HandlerRequestFactory'

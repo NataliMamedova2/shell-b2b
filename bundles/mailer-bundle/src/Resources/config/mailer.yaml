@@ -1,0 +1,8 @@
+mailer:
+  from_email: 'support@email.com'
+  from_name: 'Mailer'
+
+  templates:
+    - key: 'default'
+      subject: 'Default subject'
+      template: 'emails/templates/default.html.twig'

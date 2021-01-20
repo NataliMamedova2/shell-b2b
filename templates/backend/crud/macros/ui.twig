@@ -1,0 +1,24 @@
+{% macro budge(text, class = 'success') %}
+    {% if text == true %}
+        {% set text = 'label.yes'|trans %}
+        {% set class = 'success' %}
+    {% endif %}
+    {% if text == false %}
+        {% set text = 'label.no'|trans %}
+        {% set class = 'default' %}
+    {% endif %}
+
+    <span class="label label-rouded label-{{ class }}">{{ text }}</span>
+{% endmacro budge %}
+
+{% macro labeled(value, textValueMap, colorValueMap) %}
+
+    {% set color = colorValueMap[value]|default('default') %}
+    {% set text = textValueMap[value]|default(value) %}
+
+    <span class="label label-{{ color }}">{{ text }}</span>
+{% endmacro labeled %}
+
+{% macro render_number(value, decimal = 2, devider = 100) %}
+    {{ (value / devider)|number_format(decimal, ',', ' ') }}
+{% endmacro render_number %}

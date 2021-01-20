@@ -1,0 +1,14 @@
+@import "../../../shared";
+
+.m-create-card {
+
+  &__info {
+    margin-top: 25px;
+    max-width: 350px;
+  }
+
+  .c-form__group {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}

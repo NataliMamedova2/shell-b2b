@@ -1,0 +1,44 @@
+{% import "backend/crud/macros/link.twig" as link %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.fuel_code'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.replacement_fuel_code'|trans }}
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>{{ entity.fuelCode }}</td>
+            <td data-tablesaw-no-labels>{{ entity.fuelReplacementCode }}</td>
+            <td data-tablesaw-no-labels>
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-danger delete_link"
+                            title="{{ 'label.delete'|trans }}"
+                            data-toggle="modal"
+                            data-target="#delete-confirm-modal"
+                            data-href="{{ path('admin_fuel_replacement_delete', {id: entity.id}) }}"
+                            data-redirect="{{ target_url('admin_fuel_replacement_list') }}"
+                            data-id="{{ entity.id }}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        {{ 'label.delete'|trans }}
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

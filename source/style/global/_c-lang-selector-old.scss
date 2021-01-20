@@ -1,0 +1,81 @@
+.c-lang-selector-old {
+  width: auto;
+  height: auto;
+  position: relative;
+  background-color: $palette-light;
+
+  &__list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: none;
+    padding-top: 36px;
+
+    flex-direction: column;
+    pointer-events: none;
+
+    &:before {
+      content: "";
+      @include absolute-fill(1);
+      box-shadow: $shadow-select;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    height: auto;
+    display: block;
+    background-color: $palette-light;
+  }
+
+  &__button {
+    width: 36px;
+    height: 36px;
+    padding: 0 5px;
+    text-align: center;
+    line-height: 36px;
+    display: block;
+    font: {
+      family: $family-main;
+      size: $font-paragraph;
+      weight: $weight-medium;
+    }
+    min-width: 36px;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+
+    font-size: 12px;
+    text-transform: uppercase;
+    color: $palette-dark;
+
+    &:hover {
+      background-color: $palette-fill-grey;
+    }
+  }
+
+  &.is-active {
+    .c-lang-selector-old__list {
+      display: flex;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover {
+    .c-lang-selector-old__list {
+      display: flex;
+      pointer-events: auto;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+}

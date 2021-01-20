@@ -1,0 +1,41 @@
+@import "../../shared";
+
+.c-styled-link {
+  @include style-link;
+  width: auto;
+  max-width: 100%;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  background-color: $palette-fill-grey;
+  color: $palette-dark;
+  display: flex;
+  align-items: center;
+
+  &__ellipse {
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+
+  @include breakpoint-hover() {
+    &:hover {
+      color: $palette-attention;
+
+      .c-icon {
+        color: $palette-attention;
+      }
+    }
+  }
+
+  .c-icon {
+    margin-left: 4px;
+    color: $palette-grey;
+  }
+
+  .c-icon--pending {
+    font-size: 14px;
+  }
+}

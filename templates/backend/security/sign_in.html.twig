@@ -1,0 +1,46 @@
+{% extends 'backend/_layout/base.html.twig' %}
+
+{% block body %}
+    <section id="wrapper" class="login-register">
+        <div class="login-box">
+            <div class="white-box">
+
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <form class="form-horizontal form-material" id="loginform" action="{{ path("admin_sign_in") }}" method="post">
+                    <h3 class="box-title m-b-20">Sign In</h3>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input class="form-control" name="username" type="text" required="" placeholder="Username" value="{{ lastUsername }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input class="form-control" name="password" type="password" required="" placeholder="Password">
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="checkbox checkbox-primary pull-left p-t-0">
+                                <input id="checkbox-signup" type="checkbox" name="_remember_me">
+                                <label for="checkbox-signup">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-xs-12">
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,31 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+bootstrap: _bootstrap.php
+modules:
+    enabled:
+        - WebDriver
+        - Db
+        - Cli
+        - Filesystem
+        - Tests\Helper\Acceptance
+        - Tests\Helper\Fixtures
+    config:
+        WebDriver:
+            url: '%WEB_DRIVER_URL%'      # url of app
+            browser: chrome
+            host: '%WEB_DRIVER_HOST%'    # selenium|phantomjs server host, default 127.0.0.1
+            wait: 15
+            capabilities:
+                acceptInsecureCerts: true
+                enableVerboseLogging: true
+                chromeOptions:
+                    args: ["disable-dev-shm-usage", "no-sandbox", "disable-infobars", "disable-extensions", "disable-gpu"]
+extensions:
+    enabled:
+        - Codeception\Extension\Recorder:
+              ignore_steps: [have, grab*]

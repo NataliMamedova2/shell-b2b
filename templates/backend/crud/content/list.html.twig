@@ -1,0 +1,83 @@
+{% extends 'backend/_layout/layout.html.twig' %}
+
+{% block content %}
+
+    {% block filter %}
+        {% if view.hasChildrenByCapture('filter') %}
+            {{ view_render('filter', view) }}
+        {% endif %}
+    {% endblock %}
+
+    {% block actions %}
+        {% if view.hasChildrenByCapture('actions') %}
+            <div class="row p-b-20">
+                <div class="col-sm-12">
+                    <div class="pull-right">
+                        {% for data in view.getChildrenByCaptureTo('actions')[0] %}
+                            {{ view_render(data.captureTo, data) }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                {% if view.paginator is defined and view.paginator.count > 0 %}
+
+                    {% block table %}
+                        {% if view.hasChildrenByCapture('table') %}
+                            {{ view_render('table', view) }}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% if view.hasChildrenByCapture('paginator') %}
+                        {{ view_render('paginator', view) }}
+                    {% endif %}
+                {% else %}
+                    {% block no_result_content %}
+                        <div class="text-center">
+                            <h2 class="m-40">{{ 'no_result'|trans }}</h2>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% block delete_modal %}
+        <div class="modal fade" id="delete-confirm-modal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <form action="" method="post" id="form-delete-confirm">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="deleteModalLabel">
+                                {% trans %}modal_header.delete_entity{% endtrans %}
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            {% trans %}modal_delete.are_you_sure_text?{% endtrans %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                {% trans %}btn.close{% endtrans %}
+                            </button>
+                            <button type="submit" class="btn btn-danger" id="btn-delete-confirm">
+                                {% trans %}btn.delete{% endtrans %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/crud/list.js') }}"></script>
+{% endblock %}

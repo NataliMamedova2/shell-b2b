@@ -1,0 +1,56 @@
+{% trans_default_domain 'frontend' %}
+
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Turn off telephone number detection. -->
+    <meta name="format-detection" content="telephone=no">
+    <title>{% trans %}Shell Cards{% endtrans %} | {% trans %}Loading...{% endtrans %}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style> html {display:none;} </style>
+    <script nonce="{{ csp_nonce() }}">
+        if (self === top) {
+            document.documentElement.style.display = 'block';
+        }
+        else {
+            top.location = self.location;
+        }
+    </script>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('style/app.css') }}">
+    {% endblock %}
+
+    <script nonce="{{ csp_nonce() }}">
+        window.__app__static__i18n__ = {
+	        loadingTranslations: "{{ "Loading translations"|trans }}",
+	        loadingProfileData: "{{ "Load profile data"|trans }}",
+	        pageError: "{{ "Page error"|trans }}",
+	        redirectToPortal: "{{ "Redirect to portal"|trans }}",
+            offlineMessage: "{{ "You are offline"|trans }}",
+	        cardTransactionFileNamePrefix: "{{ "Transactions_of_the_cards"|trans }}",
+	        companyTransactionFileNamePrefix: "{{ "Transactions_of_the_company"|trans }}"
+        }
+    </script>
+</head>
+<body>
+
+    <div id="root">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+    </div>
+    <div id="overlay-root"></div>
+    <div id="portal-root"></div>
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/app.js') }}" nonce="{{ csp_nonce() }}"></script>
+{% endblock %}
+</body>
+</html>

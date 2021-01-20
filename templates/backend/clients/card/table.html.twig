@@ -1,0 +1,104 @@
+{% import "backend/crud/macros/link.twig" as link %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.card_number'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.company'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.status'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>
+                {{ entity.cardNumber }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {% if view.clients[entity.client1CId] is defined %}
+                    {{ view.clients[entity.client1CId].fullName }}
+                {% endif %}
+                ({{ entity.client1CId }})
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.status, {
+                    '0': 'blocked'|trans,
+                    '1': 'active'|trans
+                }, {
+                    '0': 'default',
+                    '1': 'success'
+                }) }}
+                {% if entity.exportStatus.onModeration == true or entity.cardNumber in view.limitsCardNumbersOnModeration %}
+                    <i class="fa fa-circle text-purple m-r-5"></i>{{ 'label.on_moderation'|trans }}
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>
+                {% if entity.isBlocked == false %}
+                    <a href="{{ path('admin_clients_card_read', { id: entity.id }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'label.edit'|trans }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        {{ 'label.edit'|trans }}
+                    </a>
+                {% endif %}
+                <a href="{{ path('admin_clients_card_limits_list', { id: entity.id }) }}"
+                   class="btn btn-xs btn-primary" title="{{ 'btn.view_limits'|trans }}">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    {{ 'btn.view_limits'|trans }}
+                </a>
+                {% if entity.exportStatus.onModeration == false and entity.cardNumber not in view.limitsCardNumbersOnModeration and entity.isBlocked == false %}
+                    <button class="btn btn-xs btn-danger"
+                            title="{{ 'btn.block_card'|trans }}"
+                            data-toggle="modal"
+                            data-target="#block_card__confirm_modal"
+                            data-href="{{ path('admin_clients_card_block', { id: entity.id }) }}"
+                            data-redirect="{{ target_url('admin_clients_card_list') }}">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        {{ 'btn.block_card'|trans }}
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="modal fade" id="block_card__confirm_modal" tabindex="-1" role="dialog" aria-labelledby="blockCardModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form action="" method="post" id="form-block-confirm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="blockCardModalLabel">
+                        {% trans %}modal_header.block_card{% endtrans %}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {% trans %}modal_block_card.are_you_sure_text?{% endtrans %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        {% trans %}btn.close{% endtrans %}
+                    </button>
+                    <button type="submit" class="btn btn-danger" id="btn-block-confirm">
+                        {% trans %}btn.block_card{% endtrans %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

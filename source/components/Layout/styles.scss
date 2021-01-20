@@ -1,0 +1,64 @@
+@import "../../shared";
+
+.m-layout {
+  width: 100%;
+  height: auto;
+  position: relative;
+
+
+  &.has-no-sidebar {
+    .m-layout__main {
+      padding-left: 0;
+    }
+  }
+
+  &__header {
+    width: 100%;
+    height: 56px;
+    display: block;
+    background-color: $palette-fill-light;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+  }
+
+  &__main {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: with-header-height(0) 0 0 225px;
+    background-color: $palette-fill-grey;
+    @include min-screen-height;
+  }
+
+  &__body {
+    width: 100%;
+    height: auto;
+    background-color: crimson;
+  }
+
+  &__sidebar {
+    width: 225px;
+    @include screen-height-except($header-height);
+    position: fixed;
+    left: 0;
+    top: with-header-height(0px);
+    z-index: 5;
+    border-right: 1px solid $palette-line;
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include styled-scrollbar;
+  }
+
+  @include breakpoint-across-mobile-small() {
+    &__sidebar {
+      display: none;
+    }
+
+    &__main {
+      padding: with-header-height(0) 0 0 0;
+    }
+
+  }
+}

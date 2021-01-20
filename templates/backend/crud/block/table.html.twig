@@ -1,0 +1,16 @@
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table" data-tablesaw-mode="stack">
+    <thead>
+    {% block table_head %}
+        {% for data in view.getChildrenByCaptureTo('table-head-row') %}
+            {{ view_render(data.captureTo, data) }}
+        {% endfor %}
+    {% endblock table_head %}
+    </thead>
+    <tbody>
+    {% block table_body %}
+        {% for data in view.getChildrenByCaptureTo('table-body-row') %}
+            {{ view_render(data.captureTo, data) }}
+        {% endfor %}
+    {% endblock table_body %}
+    </tbody>
+</table>

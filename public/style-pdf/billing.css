@@ -1,0 +1,181 @@
+/** RESET **/
+*,
+*:after,
+*:before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100%;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    height: 100%;
+}
+
+html,
+body {
+    font-size: 10pt;
+    font-family: "Arial", sans-serif;
+}
+
+table {
+    width: 100%;
+    cellspacing: 0;
+    border-collapse: collapse;
+}
+
+td {
+    text-align: right;
+    padding: 2px 4px;
+}
+
+tfoot {
+    font-weight: 800;
+    font-size: 11pt;
+}
+
+thead td {
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/** GENERAL SETTINGS **/
+.is-centered {
+    text-align: center;
+}
+
+.is-left {
+    text-align: left;
+}
+
+.is-right {
+    text-align: right;
+}
+.is-bold {
+    font-weight: bold;
+}
+.is-underlined {
+    text-decoration: underline;
+}
+
+.cl-1-2 {
+    width: 7%;
+}
+
+.cl-1 {
+    width: 14%;
+}
+.cl-2 {
+    width: 28%;
+}
+.cl-3 {
+    width: 42%;
+}
+.cl-5-5 {
+    width: 79%;
+}
+.cl-6 {
+    width: 84%;
+}
+.h-2 {
+    font-size: 12pt;
+}
+.h-3 {
+    font-size: 11pt;
+}
+.h-4 {
+    font-size: 10pt;
+}
+.h-5 {
+    font-size: 9pt;
+}
+.h-6 {
+    font-size: 8pt;
+}
+
+/** BLOCKS STYLE **/
+
+.m-bill {
+    padding: 20px 50px;
+    font-size: 10pt;
+    line-height: 16pt;
+    font-family: "Arial", sans-serif;
+}
+.m-bill__row {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    float: left;
+}
+.m-bill__logo {
+    width: 300px;
+    position: relative;
+    min-height: 64px;
+    float: left;
+    padding: 20px 10px;
+}
+
+.m-bill__header {
+    width: calc(100% - 300px);
+    float: left;
+}
+
+.m-bill__logo img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+.m-bill__title {
+    margin-top: 40px;
+    margin-bottom: 8px;
+    font-weight: 800;
+}
+.m-bill__title p {
+    padding: 2px 0;
+}
+
+tfoot .cl-1,
+.m-bill__tr  td {
+    border: 1px solid #000000;
+}
+.m-bill__attention {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid #000000;
+}
+.m-bill__end {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.m-bill__payer {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.m-bill__footer {
+    margin-top: 30px;
+}
+.m-bill__footer td,
+.m-bill__payer td {
+    text-align: left;
+}
+.m-bill__footer .h-5 {
+    padding-top: 2px;
+    text-align: center;
+}
+.m-bill__row {
+    display: flex;
+}
+.m-bill__attention p {
+    min-height: 20px;
+}
+.has-border-b {
+    border-bottom: 1px solid #000000;
+}

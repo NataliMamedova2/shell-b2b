@@ -1,0 +1,19 @@
+## discount
+services:
+    app.clients.infrastructure.discount.repository:
+        class: 'App\Clients\Infrastructure\Discount\Repository\DiscountRepository'
+        factory: '@App\Clients\Infrastructure\Discount\Repository\DiscountRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+
+    app.api.discounts.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.discount.repository']
+
+    app.api.resource.discounts.list_data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\Discount'

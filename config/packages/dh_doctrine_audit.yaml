@@ -1,0 +1,14 @@
+dh_doctrine_audit:
+    # Configuration reference available at:
+    # https://github.com/DamienHarper/DoctrineAuditBundle#configuration
+    table_suffix: '_history'
+    ignored_columns:    # properties ignored by the audit process in any audited entity
+        - createdAt
+        - updatedAt
+
+    entities:
+        App\Clients\Domain\Card\Card: ~
+        App\Clients\Domain\Card\StopList: ~
+        App\Clients\Domain\FuelLimit\FuelLimit: ~
+        App\Clients\Domain\Invoice\Invoice: ~
+        App\Clients\Domain\Invoice\Item: ~

@@ -1,0 +1,76 @@
+{% block cropper_image_widget %}
+    <div class="cropper__block cropper__block_{{ id }} form-group">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="img-container">
+                    <img id="original__image" src="{{ original_file }}" class="img-responsive" alt="">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="docs-preview clearfix">
+                    <div class="img-preview preview-lg img-responsive"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row actions">
+            <div class="col-md-8 docs-buttons">
+                <!-- <h3>Toolbar:</h3> -->
+
+                <div class="btn-group">
+                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                        <input type="file" class="sr-only" onchange="window.upload.onChange(this)" id="inputImage"
+                               data-name="file" name="{{ full_name }}" accept="image/*">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs">
+                                <span class="fa fa-upload"></span>
+                            </span>
+                    </label>
+                    <button type="button" class="btn btn-primary" data-method="reset" title="Reset">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="Reset">
+                            <span class="fa fa-refresh"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="errors__block has-error"></div>
+    </div>
+{% endblock %}
+
+{% block upload_cropped_image_widget %}
+    <div id="image_block_{{ id }}">
+        <input type="file" class="dropify dropify-cropper image-element__{{ id }}" title=""
+               data-default-file="{{ default_file }}"
+               data-original-file="{{ original_file }}"
+               data-cropper-options='{{ cropper_options|json_encode|raw }}'
+               data-cropper-data='{{ cropper_data|json_encode|raw }}'
+               data-show-remove="{{ allow_remove ? 'true' : 'false' }}"
+               data-show-loader="false"
+               accept="image/*"
+        />
+
+        <div class="hidden" id="modal-form">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+    {% if form.parent.vars.errors is not empty %}
+        <span class="has-error">
+            {% for error in form.parent.vars.errors %}
+                {% if error.origin.name == name %}
+                    <span class="help-block">
+                        <span class="form-error-message">
+                            {{error.message}}
+                        </span>
+                    </span>
+                {% endif %}
+            {%endfor%}
+        </span>
+    {% endif %}
+
+    <script>
+        window.__CROPPER_CONFIG__ = {
+            uploadUrl: '{{ upload_url }}',
+            cropImageUrl: '{{ crop_image_url }}'
+        };
+    </script>
+{% endblock %}

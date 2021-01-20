@@ -1,0 +1,26 @@
+@import "../../shared";
+
+.c-logo {
+  height: auto;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  &__image {
+    width: auto;
+    height: auto;
+    display: block;
+    margin-right: 12px;
+  }
+
+  .c-text {
+    font-weight: $weight-medium;
+  }
+
+  &.is-static {
+
+  }
+
+  &.is-active {
+    pointer-events: none;
+  }
+}

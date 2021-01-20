@@ -1,0 +1,34 @@
+## clients_partners
+services:
+  app.partners.action.backend.user.list_action.query_request:
+    public: true
+    class: App\Clients\Action\Backend\Partner\ListAction\QueryRequest
+    arguments:
+      - '@request_stack'
+      - '@security.token_storage'
+      - '@security.authorization_checker'
+
+  App\Api\Action\Api\V1\PartnersMe\ProfileAction\ProfileAction:
+    class: App\Api\Action\Api\V1\PartnersMe\ProfileAction\ProfileAction
+    arguments:
+      - '@partnerMyself'
+      - '@app.users.infrastructure.user.repository'
+      - '@App\Api\Resource\PartnersMeProfile'
+      - '@app.api.crud.json_response'
+    tags: ['controller.service_arguments']
+
+  app.partners.infrastructure.partner.repository:
+      public: true
+      class: App\Partners\Infrastructure\Partner\Repository\PartnerRepository
+      factory: '@App\Partners\Infrastructure\Partner\Repository\PartnerRepositoryFactory'
+      arguments:
+        - '@doctrine.orm.entity_manager'
+        - '@infrastructure.criteria.criteria_factory'
+  App\Partners\Infrastructure\Partner\Repository\PartnerRepository: '@app.partners.infrastructure.partner.repository'
+
+  app.partners.application.validator.constraints.partner_exist_validator:
+    class: App\Partners\Application\Validator\Constraints\PartnerExistValidator
+    arguments: ['@app.partners.infrastructure.partner.repository']
+    tags:
+      - { name: validator.constraint_validator }
+  App\Partners\Application\Validator\Constraints\PartnerExistValidator: '@app.partners.application.validator.constraints.partner_exist_validator'

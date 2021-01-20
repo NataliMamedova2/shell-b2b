@@ -1,0 +1,70 @@
+## clients_register_token
+services:
+    app.clients.infrastructure.register_token.repository:
+        public: true
+        class: 'App\Clients\Infrastructure\RegisterToken\Repository\RegisterRepository'
+        factory: '@App\Clients\Infrastructure\RegisterToken\Repository\RegisterRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+
+    app.clients.domain.register_token.use_case.create.handler:
+        class: App\Clients\Domain\RegisterToken\UseCase\Create\Handler
+        arguments:
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@App\Clients\Infrastructure\RegisterToken\Service\TokenGenerator'
+            - '@doctrine.orm.entity_manager'
+
+    app.clients.domain.register_token.use_case.update.handler:
+        class: App\Clients\Domain\RegisterToken\UseCase\Update\Handler
+        arguments:
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@App\Clients\Infrastructure\RegisterToken\Service\TokenGenerator'
+            - '@doctrine.orm.entity_manager'
+
+    app.clients.domain.register_token.use_case.delete.handler:
+        class: App\Clients\Domain\RegisterToken\UseCase\Delete\Handler
+        arguments:
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Clients\Application\Listener\RegisterToken\RegisterLinkSubscriber:
+        class: App\Clients\Application\Listener\RegisterToken\RegisterLinkSubscriber
+        arguments:
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@router'
+            - '@MailerBundle\Service\Sender'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    App\Clients\Action\Api\SendRegisterLinkAction\SendRegisterLinkAction:
+        arguments:
+            - '@validator'
+            - '@serializer'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@app.clients.domain.register_token.use_case.create.handler'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Api\ReSendRegisterLinkAction\ReSendRegisterLinkAction:
+        arguments:
+            - '@validator'
+            - '@serializer'
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@app.clients.domain.register_token.use_case.update.handler'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Frontend\Company\SignUpAction:
+        class: App\Clients\Action\Frontend\Company\SignUpAction
+        arguments:
+            - '@app.clients.infrastructure.register_token.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@form.factory'
+            - '@app.clients.domain.user.use_case.register.handler'
+            - '@app.clients.domain.register_token.use_case.delete.handler'
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
+            - '@twig'
+        tags:
+            - { name: controller.service_arguments }

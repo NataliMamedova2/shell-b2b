@@ -1,0 +1,58 @@
+{% import "backend/crud/macros/link.twig" as link %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table" data-tablesaw-mode="stack">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.email'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.full_name'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.company'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.category'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.comment'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist" class="date">
+            {{ 'label.updated_at'|trans }}
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>
+                {{ entity.email }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.name }}</td>
+            <td data-tablesaw-no-labels>{{ entity.user.company.name }}</td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.category.value, {
+                    'general-question': 'general-question'|trans,
+                    'financial-issue': 'financial-issue'|trans,
+                    'new-card-order': 'new-card-order'|trans,
+                    'complaints': 'complaints'|trans
+                }, {
+                    'general-question': 'purple',
+                    'financial-issue': 'success',
+                    'new-card-order': 'info',
+                    'complaints': 'default'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.comment }}</td>
+            <td data-tablesaw-no-labels>{{ entity.createdAt|localizeddate('medium', 'medium') }}</td>
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

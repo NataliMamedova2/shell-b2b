@@ -1,0 +1,5 @@
+<tr>
+    {% for data in view.getChildrenByCaptureTo('table-td') %}
+        {{ view_render(data.captureTo, data) }}
+    {% endfor %}
+</tr>

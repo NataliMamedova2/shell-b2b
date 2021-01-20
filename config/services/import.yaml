@@ -1,0 +1,154 @@
+## import
+services:
+    App\Partners\Action\Command\CreatePartners:
+        class: App\Partners\Action\Command\CreatePartners
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@App\Clients\Infrastructure\User\Service\PasswordEncoder'
+            - !tagged import.parsed_file_handler
+        tags:
+            - { name: console.command }
+
+    App\Import\Action\Command\Import1cCommand:
+        class: App\Import\Action\Command\Import1cCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@oneup_flysystem.import_1s_filesystem'
+            - '@oneup_flysystem.default_filesystem'
+            - '@app.import.infrastructure.import.repository'
+            - '@app.import.infrastructure.import.file.repository'
+            - '@messenger.routable_message_bus'
+            - '@logger'
+            - !tagged import.parsed_file_handler
+        tags:
+            - { name: console.command }
+    App\Import\Action\Command\ImportPcCommand:
+        class: App\Import\Action\Command\ImportPcCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@oneup_flysystem.sync_pc_source_filesystem'
+            - '@oneup_flysystem.default_filesystem'
+            - '@app.import.infrastructure.import.repository'
+            - '@app.import.infrastructure.import.file.repository'
+            - '@messenger.routable_message_bus'
+            - '@logger'
+            - !tagged import.parsed_file_handler
+        tags:
+            - { name: console.command }
+    App\Import\Action\Command\ImportDocuments:
+        arguments:
+            - '@oneup_flysystem.import_documents_filesystem'
+            - '@App\Clients\Domain\Document\Service\UploadDocumentFileService'
+            - '@app.clients.infrastructure.document.repository'
+            - '@doctrine.orm.default_entity_manager'
+            - '@logger'
+        tags:
+            - { name: console.command }
+
+    App\Import\Action\Backend\DownloadFileAction:
+        class: App\Import\Action\Backend\DownloadFileAction
+        arguments: ['@oneup_flysystem.default_filesystem', '@security.authorization_checker']
+        tags:
+            - { name: controller.service_arguments }
+
+    app.import.infrastructure.import.repository:
+        class: Infrastructure\Repository\DoctrineRepository
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Import\Domain\Import\Import
+
+    app.import.infrastructure.import.file.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Import\Domain\Import\File\File
+
+    app.import.infrastructure.file.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Import\Domain\Import\File\File
+
+    app.import.application.message_bus.message_handler.parsing_file_handler:
+        class: App\Import\Application\MessageBus\MessageHandler\ParsingFileHandler
+        arguments:
+            - '@app.import.infrastructure.import.file.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@oneup_flysystem.default_filesystem'
+            - !tagged import.parsed_file_handler
+        tags:
+            - { name: messenger.message_handler }
+
+    ## file_data_saver
+    #client
+    app.import.application.file_data_saver.client_data_saver:
+        class: App\Import\Application\FileDataSaver\ClientDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #client contract
+    app.import.application.file_data_saver.client_contract_data_saver:
+        class: App\Import\Application\FileDataSaver\ClientContractDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #transaction
+    app.import.application.file_data_saver.transaction_data_saver:
+        class: App\Import\Application\FileDataSaver\TransactionDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%', '@app.clients.infrastructure.fuel.replacement_type.repository']
+        tags:
+            - { name: import.parsed_file_handler }
+    #fuel card
+    app.import.application.file_data_saver.fuel_card_data_saver:
+        class: App\Import\Application\FileDataSaver\FuelCardLimitDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #fuel type
+    app.import.application.file_data_saver.fuel_type_data_saver:
+        class: App\Import\Application\FileDataSaver\FuelTypeDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #fuel price
+    app.import.application.file_data_saver.fuel_price_data_saver:
+        class: App\Import\Application\FileDataSaver\FuelPriceDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #card
+    app.import.application.file_data_saver.card_data_saver:
+        class: App\Import\Application\FileDataSaver\CardDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #Discount
+    app.import.application.file_data_saver.discount_data_saver:
+        class: App\Import\Application\FileDataSaver\DiscountDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #Shell Information
+    app.import.application.file_data_saver.shell_information_data_saver:
+        class: App\Import\Application\FileDataSaver\ShellInformationDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    ##pc file
+    app.import.application.file_data_saver.client_info_data_saver:
+        class: App\Import\Application\FileDataSaver\ClientInfoDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }
+    #tc file
+    app.import.application.file_data_saver.refill_balance_data_saver:
+        class: App\Import\Application\FileDataSaver\RefillBalanceDataSaver
+        arguments: ['@doctrine.orm.entity_manager', '@logger', '%kernel.debug%']
+        tags:
+            - { name: import.parsed_file_handler }

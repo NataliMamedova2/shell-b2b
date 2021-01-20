@@ -1,0 +1,33 @@
+$palette-dark: #404040;
+$palette-light: #FFFFFF;
+$palette-grey: #7E7E7E;
+$palette-darkgrey: #595959;
+$palette-disable: #BABABA;
+
+$palette-clear: rgba(255,255,255,0);
+
+$palette-attention: #DD1D21;
+$palette-attention-t7: rgba($palette-attention, 0.7);
+$palette-attention-t5: rgba($palette-attention, 0.5);
+$palette-attention-t1: rgba($palette-attention, 0.1);
+$palette-attention-d1: darken($palette-attention, 10%);
+
+$palette-line: #D9D9D9;
+$palette-line-t5: rgba(#D9D9D9, 0.5);
+$palette-border: #E1E5E8;
+
+$palette-fill-grey: #F7F7F7;
+$palette-fill-grey-d1: darken($palette-fill-grey, 10%);
+$palette-fill-grey-d2: darken($palette-fill-grey, 20%);
+$palette-fill-darkgrey: #D9D9D9;
+$palette-fill-light: #FFF;
+
+$palette-error: crimson;
+$palette-success: #67ee70;
+$palette-warning: #FCD839;
+$palette-warning-d1: darken($palette-warning, 10%);
+
+
+$palette-overlay: rgba(black, 0.8);
+
+

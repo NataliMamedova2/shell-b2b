@@ -1,0 +1,58 @@
+@import "../../../shared";
+
+.m-bill-create-calc {
+  .c-paper {
+    padding: 25px 20px;
+  }
+
+  .c-field__array-item {
+    display: block;
+    position: relative;
+
+    .c-icon--remove,
+    .c-icon--close {
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $palette-light;
+      }
+    }
+  }
+
+  .c-form__actions {
+    border-top: 1px solid $palette-line;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    padding: 40px 20px 0;
+    margin-top: 0;
+  }
+
+  @include breakpoint-mobile {
+    .c-paper {
+      padding: 0 10px 30px;
+    }
+
+    .c-form__actions {
+      width: calc(100% + 20px);
+      margin-left: -10px;
+      padding: 20px 20px 0;
+    }
+  }
+
+  @include breakpoint-tablet {
+
+    .c-form__actions {
+      width: calc(100% + 100px);
+      margin-left: -50px;
+      padding: 25px 50px 0;
+    }
+
+    .c-paper {
+      padding: 25px 50px 40px;
+    }
+  }
+}

@@ -1,0 +1,106 @@
+@import "../../shared";
+
+.c-pagination {
+  width: 100%;
+  height: auto;
+  background-color: $palette-light;
+  padding: 40px;
+
+  &__wrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__wrapper.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+
+    * {
+      pointer-events: none !important;
+    }
+  }
+
+  &__item {
+    height: 32px;
+    width: auto;
+    min-width: 32px;
+    border-radius: 16px;
+    margin: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include style-paragraph;
+    font-weight: $weight-bold;
+    line-height: 1;
+    color: $palette-dark;
+
+    &.is-active {
+      background-color: $palette-warning;
+      pointer-events: none;
+      user-select: none;
+      cursor: inherit;
+    }
+
+    &.is-disabled {
+      pointer-events: none;
+      user-select: none;
+      cursor: inherit;
+    }
+
+    @include breakpoint-hover() {
+      &:not(.is-active):hover {
+        background-color: $palette-fill-grey;
+      }
+    }
+  }
+  &__link {
+    color: inherit;
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  &__control {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+
+    &.is-disabled {
+      pointer-events: none;
+      cursor: inherit;
+      .c-icon { color: $palette-fill-grey-d1 }
+    }
+
+    @include breakpoint-hover() {
+      &:not(.is-disabled):hover {
+        background-color: $palette-fill-grey;
+      }
+    }
+  }
+
+  @include breakpoint-mobile() {
+    padding: 30px 0;
+
+    &__item,
+    &__control {
+      margin: 0;
+    }
+
+  }
+
+  @include breakpoint-across-mobile-tablet() {
+    padding: 10px 10px 30px;
+  }
+}
+

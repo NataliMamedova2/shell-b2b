@@ -1,0 +1,50 @@
+@import "../../shared";
+
+.c-checkbox {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__native {
+    @include visuallyhidden();
+    left: 0;
+    top: 0;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    border: 1px solid $palette-line;
+    flex: none;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: $palette-attention;
+      display: none;
+    }
+  }
+
+  .c-checkbox__label {
+    line-height: 1;
+    padding-left: 14px;
+    margin-bottom: 0;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  .c-checkbox__native:checked + .c-checkbox__icon:before {
+    display: block;
+  }
+
+}

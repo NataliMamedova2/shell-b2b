@@ -1,0 +1,161 @@
+## transactions
+services:
+    ## cards transactions
+    App\Clients\Infrastructure\Transaction\Repository\TransactionRepository:
+        factory: '@App\Clients\Infrastructure\Transaction\Repository\TransactionRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+    app.clients.infrastructure.transaction_card.repository: '@App\Clients\Infrastructure\Transaction\Repository\TransactionRepository'
+
+    ## partner transactions
+    App\Partners\Infrastructure\Repository\Transaction\TransactionRepository:
+        factory: '@App\Partners\Infrastructure\Repository\Transaction\TransactionRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+    app.partners.infrastructure.transaction.repository: '@App\Partners\Infrastructure\Repository\Transaction\TransactionRepository'
+    app.clients.infrastructure.transaction_card.paginator:
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Transaction\Card\Transaction
+
+    App\Api\Action\Api\V1\Transactions\Card\ListAction\ListService:
+        public: true
+        class: App\Api\Action\Api\V1\Transactions\Card\ListAction\ListService
+        arguments:
+            - '@app.clients.infrastructure.transaction_card.paginator'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.transaction.card.region.repository'
+            - '@app.clients.infrastructure.transaction.card.network_station.repository'
+            - '@App\Clients\Infrastructure\ClientInfo\Service\Balance\BalanceService'
+    App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\CreateExcelService:
+        class: App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\CreateExcelService
+        arguments:
+            - '@translator'
+            - '@cache.app'
+    App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\GetReportTransactionsHandler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+    App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\CreateReportAction:
+        arguments:
+            - '@App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\CreateExcelService'
+            - '@myself'
+        tags: ['controller.service_arguments']
+
+    ## company transactions
+    app.clients.infrastructure.transaction_company.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Transaction\Company\Transaction
+
+    App\Api\Action\Api\V1\Transactions\Company\ListAction\ListService:
+        public: true
+        class: App\Api\Action\Api\V1\Transactions\Company\ListAction\ListService
+        arguments:
+            - '@app.clients.infrastructure.transaction_company.repository'
+            - '@App\Clients\Infrastructure\ClientInfo\Service\Balance\BalanceService'
+
+    App\Api\Action\Api\V1\Transactions\Company\ListAction\QueryRequest:
+        public: true
+        class: App\Api\Action\Api\V1\Transactions\Company\ListAction\QueryRequest
+        arguments:
+            - '@request_stack'
+            - '@myself'
+
+    ## company transactions report
+    App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\Service\GetReportTransactionsHandler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.transaction_company.repository'
+    App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\CreateReportAction:
+        arguments:
+            - '@App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\Service\CreateExcelService'
+            - '@myself'
+        tags: ['controller.service_arguments']
+
+    ## regions
+    app.clients.infrastructure.transaction.card.region.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Transaction\Card\Region
+    app.api.action.service.transaction_card.regions.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.transaction.card.region.repository']
+
+    app.api.resource.transaction_card.regions_list.data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\TransactionRegion'
+    ## network_stations
+    app.clients.infrastructure.transaction.card.network_station.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Transaction\Card\NetworkStation
+    app.api.action.service.transaction_card.network_stations.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.transaction.card.network_station.repository']
+
+    app.api.resource.transaction_card.network_stations_list.data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\NetworkStation'
+
+    ## supplies
+    app.api.action.service.transaction_card.supplies.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.fuel.type.repository']
+
+    app.api.resource.transaction_card.supplies_list.data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\Supply'
+
+    ## Backend
+    App\Clients\Action\Backend\Transaction\ListAction\ListAction:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.transaction_card.paginator'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@crud.service.target_route'
+        tags: ['controller.service_arguments']
+        
+    App\Clients\Action\Backend\Transaction\CreateReportAction\CreateReportAction:
+        public: true
+        arguments:
+            - '@App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\CreateExcelService'
+            - '@app.clients.infrastructure.client.repository'
+        tags: ['controller.service_arguments']
+
+    App\Clients\View\Form\Transaction\FilterFormType:
+        arguments:
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@request_stack'
+        tags:
+            - { name: form.type, alias: App\Clients\View\Form\Transaction\FilterFormType }

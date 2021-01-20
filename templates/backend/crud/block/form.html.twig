@@ -1,0 +1,22 @@
+{% set form = view.variable('form') %}
+
+{% set params = app.request.get('_route_params') %}
+
+{{ form_start(form, {'action': path(view.variable('actionRoute'), params)}) }}
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="white-box">
+            {{ form_widget(form) }}
+            {% if view.getChildrenByCaptureTo('actions') is not empty %}
+                <hr/>
+                <div class="form-group">
+                    {% for data in view.getChildrenByCaptureTo('actions')[0] %}
+                        {{ view_render(data.captureTo, data) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{{ form_end(form, {'render_rest': false}) }}
+

@@ -1,0 +1,22 @@
+@import "../../shared";
+
+body.is-frozen {
+  @include screen-height;
+  overflow: hidden;
+
+  @include breakpoint-mobile() {
+    .m-layout {
+      @include screen-height;
+      overflow: hidden;
+    }
+  }
+
+  .m-layout__main {
+    padding-right: 15px;
+    padding-right: var(--scrollbarWidth);
+  }
+
+  .m-header {
+    padding-right: calc(20px + var(--scrollbarWidth));
+  }
+}

@@ -1,0 +1,49 @@
+@import "../../../shared";
+
+.c-bill-link {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  border-radius: $corner-default;
+  background-color: $palette-light;
+  padding: 15px 30px 15px 15px;
+  color: $palette-dark;
+
+  margin-bottom: 15px;
+
+  .c-page-icon {
+    width: 60px;
+    height: 60px;
+    flex: none;
+  }
+
+  > .c-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $palette-fill-grey;
+  }
+
+  .c-text {
+    width: calc(100% - 90px);
+    padding: 0 15px;
+  }
+
+  .c-icon,
+  .c-text{
+    color: inherit;
+  }
+
+  @include breakpoint-hover() {
+    &:not(.is-static):hover {
+      color: $palette-attention;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    .c-text {
+      width: calc(100% - 60px);
+    }
+  }
+}

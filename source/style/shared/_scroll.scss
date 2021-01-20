@@ -1,0 +1,45 @@
+@mixin vertical-scroll() {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin horizontal-scroll() {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin scroll-style($width, $color, $hover, $corner, $height: auto) {
+  /* width */
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+    cursor: grab;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: $corner;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $color;
+    border-radius: $width;
+    cursor: grab;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: $hover;
+  }
+}
+
+@mixin styled-scrollbar() {
+  @include scroll-style(5px, $palette-attention-t7, $palette-attention, 5px);
+}
+@mixin zero-scrollbar() {
+  @include scroll-style(0px, transparent, 0px, 0px);
+}

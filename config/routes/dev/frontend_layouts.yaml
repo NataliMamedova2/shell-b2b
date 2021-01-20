@@ -1,0 +1,3 @@
+_frontend_layouts:
+  path: /_layouts/{template}
+  controller: App\Application\Action\Frontend\LayoutsAction

@@ -1,0 +1,15 @@
+{% extends "backend/crud/block/filter.html.twig" %}
+
+{% block form_body %}
+    <div class="row">
+        <div class="col-sm-3">
+            {{ form_row(form.filename) }}
+        </div>
+        <div class="col-sm-3">
+            {{ form_row(form.extension) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_row(form.status) }}
+        </div>
+    </div>
+{% endblock %}

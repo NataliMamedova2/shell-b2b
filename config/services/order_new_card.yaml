@@ -1,0 +1,28 @@
+## order_new_card
+services:
+    app.clients.infrastructure.card_order.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\CardOrder\Order
+
+    app.api.action.api.v1.fuel_card.card_order.handler_request:
+        public: true
+        factory: '@App\Api\Action\Api\V1\FuelCard\CardOrder\HandlerRequestFactory'
+        class: App\Clients\Domain\CardOrder\UseCase\Create\HandlerRequest
+        arguments: ['@request_stack', '@App\Security\Cabinet\Myself', '@serializer.normalizer.object']
+
+    app.clients.domain.card_order.use_case.create.handler:
+        public: true
+        class: App\Clients\Domain\CardOrder\UseCase\Create\Handler
+        arguments: ['@app.clients.infrastructure.card_order.repository', '@doctrine.orm.entity_manager']
+
+    app.clients.application.listener.card_order.order_new_card_subscriber:
+        class: App\Clients\Application\Listener\CardOrder\OrderNewCardSubscriber
+        arguments:
+            - '@app.users.infrastructure.user.repository'
+            - '@MailerBundle\Service\Sender'
+        tags:
+            - { name: doctrine.event_subscriber }

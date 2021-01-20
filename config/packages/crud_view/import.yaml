@@ -1,0 +1,28 @@
+## import_files
+crud:
+    view:
+        contents:
+            admin_import_files_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.import_files_list'
+                        icon: 'recycle'
+                    global:
+                        result: 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Import\View\Form\FilterFormType
+                        template: '/backend/import/files/list_filter.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_import_files_list'
+                    table:
+                        template: '/backend/import/files/table.html.twig'
+                        data:
+                            global:
+                                result: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'

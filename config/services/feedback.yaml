@@ -1,0 +1,40 @@
+## feedback
+services:
+    app.feedback.infrastructure.feedback.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Feedback\Domain\Feedback\Feedback
+
+    app.feedback.infrastructure.feedback.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Feedback\Domain\Feedback\Feedback
+
+    app.feedback.domain.feedback.use_case.create.handler:
+        class: App\Feedback\Domain\Feedback\UseCase\Create\Handler
+        arguments:
+            - '@app.feedback.infrastructure.feedback.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Api\Action\Api\V1\Feedback\CreateAction:
+        arguments:
+        - '@validator'
+        - '@serializer'
+        - '@app.feedback.domain.feedback.use_case.create.handler'
+        - '@myself'
+        - '@app.api.crud.json_response'
+        tags:
+            - { name: controller.service_arguments }
+    App\Feedback\Application\Listener\CreateFeedbackSubscriber:
+        class: App\Feedback\Application\Listener\CreateFeedbackSubscriber
+        arguments:
+            - '@MailerBundle\Service\Sender'
+            - '@app.users.infrastructure.user.repository'
+        tags:
+            - { name: doctrine.event_subscriber }

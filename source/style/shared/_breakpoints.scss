@@ -1,0 +1,167 @@
+$mobile-end: 767px;
+$tablet-start: 768px;
+$tablet-end: 1024px;
+$small-start: 1025px;
+$small-end: 1300px;
+$default-start: 1301px;
+$default-end: 1599px;
+$large-start: 1600px;
+
+$ranges: (
+  mobile: "(min-width: 300px) and (max-width: #{$mobile-end})",
+  tablet: "(min-width: #{$tablet-start}) and (max-width: #{$tablet-end})",
+  small: "(min-width: #{$small-start}) and (max-width: #{$small-end})",
+  default: "(min-width: #{$default-start}) and (max-width: #{$default-end})",
+  large: "(min-width: #{$large-start})",
+  mobile-tablet: "(min-width: 300px) and (max-width: #{$tablet-end})",
+  mobile-small: "(min-width: 300px) and (max-width: #{$small-end})",
+  tablet-small: "(min-width: #{$tablet-start}) and (max-width: #{$small-end})",
+  tablet-default:
+    "(min-width: #{$tablet-start}) and (max-width: #{$default-end})",
+  small-default: "(min-width: #{$small-start}) and (max-width: #{$default-end})",
+  mobile-up: "(min-width: #{$tablet-start})",
+  tablet-up: "(min-width: #{$small-start})",
+  small-up: "(min-width: #{$default-start})",
+  landscape: "(orientation: landscape)",
+  portrait: "(orientation: portrait)"
+);
+
+@function get_media($media, $list: $ranges) {
+  @return unquote(map_get($list, $media));
+}
+
+@mixin media-query($media, $orientation: null) {
+  @if ($orientation != null) {
+    @media all and #{get-media($media)} and #{get-media($orientation)} {
+      @content;
+    }
+  } @else {
+    @media all and #{get-media($media)} {
+      @content;
+    }
+  }
+}
+
+// Simple ranges
+@mixin breakpoint-mobile() {
+  @include media-query(mobile) {
+    @content;
+  }
+}
+
+@mixin breakpoint-tablet() {
+  @include media-query(tablet) {
+    @content;
+  }
+}
+@mixin breakpoint-ipad() {
+  @include media-query(ipad) {
+    @content;
+  }
+}
+@mixin breakpoint-small() {
+  @include media-query(small) {
+    @content;
+  }
+}
+
+@mixin breakpoint-default() {
+  @include media-query(default) {
+    @content;
+  }
+}
+
+@mixin breakpoint-large() {
+  @include media-query(large) {
+    @content;
+  }
+}
+
+// Across multiple viewports
+@mixin breakpoint-across-mobile-tablet() {
+  @include media-query(mobile-tablet) {
+    @content;
+  }
+}
+@mixin breakpoint-across-mobile-small() {
+  @include media-query(mobile-small) {
+    @content;
+  }
+}
+@mixin breakpoint-across-tablet-default() {
+  @include media-query(tablet-default) {
+    @content;
+  }
+}
+
+@mixin breakpoint-across-tablet-small() {
+  @include media-query(tablet-small) {
+    @content;
+  }
+}
+
+@mixin breakpoint-across-small-default() {
+  @include media-query(small-default) {
+    @content;
+  }
+}
+
+// More than
+@mixin breakpoint-mobile-up() {
+  @include media-query(mobile-up) {
+    @content;
+  }
+}
+@mixin breakpoint-tablet-up() {
+  @include media-query(tablet-up) {
+    @content;
+  }
+}
+@mixin breakpoint-small-up() {
+  @include media-query(small-up) {
+    @content;
+  }
+}
+
+// Orientation
+@mixin breakpoint-landscape() {
+  @media all and (orientation: landscape) {
+    @content;
+  }
+}
+@mixin breakpoint-portrait() {
+  @media all and (orientation: portrait) {
+    @content;
+  }
+}
+
+// Special approaches
+@mixin breakpoint-hover() {
+  @media all and (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Height
+@mixin breakpoint-height-small() {
+  @media all and (max-height: 650px) {
+    @content;
+  }
+}
+@mixin breakpoint-height-micro() {
+  @media all and (max-height: 570px) {
+    @content;
+  }
+}
+// Special
+@mixin breakpoint-mobile-old-phones() {
+  @media all and (max-width: 340px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-browser-edge() {
+  @supports (-ms-ime-align:auto) {
+    @content;
+  }
+}

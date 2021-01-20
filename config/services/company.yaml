@@ -1,0 +1,40 @@
+## clients_client
+services:
+    app.clients.infrastructure.company.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Company\Company
+
+    app.api.action.api.v1.company.update_action.handler_request:
+        public: true
+        class: App\Clients\Domain\Company\UseCase\Update\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Company\UpdateAction\HandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@myself'
+
+    app.clients.domain.company.use_case.update.handler:
+        public: true
+        class: App\Clients\Domain\Company\UseCase\Update\Handler
+        arguments:
+            - '@app.clients.infrastructure.company.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Api\Action\Api\V1\Company\DashboardAction:
+        arguments:
+            - '@myself'
+            - '@app.clients.infrastructure.user.repository'
+            - '@app.clients.infrastructure.driver.repository'
+            - '@App\Api\Crud\JsonResponse'
+        tags:
+            - { name: controller.service_arguments }
+
+    app.api.resource.company.data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ObjectDataTransformer
+        arguments:
+            - '@serializer'
+            - '@App\Api\Resource\Company'

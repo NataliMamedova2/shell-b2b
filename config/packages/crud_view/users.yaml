@@ -1,0 +1,90 @@
+## users_user
+crud:
+    view:
+        contents:
+            admin_users_user_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.users_list'
+                        icon: 'users'
+                    global:
+                        result: 'paginator'
+                children:
+                    actions:
+                        children:
+                            button-new-entity:
+                                template: '/backend/crud/block/link-button.html.twig'
+                                data:
+                                    static:
+                                        title: 'btn.new_entity'
+                                        color: 'success'
+                                        icon: 'plus'
+                                        routeName: 'admin_users_user_new'
+                    table:
+                        template: '/backend/users/table.html.twig'
+                        data:
+                            global:
+                                result: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+            admin_users_user_new:
+                template: '/backend/crud/content/read.html.twig'
+                data:
+                    static:
+                        title: 'header.users_create'
+                        icon: 'user'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Users\View\Form\UserFormType
+                        template: '/backend/users/form.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_users_user_create'
+                        children:
+                            actions:
+                                children:
+                                    button-save:
+                                        template: '/backend/crud/block/submit-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_edit'
+                                                color: 'success'
+                                                icon: 'save'
+                                    button-save-redirect:
+                                        template: '/backend/crud/block/submit-redirect-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_back'
+                                                color: 'info'
+                                                icon: 'save'
+                                                redirect: 'admin_users_user_list'
+                                    button-cancel:
+                                        template: '/backend/crud/block/link-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.back'
+                                                color: 'default'
+                                                icon: 'list'
+                                                routeName: 'admin_users_user_list'
+            admin_users_user_create:
+                extend: 'admin_users_user_new'
+            admin_users_user_read:
+                extend: 'admin_users_user_new'
+                data:
+                    static:
+                        title: 'header.users_update'
+                children:
+                    form:
+                        data:
+                            static:
+                                actionRoute: 'admin_users_user_update'
+            admin_users_user_update:
+                extend: 'admin_users_user_read'
+            admin_users_user_delete:
+                flash_message:
+                    type: 'success'
+                    message: 'message.user_deleted.success'
+            ## end users_user

@@ -1,0 +1,36 @@
+{% extends "backend/crud/block/filter.html.twig" %}
+
+{% block form_body %}
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form_row(form.clientId) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.clientName) }}
+        </div>
+        <div class="col-sm-3">
+            {{ form_row(form.cardNumber) }}
+        </div>
+        {% if not is_granted('ROLE_MANAGER') %}
+            <div class="col-sm-3">
+                {{ form_row(form.managerId) }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_row(form.status) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {{ form_row(form.registerStatus) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_row(form.limit) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+## stop-list
+services:
+    app.clients.infrastructure.card.stop_list.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Card\StopList
+
+    App\Clients\Domain\Card\UseCase\AddStopList\Handler:
+        public: true
+        class: App\Clients\Domain\Card\UseCase\AddStopList\Handler
+        arguments:
+            - '@app.clients.infrastructure.card.repository'
+            - '@doctrine.orm.entity_manager'
+
+    App\Api\Action\Api\V1\FuelCard\AddStopListAction\HandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@app.clients.infrastructure.card.repository'
+            - '@myself'
+    app.api.action.api.v1.fuel_card.add_stop_list_action.handler_request:
+        public: true
+        class: 'App\Clients\Domain\Card\UseCase\AddStopList\HandlerRequest'
+        factory: '@App\Api\Action\Api\V1\FuelCard\AddStopListAction\HandlerRequestFactory'

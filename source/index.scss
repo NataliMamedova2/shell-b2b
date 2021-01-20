@@ -1,0 +1,11 @@
+:root {
+  --windowHeight: 100vh;
+  --scrollbarWidth: 0px;
+}
+
+@import "style/shared/module";
+@import "style/global/fonts";
+@import "style/global/reset";
+@import "style/global/keyframes";
+@import "style/global/a-color";
+@import "style/global/c-lang-selector-old";

@@ -1,0 +1,13 @@
+@import "../../shared";
+
+.c-suppliers-field {
+
+  > .c-text--label {
+    display: block;
+    padding-bottom: 5px;
+  }
+
+  .c-multi-select:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}

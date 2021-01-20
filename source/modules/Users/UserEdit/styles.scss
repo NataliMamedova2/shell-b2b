@@ -1,0 +1,23 @@
+@import "../../../shared";
+
+.m-user-edit {
+
+  &__header {
+    padding-bottom: 20px;
+  }
+
+  .c-form-layout__info-wrapper {
+    padding-left: 0;
+
+    .c-badge {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    max-width: 240px;
+    font-weight: $weight-bold;
+  }
+  &__lead {}
+}

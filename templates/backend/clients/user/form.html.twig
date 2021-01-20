@@ -1,0 +1,77 @@
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% set form = view.variable('form') %}
+
+{% set params = app.request.get('_route_params') %}
+
+{% set user = view.variable('result') %}
+{% set user_block_url = path('admin_api_clients_user_change_status', { id: user.id }) %}
+
+<div class="row p-b-20">
+    <div class="col-md-12 col-xs-12">
+        <div class="pull-right">
+            {% if user.isActive == true %}
+                <button type="button" class="btn waves-effect waves-light btn-success change-status"
+                        data-value="blocked"
+                        data-blockedtext="{{ 'btn.unblock_user'|trans }}"
+                        data-activetext="{{ 'btn.block_user'|trans }}"
+                        data-activemessage="{{ 'message.user_active_successfully'|trans }}"
+                        data-blockedmessage="{{ 'message.user_blocked_successfully'|trans }}"
+                        data-confirm="{{ 'confirm.change_user_status'|trans }}"
+                        data-url="{{ user_block_url }}"
+                >
+                    {% trans %}btn.block_user{% endtrans %}
+                </button>
+            {% else %}
+                <button type="button" class="btn waves-effect waves-light btn-danger change-status"
+                        data-value="active"
+                        data-blockedtext="{{ 'btn.unblock_user'|trans }}"
+                        data-activetext="{{ 'btn.block_user'|trans }}"
+                        data-activemessage="{{ 'message.user_active_successfully'|trans }}"
+                        data-blockedmessage="{{ 'message.user_blocked_successfully'|trans }}"
+                        data-confirm="{{ 'confirm.change_user_status'|trans }}"
+                        data-url="{{ user_block_url }}"
+                >
+                    {% trans %}btn.unblock_user{% endtrans %}
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{{ form_start(form, {'action': path(view.actionRoute, params)}) }}
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="white-box">
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.middleName) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form.repeatPassword) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.role) }}
+            {% if form.limit is defined %}
+               {{ form_row(form.limit) }}
+            {% endif %}
+            {% if view.hasChildrenByCapture('actions') %}
+                <hr/>
+                <div class="form-group">
+                    {% for data in view.getChildrenByCaptureTo('actions')[0] %}
+                        {{ view_render(data.captureTo, data) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+
+{% block javascripts %}
+    <script src="{{ asset('build/admin/js/modules/clients/users/change-status.js') }}"></script>
+{% endblock %}
+
+

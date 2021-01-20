@@ -1,0 +1,442 @@
+#api:
+#    prefix: /api
+#    resource: '../src/Api/Action/Api'
+
+api_v1_oauth:
+    path: /api/v1/oauth
+    methods: ['POST']
+
+api_partners_oauth:
+    path: /api/v1/partners/oauth
+    methods: ['POST']
+
+## last_system_update
+api_v1_last_system_update:
+    path: /api/v1/last-system-update
+    methods: [GET]
+    controller: 'App\Api\Action\Api\V1\LastSystemUpdate\ReadAction'
+## password_recovery
+api_v1_password_recovery:
+    path: /api/v1/password-recovery
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.password_recovery.handler_request'
+        handler: 'app.clients.domain.user.use_case.forgot_pass.handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+## me_profile
+api_v1_me_update:
+    path: /api/v1/me/update
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.me.update_action.handler_request'
+        handler: 'app.clients.domain.user.use_case.update_profile.handler'
+        transformer: 'app.api.resource.update_profile.data_transformer'
+
+## company_employees
+api_v1_company_employees_create:
+    path: /api/v1/company/employees/create
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.users.create_handler_request'
+        handler: 'app.clients.domain.user.use_case.create.handler'
+        transformer: 'app.api.resource.company_user.data_transformer'
+
+api_v1_company_employees_update:
+    path: /api/v1/company/employees/update/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.users.update_handler_request'
+        handler: 'app.clients.domain.user.use_case.update.handler'
+        transformer: 'app.api.resource.company_user.data_transformer'
+
+api_v1_company_employees_change_status:
+    path: /api/v1/company/employees/change-status/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.users.change_status_handler_request'
+        handler: 'app.clients.domain.user.use_case.change_status.handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+
+api_v1_company_employees_delete:
+    path: /api/v1/company/employees/delete/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.users.delete_handler_request'
+        handler: 'app.clients.domain.user.use_case.delete.handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+
+api_v1_company_employees_list:
+    path: /api/v1/company/employees
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'app.api.action.api.v1.users.list_action.query_request'
+        handler: 'App\Api\Action\Api\V1\Users\ListAction\PaginatorListService'
+        transformer: 'App\Api\Action\Api\V1\Users\ListAction\DataTransformer'
+
+api_v1_company_employees_read:
+    path: /api/v1/company/employees/{id}
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.users.read_action.query_request'
+        handler: 'app.api.action.api.v1.users.read_action.read_service'
+        transformer: 'app.api.resource.company_user.data_transformer'
+## end company_employees
+## end company_profile
+api_v1_company_profile_update:
+    path: /api/v1/company/profile/update
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.company.update_action.handler_request'
+        handler: 'app.clients.domain.company.use_case.update.handler'
+        transformer: 'app.api.resource.company.data_transformer'
+## end company_profile
+## fuel & goods
+api_v1_goods_search_list:
+    path: /api/v1/goods/search
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Search\GoodsAction\QueryRequest'
+        handler: 'app.api.fuel_type.list_service'
+        transformer: 'app.api.resource.fuel_type.list_data_transformer'
+api_v1_fuel_search_list:
+    path: /api/v1/fuel/search
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Search\FuelAction\QueryRequest'
+        handler: 'app.api.fuel_type.list_service'
+        transformer: 'app.api.resource.fuel_type.list_data_transformer'
+api_v1_service_search_list:
+    path: /api/v1/services/search
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Search\ServicesAction\QueryRequest'
+        handler: 'app.api.fuel_type.list_service'
+        transformer: 'app.api.resource.fuel_type.list_data_transformer'
+## end fuel & goods
+## supplies
+api_v1_supplies_list:
+    path: /api/v1/supplies
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        handler: 'app.api.action.api.v1.supplies.list_action.list_service'
+## invoice
+api_v1_invoice_credit_debt:
+    path: /api/v1/invoice/credit-debt
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        handler: 'app.api.action.api.v1.invoice.credit_debt_action.credit_debt_service'
+##partners invoice
+api_v1_partners_invoice_credit-debt:
+    path: /api/v1/partners/invoice/credit-debt
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        handler: 'app.api.action.api.v1.partners.invoice.credit_debt_action.credit_debt_service'
+api_v1_invoice_amount_create:
+    path: /api/v1/invoice/amount
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.invoice.amount_action.handler_request'
+        handler: 'App\Clients\Domain\Invoice\UseCase\CreateFromAmount\Handler'
+        transformer: 'App\Api\DataTransformer\DownloadDocumentDataTransformer'
+api_v1_partners_invoice_amount_create:
+    path: /api/v1/partners/invoice/amount
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.partners.invoice.amount_action.handler_request'
+        handler: 'App\Partners\Domain\Invoice\UseCase\CreateFromAmount\Handler'
+        transformer: 'App\Api\DataTransformer\PartnerDownloadDocumentDataTransformer'
+api_v1_invoice_supplies_create:
+    path: /api/v1/invoice/supplies
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.invoice.supplies_action.handler_request'
+        handler: 'App\Clients\Domain\Invoice\UseCase\CreateFromSupplies\Handler'
+        transformer: 'App\Api\DataTransformer\DownloadDocumentDataTransformer'
+## documents
+api_v1_documents_list:
+    path: /api/v1/documents
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Documents\ListAction\QueryRequest'
+        handler: 'app.api.action.api.documents.list_action.list_service'
+        transformer: 'App\Api\Action\Api\V1\Documents\ListAction\DataTransformer'
+## partners_documents
+api_v1_partners_documents_list:
+    path: /api/v1/partners/documents
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Partners\Documents\ListAction\QueryRequest'
+        handler: 'app.api.action.api.documents.list_action.list_service'
+        transformer: 'App\Api\Action\Api\V1\Partners\Documents\ListAction\DataTransformer'
+api_v1_documents_sota:
+    path: /api/v1/documents/sota
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Documents\SotaIntegration\SotaIntegrationAction
+api_v1_sota_clients_client_info:
+    path: /api/v1/sota-clients/client
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Documents\SotaIntegration\Api\QueryRequest
+api_v1_sota_clients_admins_client:
+    path: /api/v1/sota-clients/admins/client
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Users\Documents\QueryRequest
+api_v1_sota_partners_user:
+    path: /api/v1/sota-clients/partners/user
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Partners\Documents\SotaIntegration\QueryRequest
+
+api_v1_documents_download:
+    path: /api/v1/documents/download/{id}
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Documents\DownloadAction\DownloadFileAction
+    requirements:
+        id: "%routing.uuid%"
+api_v1_partners_documents_download:
+    path: /api/v1/partners/documents/download/{id}
+    methods: [GET]
+    controller: App\Api\Action\Api\V1\Partners\Documents\DownloadAction\DownloadFileAction
+    requirements:
+        id: "%routing.uuid%"
+api_v1_documents_act_checking:
+    path: /api/v1/documents/act-checking
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.documents.act_checking_action.handler_request'
+        handler: 'App\Clients\Domain\Document\UseCase\ActChecking\Handler'
+        transformer: 'App\Api\DataTransformer\DownloadDocumentDataTransformer'
+api_v1_partners_documents_act_checking:
+    path: /api/v1/partners/documents/act-checking
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.partners.documents.act_checking_action.handler_request'
+        handler: 'App\Partners\Domain\Document\UseCase\ActChecking\Handler'
+        transformer: 'App\Api\DataTransformer\PartnerDownloadDocumentDataTransformer'
+## card transactions
+api_v1_transactions_card_list:
+    path: /api/v1/transactions/card
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Card\ListAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\Transactions\Card\ListAction\ListService'
+        transformer: 'App\Api\Action\Api\V1\Transactions\Card\ListAction\DataTransformer'
+api_v1_transactions_regions_list:
+    path: /api/v1/transactions/regions
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Card\RegionsListAction\QueryRequest'
+        handler: 'app.api.action.service.transaction_card.regions.list_service'
+        transformer: 'app.api.resource.transaction_card.regions_list.data_transformer'
+api_v1_transactions_network_stations_list:
+    path: /api/v1/transactions/network-stations
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Card\NetworkStationsListAction\QueryRequest'
+        handler: 'app.api.action.service.transaction_card.network_stations.list_service'
+        transformer: 'app.api.resource.transaction_card.network_stations_list.data_transformer'
+api_v1_transactions_supplies_list:
+    path: /api/v1/transactions/supplies
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Card\SuppliesListAction\QueryRequest'
+        handler: 'app.api.action.service.transaction_card.supplies.list_service'
+        transformer: 'app.api.resource.transaction_card.supplies_list.data_transformer'
+api_v1_transactions_card_report:
+    path: /api/v1/transactions/card/report
+    methods: [GET]
+    controller: 'App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\CreateReportAction'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\Transactions\Card\CreateReportAction\Service\GetReportTransactionsHandler'
+api_v1_transaltions_company_report:
+    path: /api/v1/transactions/company/report
+    methods: [GET]
+    controller: 'App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\CreateReportAction'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\Transactions\Company\CreateReportAction\Service\GetReportTransactionsHandler'
+## end card transactions
+## company transactions
+api_v1_transactions_company_list:
+    path: /api/v1/transactions/company
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Transactions\Company\ListAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\Transactions\Company\ListAction\ListService'
+        transformer: 'App\Api\Action\Api\V1\Transactions\Company\ListAction\DataTransformer'
+## end company transactions
+## fuel cards
+api_v1_fuelcards_list:
+    path: /api/v1/fuel-cards
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\FuelCard\ListAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\FuelCard\ListAction\ListService'
+        transformer: 'App\Api\Action\Api\V1\FuelCard\ListAction\DataTransformer'
+api_v1_fuelcards_read:
+    path: /api/v1/fuel-cards/{id}
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'App\Api\Action\Api\V1\FuelCard\ReadAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\FuelCard\ReadAction\ReadService'
+api_v1_fuelcards_limit_list:
+    path: /api/v1/fuel-cards/{id}/limits
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'App\Api\Action\Api\V1\FuelCard\LimitsAction\QueryRequest'
+        handler: 'App\Api\Action\Api\V1\FuelCard\LimitsAction\ListService'
+api_v1_fuelcards_stoplist_add:
+    path: /api/v1/fuel-cards/stop-list/{id}/add
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.fuel_card.add_stop_list_action.handler_request'
+        handler: 'App\Clients\Domain\Card\UseCase\AddStopList\Handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+api_v1_fuelcards_update:
+    path: /api/v1/fuel-cards/update/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.fuel_card.update_action.handler_request'
+        handler: 'App\Clients\Domain\Card\UseCase\Update\Handler'
+        transformer: 'App\Api\DataTransformer\CardReadDataTransformer'
+api_v1_fuelcards_change_driver:
+    path: /api/v1/fuel-cards/change-driver/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.fuel_card.change_driver.handler_request'
+        handler: 'App\Clients\Domain\Card\UseCase\ChangeDriver\Handler'
+        transformer: 'App\Api\Action\Api\V1\FuelCard\ChangeDriverAction\DataTransformer'
+api_v1_fuelcards_delete_driver:
+    path: /api/v1/fuel-cards/delete-driver/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.fuel_card.delete_driver.handler_request'
+        handler: 'App\Clients\Domain\Card\UseCase\DeleteDriver\Handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+# end card transactions
+# order_new_card
+api_v1_fuelcards_order_new_card:
+    path: /api/v1/fuel-cards/order-new-card
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.fuel_card.card_order.handler_request'
+        handler: 'app.clients.domain.card_order.use_case.create.handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+# end order_new_card
+
+# discounts list
+api_v1_discounts_list:
+    path: /api/v1/discounts
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Discounts\QueryRequest'
+        handler: 'app.api.discounts.list_service'
+        transformer: 'app.api.resource.discounts.list_data_transformer'
+# end discounts
+
+## drivers
+api_v1_drivers_create:
+    path: /api/v1/drivers/create
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        request: 'app.api.action.api.v1.drivers.create_handler_request'
+        handler: 'App\Clients\Domain\Driver\UseCase\Create\Handler'
+        transformer: 'app.api.resource.driver.data_transformer'
+api_v1_drivers_update:
+    path: /api/v1/drivers/update/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.drivers.update_handler_request'
+        handler: 'App\Clients\Domain\Driver\UseCase\Update\Handler'
+        transformer: 'app.api.resource.driver.data_transformer'
+api_v1_drivers_change_status:
+    path: /api/v1/drivers/change-status/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.drivers.change_status_handler_request'
+        handler: 'App\Clients\Domain\Driver\UseCase\ChangeStatus\Handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+api_v1_drivers_delete:
+    path: /api/v1/drivers/delete/{id}
+    methods: [POST]
+    controller: 'app.api.crud.action.command_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'app.api.action.api.v1.drivers.delete_handler_request'
+        handler: 'App\Clients\Domain\Driver\UseCase\Delete\Handler'
+        transformer: 'App\Api\Crud\DataTransformer\SuccessDataTransformer'
+api_v1_drivers_list:
+    path: /api/v1/drivers
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Drivers\ListAction\QueryRequest'
+        handler: 'app.service.drivers.paginator_service'
+        transformer: 'App\Api\Action\Api\V1\Drivers\ListAction\DataTransformer'
+api_v1_drivers_read:
+    path: /api/v1/drivers/{id}
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        id: "%routing.uuid%"
+        request: 'App\Api\Action\Api\V1\Drivers\ReadAction\QueryRequest'
+        handler: 'app.service.drivers.read_service'
+        transformer: 'app.api.resource.driver.data_transformer'
+api_v1_drivers_search_list:
+    path: /api/v1/drivers/search
+    methods: [GET]
+    controller: 'app.api.crud.action.query_action'
+    requirements:
+        request: 'App\Api\Action\Api\V1\Drivers\SearchAction\QueryRequest'
+        handler: 'app.service.drivers.list_service'
+        transformer: 'app.api.resource.driver.search_data_transformer'

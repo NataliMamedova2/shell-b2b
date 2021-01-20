@@ -1,0 +1,366 @@
+@import "../../shared";
+
+.c-table {
+  width: 100%;
+  height: auto;
+  background-color: $palette-light;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+
+
+  &__head,
+  &__row {
+    display: grid;
+    padding: 0 20px;
+    grid-gap: 15px;
+    border-bottom: 1px solid $palette-line;
+  }
+
+  &__label {
+    display: none;
+  }
+
+  &__head {
+    width: 100%;
+    height: 50px;
+    transition: opacity 0.2s;
+
+    &.is-disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  }
+  &__row {
+    width: 100%;
+
+    &.is-actionable {
+      @include button-behaviour();
+
+      @include breakpoint-hover () {
+        &:hover {
+          background-color: $palette-fill-grey;
+        }
+      }
+    }
+
+    &:not(.is-actionable) {
+
+      @include breakpoint-hover () {
+        &:hover {
+          background-color: darken($palette-light, 2%);
+        }
+      }
+    }
+
+  }
+  &__cell {
+    width: 100%;
+    min-height: 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .c-table__cell-content {
+      @include style-paragraph();
+      font-size: 15px;
+      color: $palette-dark;
+    }
+
+    &.is-disabled {
+
+      .c-table__cell-content {
+        color: $palette-grey;
+      }
+    }
+    &.is-error {
+      .c-table__cell-content {
+        color: $palette-error;
+      }
+    }
+    &.is-widget {
+      padding: 0;
+    }
+
+    &.is-long-name {
+      padding: 10px 0;
+    }
+
+    &.is-overflow-break {
+      overflow-wrap: break-word;
+      word-break: break-all;
+    }
+
+    &.is-bold {
+      font-weight: $weight-medium;
+    }
+  }
+
+  &__cell-content {
+    width: 100%;
+  }
+
+  &__sort {
+    height: 100%;
+    width: calc(100% + 10px);
+    margin-left: -10px;
+    padding: 8px 0;
+    display: flex;
+    align-items: flex-start;
+
+  }
+  &__sort-icon {
+    width: 5px;
+    height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:before,
+    &:after {
+      position: absolute;
+      left: -8px;
+    }
+
+    &:before {
+      top: -10px;
+      content: "\e907";
+      color: $palette-dark;
+    }
+    &:after {
+      bottom: -9px;
+      content: "\e906";
+      color: #D9D9D9;
+    }
+  }
+
+  &__sort-button {
+    max-width: 100%;
+    width: auto;
+    height: 100%;
+    border-radius: 4px;
+    padding: 0 0 0 10px;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @include style-label;
+    color: $palette-dark;
+
+    &.is-active {
+      background-color: $palette-fill-grey;
+    }
+    &.is-sortable {
+      padding: 0 25px 0 10px;
+      @include button-behaviour();
+      @include breakpoint-hover() {
+        &:hover {
+          background-color: $palette-fill-grey;
+        }
+
+        &.is-active:hover {
+          .c-table__sort-label {
+            color: $palette-attention;
+          }
+        }
+
+        &.is-active:not(.is-reverse):hover {
+          .c-table__sort-icon {
+            &:before { color: $palette-attention; }
+            &:after { color: rgba($palette-attention, 0.1); }
+          }
+        }
+
+        &.is-active.is-reverse:hover {
+          .c-table__sort-icon {
+            &:after { color: $palette-attention; }
+            &:before { color: rgba($palette-attention, 0.1); }
+          }
+        }
+      }
+    }
+    &.is-reverse {
+      .c-table__sort-icon {
+        &:before {
+          color: #D9D9D9;
+        }
+        &:after {
+          color: $palette-dark;
+        }
+      }
+    }
+  }
+
+  &__sort-label {
+    max-width: 100%;
+    width: auto;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__show-more {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+
+    .c-icon {
+      font-size: 40px;
+    }
+
+    @include breakpoint-hover() {
+      &:hover {
+        color: $palette-attention;
+      }
+    }
+  }
+
+  &__empty {
+    width: 100%;
+    padding: 50px 10px;
+    text-align: center;
+
+  }
+
+  @include breakpoint-small() {
+    &__row,
+    &__head {
+      padding: 0 15px;
+    }
+  }
+
+  @include breakpoint-across-mobile-tablet() {
+    padding: 10px;
+
+    &.c-table--with-more {
+      .c-table__row {
+        padding-right: 50px;
+      }
+    }
+
+    .c-field {
+      margin-bottom: 20px;
+    }
+
+    .c-table__head {
+      display: none;
+    }
+
+    .c-table__row {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid $palette-line;
+      margin-bottom: 10px;
+      position: relative;
+      padding: 10px;
+    }
+
+    .c-table__cell {
+      min-height: 20px;
+      padding: 5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-size: 16px;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $palette-line-t5;
+      }
+    }
+
+    .c-table__label {
+      display: block;
+    }
+
+    .c-more-wrapper {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+  }
+}
+
+@include grid-legacy() {
+  .c-table__head,
+  .c-table__row {
+    display: flex;
+    flex-wrap: nowrap;
+
+
+    @for $i from 1 through 10 {
+      &.has-cells-#{$i} {
+        .c-table__cell,
+        .c-table__sort {
+          width: calc(100% / #{$i});
+          flex-basis: calc(100% / #{$i});
+        }
+      }
+    }
+  }
+
+  .c-table__cell {
+    .c-text--paragraph {
+      display: block;
+      width: 100%;
+      flex: none;
+      line-height: 1.1;
+      word-break: break-word;
+      font-size: 14px;
+    }
+  }
+
+  .c-table__cell,
+  .c-table__sort {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin: 0 !important;
+    &:only-child {
+      width: 100% !important;
+    }
+  }
+}
+
+//.no-cssgrid {
+//  .c-table {
+//    //display: table;
+//    table-layout: fixed;
+//
+//  }
+//
+//  .c-table__head,
+//  .c-table__row {
+//    display: table-row;
+//  }
+//
+//  .c-table__row--placeholder {
+//    display: block;
+//
+//    .c-table__sort,
+//    .c-table__cell {
+//      border-bottom: none;
+//    }
+//  }
+//
+//  .c-table__sort,
+//  .c-table__cell {
+//    display: table-cell;
+//    border-bottom: 1px solid $palette-line;
+//    padding: 10px 20px;
+//    min-width: 100px;
+//  }
+//
+//  .c-table__sort-button {
+//    height: 40px;
+//  }
+//}

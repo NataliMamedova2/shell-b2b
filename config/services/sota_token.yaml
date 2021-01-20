@@ -1,0 +1,12 @@
+## sota_token
+services:
+  app.clients.domain.sota.use_case.update.handler:
+    class: App\Clients\Domain\Sota\UseCase\Update\Handler
+    arguments:
+        - '@doctrine.orm.entity_manager'
+        - '@myself'
+  app.partners.domain.partner.sota.use_case.update.handler:
+    class: App\Partners\Domain\Partner\Sota\UseCase\Update\Handler
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@partnerMyself'

@@ -1,0 +1,160 @@
+{% extends 'frontend/_layout/base.html.twig' %}
+{% trans_default_domain 'frontend' %}
+
+
+{% set fill_image = "/media/_temp/sign.jpg" %}
+{% block title %}{% trans %}Sign Up{% endtrans %}{% endblock %}
+
+{% block body %}
+
+    <div class="m-sign__content">
+        <div class="m-sign__info">
+            <h1 class="c-text c-text--h1 a-color-light m-sign__title">
+                {% trans %}Sign Up in Shell Cards{% endtrans %}
+            </h1>
+        </div>
+        <div class="m-sign__form">
+            <div class="c-paper">
+                <h2 class="c-text c-text--h4 a-color-dark m-sign__form-title">
+                    {% trans %}Sign Up{% endtrans %}
+                </h2>
+
+                <form class="c-form" method="post">
+                    <div class="c-form__groups">
+                        <div class="c-form__group">
+                            <div class="c-form__row has-cols-2">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                        <span class="c-field__label">
+                                            {% trans %}First name{% endtrans %}*
+                                        </span>
+                                            <input name="{{ form.firstName.vars.full_name }}" value="{{ form.firstName.vars.value }}" class="c-input" required placeholder="{% trans %}First name{% endtrans %}">
+                                            <span class="c-text c-text--caption a-color-error">
+                                           {{ form_errors(form.firstName) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Last name{% endtrans %}*
+                                    </span>
+                                        <input name="{{ form.lastName.vars.full_name }}" value="{{ form.lastName.vars.value }}" class="c-input" required placeholder="{% trans %}Last name{% endtrans %}">
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.lastName) }}
+                                    </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="c-form__row has-cols-2">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Middle name{% endtrans %}
+                                    </span>
+                                        <input name="{{ form.middleName.vars.full_name }}" value="{{ form.middleName.vars.value }}" class="c-input" placeholder="{% trans %}Middle name{% endtrans %}">
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.middleName) }}
+                                    </span>
+                                    </label>
+                                </div>
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Email{% endtrans %}*
+                                    </span>
+                                        <input type="email" name="{{ form.email.vars.full_name }}" value="{{ form.email.vars.value }}" class="c-input" required placeholder="example@mail.com">
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.email) }}
+                                    </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="c-form__row has-cols-2">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Phone{% endtrans %}*
+                                    </span>
+                                        <input type="text" name="{{ form.phone.vars.full_name }}" value="{{ form.phone.vars.value }}" class="c-input" required placeholder="+380963332211">
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.phone) }}
+                                    </span>
+                                    </label>
+                                </div>
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Username{% endtrans %}*
+                                    </span>
+                                        <input type="text" name="{{ form.username.vars.full_name }}" value="{{ form.username.vars.value }}" class="c-input" placeholder="{% trans %}Username{% endtrans %}">
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.username) }}
+                                    </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="c-form__row has-cols-2">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Password{% endtrans %}*
+                                    </span>
+                                        <span class="c-password">
+                                            <input class="c-password__input" type="password" autocomplete="off" placeholder=" " name="{{ form.password.vars.full_name }}" required minlength="6">
+                                            <span class="c-password__button" title="Show password" role="button">
+                                                <img alt=" " class="c-password__icon" src="/media/eye.svg">
+                                            </span>
+                                        </span>
+
+                                        <span class="c-text c-text--caption a-color-error">
+                                        {{ form_errors(form.password) }}
+                                    </span>
+                                    </label>
+                                </div>
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                        <span class="c-field__label">
+                                            {% trans %}Re-enter password{% endtrans %}*
+                                        </span>
+
+                                        <span class="c-password">
+                                            <input class="c-password__input" type="password" autocomplete="off" placeholder=" " name="{{ form.repeatPassword.vars.full_name }}" required minlength="6">
+                                            <span class="c-password__button" title="Show password" role="button">
+                                                <img alt=" " class="c-password__icon" src="/media/eye.svg">
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="c-form__row has-cols-1">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                    <span class="c-field__label">
+                                        {% trans %}Legal company name{% endtrans %}
+                                    </span>
+                                        <input disabled readonly value="{{ client.fullName }}" class="c-input"/>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="c-form__actions">
+                        <button class="c-button c-button--primary" type="submit">
+                            <span class="c-button__label">
+                                {% trans %}Sign Up{% endtrans %}
+                            </span>
+                        </button>
+                    </div>
+                    {{ form_widget(form._token) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

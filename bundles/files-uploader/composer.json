@@ -1,0 +1,7 @@
+{
+  "require": {
+    "symfony/http-foundation": "^4.3",
+    "symfony/mime": "^4.3",
+    "league/flysystem": "^1"
+  }
+}

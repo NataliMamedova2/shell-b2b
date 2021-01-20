@@ -1,0 +1,177 @@
+{% extends 'backend/_layout/layout.html.twig' %}
+
+{% block page_title %}
+    {% trans %}translations.heading{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12 col-md-12" id="filter-container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {% trans %}filter.title{% endtrans %}
+                    <div class="pull-right">
+                        <a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        {{ form_start(form, {attr: {class: 'form-horizontal'} }) }}
+                        <div class="form-group">
+                            {{ form_label(form.key, 'label.key', {'label_attr': {'class': 'control-label col-md-3'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.key) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.message, 'label.translation', {'label_attr': {'class': 'control-label col-md-3'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.message) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.locale, 'label.locale', {'label_attr': {'class': 'control-label col-md-3'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.locale) }}
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-filter" aria-hidden="true"></i> {{ 'btn.filter'|trans }}
+                                </button>
+
+                                <a class="btn btn-default" href="{{ path('admin_translations_list') }}">
+                                    {{ 'link.reset_filter'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="list-container">
+            <div class="white-box">
+
+                {% if messages|length > 0 %}
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="btn-group m-b-20">
+                                <a type="button" class="btn btn-default btn-xs waves-effect show-all active">
+                                    {{ 'btn.show_all'|trans }}
+                                </a>
+                                <a type="button" class="btn btn-success btn-xs waves-effect show-only-empty">
+                                    {{ 'btn.show_empty'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered tablesaw table-striped table-hover color-table muted-table" data-tablesaw-mode="stack">
+                        <thead>
+                        <th scope="col" data-tablesaw-priority="persist" style="width:40%">
+                            {{ 'label.key'|trans }}
+                        </th>
+                        <th data-tablesaw-priority="1">
+                            {{ 'label.translation'|trans }}
+                        </th>
+                        <th></th>
+                        </thead>
+
+                        {% block table_body %}
+                            <tbody>
+                            {% for object in messages %}
+                                <tr class="message
+                                    {{ object.message ? '' : 'empty' }}
+{#                                    {{ object.obsolete ? 'has-warning' : '' }}#}
+                                    {{ object.new ? 'has-success' : '' }}"
+                                    id="{{ object.key }}"
+                                >
+                                    <td>
+                                        <textarea class="form-control" readonly>{{ object.key }}</textarea>
+                                        <div class="p-t-10 inf-block">
+{#                                            {% if object.obsolete %}#}
+{#                                                <span class="text-warning m-t-5" title="Obsolete">#}
+{#                                                    <i class="fa fa-warning"></i> obsolete</span>#}
+{#                                            {% endif %}#}
+                                            {% if object.new %}
+                                                <span class="text-success p-t-10" title="New">
+                                                    <i class="fa fa-asterisk"></i> new</span>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <strong>{{ object.locale }}</strong>
+                                            </span>
+                                            <textarea class="form-control" id="message">{{ object.message }}</textarea>
+                                        </div>
+
+                                        {% if object.otherTranslations|length > 0 %}
+                                            <div class="p-t-10">
+                                                <div class="text-muted">
+                                                    {% for locale,trans in object.otherTranslations if not trans is empty %}
+                                                        <b>{{ locale }}</b>: {{ trans }}<br>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if false and object.sourceLocations|length > 0 %}
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <ul class="location-list">
+                                                        {% for location in object.sourceLocations %}
+                                                            <li>
+                                                                <a href="{{ (file_base_path ~ location['path'])|file_link(location['line']) }}">
+                                                                    {{ location['path'] }} at line {{ location['line'] }}
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td data-tablesaw-no-labels>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-primary btn-save"
+                                                data-key="{{ object.key }}"
+                                                data-domain="{{ object.domain }}"
+                                                data-locale="{{ object.locale }}"
+                                            >
+                                                <i class="fa fa-save"></i>&nbsp;
+                                                {{ 'btn_save'|trans }}
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% else %}
+                    {% block no_result_content %}
+                        <div class="text-center">
+                            <h2 class="m-40">{{ 'no_result'|trans }}</h2>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/crud/list.js') }}"></script>
+    <script src="{{ asset('build/admin/js/modules/translations.js') }}"></script>
+{% endblock %}

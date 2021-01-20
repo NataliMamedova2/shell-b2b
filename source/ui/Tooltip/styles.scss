@@ -1,0 +1,87 @@
+@import "../../shared";
+
+.c-tooltip {
+  width: auto;
+  height: auto;
+  display: inline-block;
+
+  .c-icon {
+    color: $palette-grey;
+  }
+
+  &.is-danger {
+    .c-icon {
+      color: $palette-attention;
+    }
+    .c-tooltip__content {
+      animation-delay: 0.05s;
+    }
+
+    &:hover {
+      .c-icon {
+        color: $palette-attention-d1;
+      }
+    }
+  }
+
+  &.is-ellipsis {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Small triangle
+  &.is-anchor {
+    &:before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      transform: rotate(-45deg);
+      bottom: -6px;
+      left: 19px;
+      display: block;
+      z-index: 7;
+      background: #fff;
+    }
+  }
+
+  &:hover {
+    .c-icon {
+      color: $palette-dark;
+    }
+  }
+
+  &__content {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    padding: 8px;
+    height: auto;
+    transform: translateY(-100%);
+    background-color: $palette-light;
+    border-radius: $corner-default;
+    box-shadow: $shadow-tooltip;
+    opacity: 0;
+    animation: 0.15s ease-in-out 0.3s 1 forwards tooltip-show-up;
+  }
+
+  @include breakpoint-mobile() {
+    &__content {
+      animation-delay: 0s;
+    }
+  }
+}
+
+@keyframes tooltip-show-up {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

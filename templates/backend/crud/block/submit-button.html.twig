@@ -1,0 +1,10 @@
+<button type="submit"
+        class="btn waves-effect waves-light btn-{{ view.color|default('default') }} {{ view.size|default('') }}"
+        {% if view.disabled is defined and view.disabled == true %}disabled="disabled"{% endif %}>
+    {% if view.icon is defined %}
+        <span class="btn-label">
+            <i class="fa fa-{{ view.icon }}"></i>
+        </span>
+    {% endif %}
+    {{ view.title|trans }}
+</button>

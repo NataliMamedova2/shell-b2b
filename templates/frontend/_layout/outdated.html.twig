@@ -1,0 +1,35 @@
+{% trans_default_domain 'frontend' %}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('style/old.css') }}">
+    {% endblock %}
+</head>
+<body>
+
+<div class="m-layout">
+
+    <div class="m-header">
+
+        <div class="m-header__section">
+            <div class="c-logo" >
+                <img src="/media/logo.svg" class="c-logo__image" alt="shell logo" />
+                <span class="c-text c-text--h4 a-color-dark">Business</span>
+            </div>
+        </div>
+
+        <div class="m-header__section m-header__actions">
+            {{ locale_switcher('frontend/components/lang-selector.component.twig') }}
+        </div>
+    </div>
+    <main class="m-main">
+        {% block body %}{% endblock %}
+    </main>
+</div>
+
+</body>
+</html>

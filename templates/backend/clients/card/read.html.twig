@@ -1,0 +1,49 @@
+{% extends '/backend/crud/content/read.html.twig' %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% block content %}
+    <div class="row p-b-20">
+        <div class="col-sm-12">
+            <a href="{{ target_url('admin_clients_card_list') }}" class="btn waves-effect waves-light btn-default">
+                <span class="btn-label">
+                    <i class="fa fa-list"></i>
+                </span>
+                {{ 'btn.list'|trans }}
+            </a>
+            <a href="{{ path('admin_clients_card_limits_list', { id: view.card.id }) }}" class="btn waves-effect waves-light btn-primary">
+                <span class="btn-label">
+                    <i class="fa fa-eye"></i>
+                </span>
+                {{ 'btn.view_limits'|trans }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>{{ view.card.cardNumber }}</h2>
+                        {{ ui.labeled(view.card.status, {
+                            '0': 'blocked'|trans,
+                            '1': 'active'|trans
+                        }, {
+                            '0': 'default',
+                            '1': 'success'
+                        }) }}
+                        {% if view.card.exportStatus.onModeration == true or view.haveLimitsOnModeration == true %}
+                            <i class="fa fa-circle text-purple m-r-5"></i>{{ 'label.on_moderation'|trans }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ view_render('form', view) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/crud/read.js') }}"></script>
+{% endblock %}

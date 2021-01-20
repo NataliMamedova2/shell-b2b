@@ -1,0 +1,44 @@
+storage_read_file:
+  path: /storage/{path}
+  defaults: { _controller: FilesUploader\Action\ReadFileAction }
+  methods: [GET]
+  requirements:
+    path: ".+"
+
+frontend_outdated_browser:
+  path: /browser-outdated
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  requirements:
+    _locale: '%routing.locales%'
+  defaults:
+    _locale: '%locale%'
+    template: 'frontend/browser_outdated.html.twig'
+
+frontend_company_register_successful:
+  path: /company/register-successful
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  requirements:
+    _locale: '%routing.locales%'
+  defaults:
+    _locale: '%locale%'
+    template: 'frontend/company/register_successful.html.twig'
+
+frontend_pass_recover_successful:
+  path: /pass/recover-successful
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  requirements:
+    _locale: '%routing.locales%'
+  defaults:
+    _locale: '%locale%'
+    template: 'frontend/pass_recovery/recover_successful.html.twig'
+
+## keep it at the end
+frontend_homepage:
+  path: /{reactRouting}
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  methods: [GET]
+  defaults:
+    template: 'frontend/default.html.twig'
+    reactRouting: null
+  requirements:
+    reactRouting: "^(?!admin|api).+"

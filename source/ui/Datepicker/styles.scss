@@ -1,0 +1,60 @@
+@import "../../shared";
+@import "~flatpickr/dist/themes/material_red.css";
+
+.c-datepicker {
+  width: auto;
+  height: auto;
+  position: relative;
+
+  &__input {
+    @include input-base;
+    line-height: 36px;
+    text-align: center;
+    padding: 0 30px;
+  }
+
+  .c-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+  }
+
+  &.is-timepicker {
+    .c-datepicker__input {
+      text-align: left;
+      padding: 0 12px;
+    }
+
+    .c-icon {
+      display: none;
+    }
+  }
+}
+span.flatpickr-weekday {
+  color: $palette-light;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover ,
+.flatpickr-months .flatpickr-next-month:hover svg {
+
+}
+
+.flatpickr-months .flatpickr-month {
+  height: 40px !important;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  height: 40px;
+  border-radius: $corner-default;
+
+  &:hover {
+    svg {
+      fill: $palette-light;
+    }
+
+    background-color: rgba($palette-dark, 0.1);
+  }
+}

@@ -1,0 +1,134 @@
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ rootPath ~ '/public/style-pdf/billing.css' }}">
+</head>
+<body>
+{% block body %}
+    <div class="m-bill">
+        <div class="m-bill__row">
+            {{ include('pdf/components/logo.twig') }}
+            <div class="m-bill__header">
+                {{ include('pdf/components/header.twig') }}
+                <p class="h-3 is-bold">
+                    IBAN {{ shellInfo.currentAccount }}<br/>
+                    в {{ shellInfo.currentBank }} МФО {{ shellInfo.currentMfo }}
+                </p>
+            </div>
+        </div>
+        <p>Адреса у мережі Internet: {{ shellInfo.site }} E-mail: {{ shellInfo.email }}</p>
+        {{ include('pdf/components/contacts.twig') }}
+        <div class="m-bill__title h-2 is-centered">
+            <p>
+                Рахунок-фактура {{ invoice.number }} <br>
+                від {{ invoice.date.creationDate|date("d.m.Y") }}
+            </p>
+            <p class="h-4">За смарт-картками</p>
+        </div>
+
+        <table cellspacing="0" cellpadding="5">
+            {{ include('pdf/components/table.header.twig') }}
+            <tbody>
+            <tr class="m-bill__tr">
+                <td class="cl-1-2">1</td>
+                <td class="cl-3 is-left">Замовлення нафтопродуктів</td>
+                <td class="cl-1-2 is-centered">грн</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalWithValueTax) }}</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalWithoutValueTax) }}</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalWithoutValueTax) }}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="cl-6" colspan="5">Разом без ПДВ:</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalWithoutValueTax) }}</td>
+            </tr>
+            <tr>
+                <td class="cl-6" colspan="5">ПДВ:</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalValueTax) }}</td>
+            </tr>
+            <tr>
+                <td class="cl-6" colspan="5">Всього з ПДВ:</td>
+                <td class="cl-1">{{ ui.render_number(invoice.totalWithValueTax) }}</td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <div class="h-3">
+            <p>Всього на суму:</p>
+            <p class="is-bold">
+                {{ (invoice.totalWithValueTax / 100)|spellout_amount }}
+            </p>
+            <p>ПДВ: {{ ui.render_number(invoice.totalValueTax) }} грн.</p>
+        </div>
+
+        <p class="m-bill__end is-right is-bold">Рахунок дійсний до сплати до {{ invoice.date.expirationDate|date("d.m.Y") }}</p>
+
+        <div class="m-bill__attention is-centered is-bold">
+            <p class="h-2">УВАГА!!!</p>
+            <p>Призначення платежу: Замовлення нафтопродуктів згідно рах. № {{ invoice.number }} від {{ invoice.date.creationDate|date("d.m.Y") }}р.</p>
+        </div>
+
+        <table class="m-bill__payer">
+            <tr>
+                <td class="cl-1-2"></td>
+                <td class="cl-1-5">Додаток №1 до Рахунку-фактури № {{ invoice.number }} </td>
+                <td class="cl-1">від {{ invoice.date.creationDate|date("d.m.Y") }}</td>
+            </tr>
+        </table>
+
+        <div class="m-bill__row">
+            {{ include('pdf/components/logo.twig') }}
+            <div class="m-bill__header">
+                {{ include('pdf/components/header.twig') }}
+            </div>
+        </div>
+        {{ include('pdf/components/contacts.twig') }}
+        <div class="m-bill__title h-2 is-centered">
+            <p>
+                Попередня заява на асортимент нафтопродуктів № {{ invoice.number }}<br/>
+                від {{ invoice.date.creationDate|date("d.m.Y") }}
+            </p>
+        </div>
+        <table>
+            {{ include('pdf/components/table.header.twig') }}
+            {% for item in invoice.items %}
+                <tr class="m-bill__tr">
+                    <td class="cl-1-2">{{ item.lineNumber }}</td>
+                    <td class="cl-3 is-left">{{ fuel[item.fuelCode].fuelName }}</td>
+                    <td class="cl-1-2 is-centered">л</td>
+                    <td class="cl-1">{{ ui.render_number(item.quantity) }}</td>
+                    <td class="cl-1">{{ ui.render_number(item.priceWithoutValueTax, 6, 10000000) }}</td>
+                    <td class="cl-1">{{ ui.render_number(item.sumWithoutValueTax) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table  class="m-bill__footer">
+            <tr>
+                <td class="cl-1-2"></td>
+                <td class="cl-1">Підготував(ла) </td>
+                <td class="cl-2 has-border-b"></td>
+                <td class="cl-1-2"></td>
+                <td class="cl-1">Від Клієнта</td>
+                <td class="cl-2 has-border-b"></td>
+            </tr>
+            <tr>
+                <td class="cl-1-2"></td>
+                <td class="cl-1"></td>
+                <td class="cl-2 h-5">Фролов І.В.</td>
+                <td class="cl-1-2"></td>
+                <td class="cl-1"></td>
+                <td class="cl-2"></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>

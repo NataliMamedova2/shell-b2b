@@ -1,0 +1,72 @@
+@import "../../../shared";
+
+.m-company-edit {
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding-bottom: 40px;
+
+    .c-back {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .c-text {
+      width: 300px;
+      text-align: center;
+    }
+  }
+  &__body {
+    width: 100%;
+    display: block;
+  }
+
+  @include breakpoint-tablet-up() {
+    &__text {
+      margin-bottom: 40px;
+    }
+  }
+
+  .c-callout {
+    max-width: 320px;
+  }
+
+  @include breakpoint-across-mobile-tablet() {
+    .c-form-layout__aside {
+      max-width: 340px;
+      padding-right: 0;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    &__header {
+      padding: 20px 40px 40px;
+    }
+  }
+}
+
+.c-company-legal-name {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f7f7f7;
+  border-radius: $corner-default;
+
+  &__value {
+    pointer-events: none;
+    color: #595959;
+    padding: 0 12px;
+    width: calc(100% - 40px);
+    @include ellipsis;
+    user-select: none;
+  }
+
+  .c-tooltip {
+    margin: 0 6px 0 12px;
+    flex: none;
+  }
+}

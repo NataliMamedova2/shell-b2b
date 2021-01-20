@@ -1,0 +1,16 @@
+@import "functions";
+@import "utils";
+@import "palette";
+@import "typography";
+@import "breakpoints";
+@import "scroll";
+@import "decorate";
+@import "input-base";
+@import "visually";
+@import "corners";
+@import "shadows";
+@import "modernizr";
+
+
+$max-width-view-content: 1050px;
+$header-height: 56px;

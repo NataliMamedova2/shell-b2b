@@ -1,0 +1,11 @@
+<div class="locale_switcher pull-right p-b-10">
+    <div class="btn-group">
+        {% for locale, label in locales %}
+            <a type="button" class="btn waves-effect {% if currentLocale == locale %}btn-info{% else %} btn-default{% endif %}"
+               href="{{ path(routeName, routeParams|merge(app.request.query.all)|merge({'tl': locale})) }}">
+                {{ label }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+<div class="clearfix"></div>

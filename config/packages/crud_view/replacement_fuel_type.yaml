@@ -1,0 +1,79 @@
+## replacement_fuel_type
+crud:
+    view:
+        contents:
+            admin_fuel_replacement_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.replacement_fuel_type_list'
+                        icon: 'users'
+                    global:
+                        result: 'paginator'
+                children:
+                    actions:
+                        children:
+                            button-new-entity:
+                                template: '/backend/crud/block/link-button.html.twig'
+                                data:
+                                    static:
+                                        title: 'btn.new_entity'
+                                        color: 'success'
+                                        icon: 'plus'
+                                        routeName: 'admin_fuel_replacement_new'
+                    table:
+                        template: '/backend/replacement_fuel_type/table.html.twig'
+                        data:
+                            global:
+                                result: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+            admin_fuel_replacement_new:
+                template: '/backend/crud/content/read.html.twig'
+                data:
+                    static:
+                        title: 'header.replacement_fuel_type_create'
+                        icon: 'user'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Clients\View\Form\ReplacementFuelType\ReplacementFuelTypeFormType
+                        template: '/backend/crud/block/form.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_fuel_replacement_create'
+                        children:
+                            actions:
+                                children:
+                                    button-save:
+                                        template: '/backend/crud/block/submit-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_edit'
+                                                color: 'success'
+                                                icon: 'save'
+                                    button-save-redirect:
+                                        template: '/backend/crud/block/submit-redirect-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_back'
+                                                color: 'info'
+                                                icon: 'save'
+                                                redirect: 'admin_fuel_replacement_list'
+                                    button-cancel:
+                                        template: '/backend/crud/block/link-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.back'
+                                                color: 'default'
+                                                icon: 'list'
+                                                routeName: 'admin_fuel_replacement_list'
+            admin_fuel_replacement_create:
+                extend: 'admin_users_user_new'
+
+            admin_fuel_replacement_delete:
+                flash_message:
+                    type: 'success'
+                    message: 'message.user_deleted.success'
+            # end users_user

@@ -1,0 +1,8 @@
+## shell_information
+services:
+    App\Clients\Infrastructure\ShellInformation\Repository\ShellInfoRepository:
+        factory: '@App\Clients\Infrastructure\ShellInformation\Repository\RepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+    app.clients.infrastructure.shell_info.repository: '@App\Clients\Infrastructure\ShellInformation\Repository\ShellInfoRepository'

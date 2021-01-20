@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="false" />
+        <defaults autoconfigure="false" />
+
+        <service class="CrudBundle\EventListener\KernelViewSubscriber" id="crud.event_listener.kernel_view_subscriber">
+            <argument id="parameter_bag" type="service"/>
+            <argument id="service_container" type="service"/>
+            <argument id="twig" type="service"/>
+            <argument id="session.flash_bag" type="service"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service class="CrudBundle\Factory\PaginatorFactory" id="crud.factory.paginator_factory"/>
+        <service class="CrudBundle\Factory\DoctrineRepositoryFactory" id="crud.factory.repository_factory"/>
+
+        <service class="CrudBundle\Service\TargetRoute" id="CrudBundle\Service\TargetRoute">
+            <argument id="session" type="service"/>
+            <argument id="request_stack" type="service"/>
+        </service>
+        <service id="crud.service.target_route" alias="CrudBundle\Service\TargetRoute"/>
+
+        <!-- actions -->
+        <service class="CrudBundle\Action\EmptyAction" id="crud.action.empty_action" public="true"/>
+
+        <service class="CrudBundle\Action\CommandAction" id="crud.action.command_action" public="true">
+            <argument id="validator" type="service"/>
+            <argument id="session.flash_bag" type="service"/>
+        </service>
+
+        <service class="CrudBundle\Action\ListAction" id="crud.action.list_action" public="true">
+            <argument id="crud.service.target_route" type="service"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service class="CrudBundle\Action\ReadAction" id="crud.action.read_action" public="true">
+            <tag name="controller.service_arguments"/>
+        </service>
+        <!-- end actions -->
+
+        <service class="Infrastructure\Criteria\CriteriaFactory" id="Infrastructure\Criteria\CriteriaFactory">
+            <argument id="doctrine.orm.default_entity_manager" type="service"/>
+        </service>
+        <service id="infrastructure.criteria.criteria_factory" alias="Infrastructure\Criteria\CriteriaFactory"/>
+        <service id="Infrastructure\Interfaces\Criteria\CriteriaFactory" alias="Infrastructure\Criteria\CriteriaFactory"/>
+
+        <service class="CrudBundle\View\Twig\Extension\ViewExtension" id="crud.view_twig_extension.view_extension">
+            <tag name="twig.extension"/>
+        </service>
+
+        <service class="CrudBundle\View\Twig\Extension\TargetRouteExtension" id="crud.view_twig_extension.target_route_extension">
+            <argument id="crud.service.target_route" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service class="CrudBundle\View\ViewModel\FormViewModel" id="crud.view_view_model.form_view_model" public="true">
+            <argument id="form.factory" type="service"/>
+            <argument id="service_container" type="service"/>
+            <argument id="request_stack" type="service"/>
+        </service>
+
+        <service class="CrudBundle\View\ViewModel\NormalizerFormDataMapper" id="crud.view_view_model.normalizer_form_data_mapper" public="true">
+            <argument id="serializer.normalizer.object" type="service"/>
+        </service>
+
+        <!-- argument_value_resolver -->
+        <service class="CrudBundle\ArgumentResolver\DomainHandlerResolver" id="crud.argument_resolver.domain_handler_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\DomainHandlerRequestResolver" id="crud.argument_resolver.domain_handler_request_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <argument id="serializer" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\QueryRequestResolver" id="crud.argument_resolver.query_request_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\PaginatorResolver" id="crud.argument_resolver.paginator_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\ReadQueryRequestResolver" id="crud.argument_resolver.read_query_request_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\RepositoryResolver" id="crud.argument_resolver.repository_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver" priority="50"/>
+        </service>
+
+        <service class="CrudBundle\ArgumentResolver\RedirectResponseResolver" id="crud.argument_resolver.redirect_response_resolver">
+            <argument id="service_container" type="service"/>
+            <argument id="router" type="service"/>
+            <tag name="controller.argument_value_resolver"/>
+        </service>
+
+        <!-- end argument_value_resolver -->
+    </services>
+</container>

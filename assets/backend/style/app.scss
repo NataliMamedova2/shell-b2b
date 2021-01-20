@@ -1,0 +1,101 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap-tagsinput/dist/bootstrap-tagsinput.css";
+@import "~bootstrap-select/dist/css/bootstrap-select.min.css";
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+@import "~metismenu/dist/metisMenu.css";
+@import '~tablesaw/dist/tablesaw.css';
+@import "toastr";
+@import "cropperjs";
+
+@import "../themes/css/animate.css";
+@import "../themes/css/style.css";
+@import "../themes/css/colors/blue.css";
+@import "../themes/plugins/dropify/dist/css/dropify.css";
+@import "./image-crop.css";
+
+form label.required:after {
+  content: '*';
+}
+.form-group {
+  margin-bottom: 15px;
+}
+
+.alert-error {
+  background: #cbb2ae;
+  color: #ffffff;
+  border-color: #cbb2ae;
+}
+
+table.sortable .dragable {
+  cursor: grab;
+  padding-right: 5px;
+}
+table.vertical-middle tr > td,
+table.vertical-middle > thead > tr > th {
+  vertical-align: middle;
+}
+table .cell-hyphens {
+  word-wrap: break-word;
+  max-width: 1px;
+  -webkit-hyphens: auto; /* iOS 4.2+ */
+  -moz-hyphens: auto; /* Firefox 5+ */
+  -ms-hyphens: auto; /* IE 10+ */
+  hyphens: auto;
+}
+
+table td.date, th.date {
+  min-width: 125px;
+}
+
+.table > tbody > tr > td {
+  padding: 8px 8px;
+}
+
+.table > thead > tr > td, .table > thead > tr > th {
+  padding: 15px 8px;
+}
+
+.nav-tabs li.has-error a {
+    color: #a94442;
+    box-shadow: none !important;
+}
+.nav-tabs li.active.has-error a {
+  border-color: #a94442;
+  color: #a94442;
+}
+
+.two-column > div.checkbox {
+  display: inline-block;
+  width: 50%;
+}
+
+.login-register {
+  background: url(../../../public/media/_temp/sign.jpg) no-repeat center center / cover !important;
+  height: 100%;
+  position: fixed;
+}
+
+// user profile form
+.user-bg .overlay-box .user-content {
+  margin-top: 10px;
+}
+.user-bg .dropify-wrapper {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+  border-radius: 50%;
+  color: #fff
+}
+.user-bg .text-muted {
+  color: #fff
+}
+.user-bg .dropify-wrapper .dropify-message {
+  top: 85%;
+}
+.user-bg .dropify-wrapper .dropify-preview {
+  padding: 0;
+}
+.user-bg .dropify-wrapper .dropify-preview .dropify-render img {
+  border-radius: 50%;
+  height: 100%;
+}

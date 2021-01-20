@@ -1,0 +1,24 @@
+{% trans_default_domain 'frontend' %}
+
+<div class="c-lang-selector-old">
+    <span role="button" class="c-lang-selector-old__button">
+        {{ locales[currentLocale] }}
+    </span>
+    <ul class="c-lang-selector-old__list">
+        {% for locale, label in locales %}
+            {% if currentLocale != locale %}
+                <li class="c-lang-selector-old__item">
+                    {% if routeName is not empty %}
+                        <a href="{{ path(routeName, app.request.query.all|merge(routeParams|merge({'_locale': locale}))) }}" class="c-lang-selector-old__button">
+                            {{ label|trans }}
+                        </a>
+                    {% elseif urls is not empty and urls[locale] is defined %}
+                        <a href="{{ urls[locale] }}" class="c-lang-selector-old__button">
+                            {{ label|trans }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

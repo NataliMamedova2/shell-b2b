@@ -1,0 +1,16 @@
+{% extends 'frontend/_layout/base.html.twig' %}
+{% trans_default_domain 'frontend' %}
+
+{% block title %}{% trans %}Success | Sign Up{% endtrans %}{% endblock %}
+{% set yellow_style = true %}
+
+{% block body %}
+    <div class="m-sign__message">
+        <h1 class="m-sign__title c-text c-text--h1 a-color-dark">{% trans %}Successfully{% endtrans %}</h1>
+        <p class="c-text c-text--paragraph a-color-dark m-sign__lead">{% trans %}Now you can sing in{% endtrans %}</p>
+
+        <a class="c-button c-button--primary" href="/{{ app.request.get('_locale') }}/auth">
+            {% trans %}To authorization{% endtrans %}
+        </a>
+    </div>
+{% endblock %}

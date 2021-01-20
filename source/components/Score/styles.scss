@@ -1,0 +1,32 @@
+@import "../../shared";
+
+.c-score {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+
+  .c-text {
+    text-align: right;
+  }
+
+  .c-text--label {
+    margin-bottom: 5px;
+  }
+
+  @include breakpoint-mobile() {
+    align-items: flex-start;
+    padding: 0 15px 20px;
+    .c-text {
+      text-align: left;
+    }
+
+    &.c-score--form {
+      align-items: flex-end;
+      .c-text {
+        text-align: right;
+      }
+    }
+  }
+}

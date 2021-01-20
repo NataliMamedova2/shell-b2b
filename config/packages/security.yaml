@@ -1,0 +1,145 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\UserInterface:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        backend_in_memory:
+            memory:
+                users:
+                    root: { password: '%env(ROOT_SECRET)%', roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'] }
+        backend_db_provider:
+            id: 'app.security.provider.backend_user_provider'
+        admin_chain_provider:
+            chain:
+                providers: [backend_in_memory, backend_db_provider]
+        partners_api_db__provider:
+            id : 'app.security.provider.partners_user_provider'
+        cabinet_api_db_provider:
+            id: 'app.security.provider.cabinet_user_provider'
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api_oauth:
+            pattern: ^/api/v1/oauth
+            stateless: true
+            anonymous: true
+            user_checker: App\Security\Application\CabinetUserChecker
+            json_login:
+                provider:                 cabinet_api_db_provider
+                check_path:               /api/v1/oauth
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        api_partners_oauth:
+            pattern: ^/api/v1/partners/oauth
+            stateless: true
+            anonymous: true
+            user_checker: App\Security\Application\Partners\PartnersUserChecker
+            json_login:
+                provider: partners_api_db__provider
+                check_path: /api/v1/partners/oauth
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api_password_recovery:
+            pattern: ^/api/v1/password-recovery
+            stateless: true
+            anonymous: true
+
+        api_translations:
+            pattern: ^/api/v1/translations
+            stateless: true
+            anonymous: true
+
+        api_v1_sota_clients_client:
+            pattern: ^/api/v1/sota-clients/client
+            stateless: true
+            anonymous: true
+        api_v1_sota_clients_admins_client:
+            pattern: ^/api/v1/sota-clients/admins/client
+            stateless: true
+            anonymous: true
+        api_v1_sota_partners_user:
+            pattern: ^/api/v1/sota-clients/partners/user
+            stateless: true
+            anonymous: true
+        api_partners:
+            pattern: ^/api/v1/partners
+            stateless: true
+            anonymous: false
+            provider: partners_api_db__provider
+            user_checker: App\Security\Application\PartnerUserChecker
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        api:
+            pattern: ^/api
+            stateless: true
+            anonymous: false
+            provider: cabinet_api_db_provider
+            user_checker: App\Security\Application\CabinetUserChecker
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        main:
+            anonymous: lazy
+            user_checker: App\Security\Application\BackendUserChecker
+            provider: admin_chain_provider
+            guard:
+                authenticators:
+                    - App\Security\Authenticators\LoginFormAuthenticator
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            form_login:
+                login_path: admin_sign_in
+                use_forward: false
+                check_path: admin_sign_in
+                failure_path: null
+                csrf_token_generator: security.csrf.token_manager
+                remember_me: true
+
+            logout:
+                path: admin_logout
+                target: admin_sign_in
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        ## admin
+        - { path: ^/admin/sign-in, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/users/documents/esp, roles: [ROLE_ADMIN, ROLE_MANAGER] }
+        - { path: ^/admin/clients/card/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER] }
+        - { path: ^/admin/feedback/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER] }
+        - { path: ^/admin/users/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/admin/clients/client/list, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER, ROLE_ACCOUNTANT] }
+        - { path: ^/admin/clients/user/*, roles: [ROLE_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER, ROLE_SUPER_ADMIN] }
+        - { path: ^/admin/api/clients/user/change-status/*, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER] }
+        - { path: ^/admin/clients/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER] }
+        - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_MANAGER, ROLE_MANAGER_CALL_CENTER, ROLE_ACCOUNTANT] }
+        ## api
+        - {path: ^/api/v1/sota-clients/client, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/api/v1/sota-clients/admins/client, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/api/v1/sota-clients/partners/user, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/api/v1/oauth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/password-recovery, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/translations/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/company, roles: [ROLE_ADMIN] }
+        - { path: ^/api/v1/documents, roles: [ROLE_ADMIN, ROLE_ACCOUNTANT] }
+        - { path: ^/api/v1/sota, roles: [ROLE_ADMIN, ROLE_ACCOUNTANT] }
+            ## partners
+        - { path: ^/api/v1/partners/oauth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/partners/sota, roles: [ROLE_PARTNER] }
+        - { path: ^/api/v1/partners, roles: [ROLE_PARTNER] }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

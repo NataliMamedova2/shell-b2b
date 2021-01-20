@@ -1,0 +1,28 @@
+{% set href = path(view.routeName, view.routeParams|default([])) %}
+
+<a href="{{ target_url(view.routeName, href) }}" id="btn__history"
+   class="btn waves-effect waves-light btn-{{ view.color|default('default') }} {{ view.size|default('') }}">
+    {% if view.icon is defined %}
+        <span class="btn-label">
+            <i class="fa fa-{{ view.icon }}"></i>
+        </span>
+    {% endif %}
+    {{ view.title|trans }}
+</a>
+<script>
+    const link = document.getElementById('btn__history');
+    let href = link.getAttribute('href');
+    if(href !== null){
+        let params = href.split('&');
+        let newParams = [];
+        for(let i = 0; i < params.length; i++){
+            if(params[i].indexOf('redirect') !== -1 || params[i].indexOf('routeName') !== -1){
+                continue;
+            }
+            newParams[i] = params[i];
+        }
+      let newUri = newParams.join('&');
+      link.setAttribute('href', newUri);
+    }
+
+</script>

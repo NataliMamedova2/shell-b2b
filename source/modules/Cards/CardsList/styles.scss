@@ -1,0 +1,90 @@
+@import "../../../shared";
+
+.m-cards-list {
+
+  &__tabs {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+
+    .c-tabs {
+      margin-left: 30px;
+    }
+  }
+
+  &__score {
+    display: flex;
+    align-items: center;
+  }
+
+  &__count {
+    min-width: 30px;
+    margin-left: 10px;
+    text-align: left;
+    display: inline-block;
+  }
+
+  &__toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  @include breakpoint-across-mobile-tablet {
+
+    &__tabs {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-bottom: 20px;
+      margin-top: 30px;
+
+      .c-tabs {
+        margin-top: 10px;
+        margin-left: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        @include zero-scrollbar();
+
+        &__item {
+          flex: none;
+        }
+      }
+    }
+
+    &__toolbar {
+      flex-direction: column;
+    }
+  }
+
+  @include breakpoint-mobile() {
+
+    .c-page-header {
+      margin-bottom: 10px;
+    }
+
+    .c-page-header__section {
+      margin-bottom: 7px;
+    }
+
+    .c-page-header__actions {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 0;
+
+      .c-button {
+        margin-bottom: 0;
+      }
+
+      .m-cards-list__score {
+        margin-bottom: 15px;
+        height: 24px;
+      }
+    }
+  }
+}
+

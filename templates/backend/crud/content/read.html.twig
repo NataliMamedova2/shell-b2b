@@ -1,0 +1,10 @@
+{% extends 'backend/_layout/layout.html.twig' %}
+
+{% block content %}
+    {{ view_render('form', view) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/crud/read.js') }}"></script>
+{% endblock %}

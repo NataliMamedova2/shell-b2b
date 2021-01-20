@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="uk" trgLang="uk">
+  <file id="pagerfanta.uk">
+    <unit id="baBjNSj" name="previous">
+      <segment>
+        <source>previous</source>
+        <target>Попередня</target>
+      </segment>
+    </unit>
+    <unit id="xsHJqch" name="next">
+      <segment>
+        <source>next</source>
+        <target>Наступна</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

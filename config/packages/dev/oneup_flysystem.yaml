@@ -1,0 +1,8 @@
+oneup_flysystem:
+    adapters:
+        pc_sftp_adapter:
+            local:
+                directory: "%kernel.project_dir%/storage/sync/%env(PC_SERVER_ROOT_DIRECTORY)%"
+    filesystems:
+        sync_pc_source:
+            adapter: pc_sftp_adapter

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="uk" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="R94jWG5" resname="Sign Up">
+        <source>Sign Up</source>
+        <target>Sign Up</target>
+      </trans-unit>
+      <trans-unit id="6lHl_BN" resname="Sorry, your browser needs updating">
+        <source>Sorry, your browser needs updating</source>
+        <target>Sorry, your browser needs updating</target>
+      </trans-unit>
+      <trans-unit id="2EsjJ2C" resname="For the quality of service you need an update.">
+        <source>For the quality of service you need an update.</source>
+        <target>For the quality of service you need an update.</target>
+      </trans-unit>
+      <trans-unit id="QcX0Wep" resname="Select a browser:">
+        <source>Select a browser:</source>
+        <target>Select a browser:</target>
+      </trans-unit>
+      <trans-unit id="1ur_gjW" resname="Download">
+        <source>Download</source>
+        <target>Download</target>
+      </trans-unit>
+      <trans-unit id="LVyH4z_" resname="Password recovery">
+        <source>Password recovery</source>
+        <target>Password recovery</target>
+      </trans-unit>
+      <trans-unit id="uuBdvuI" resname="Pass recovery page">
+        <source>Pass recovery page</source>
+        <target>Pass recovery page</target>
+      </trans-unit>
+      <trans-unit id="Ey3wkDH" resname="Recovery password">
+        <source>Recovery password</source>
+        <target>Recovery password</target>
+      </trans-unit>
+      <trans-unit id="u9ITOPt" resname="Required fields">
+        <source>Required fields</source>
+        <target>Required fields</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="IPvop9l" resname="Re-enter password">
+        <source>Re-enter password</source>
+        <target>Re-enter password</target>
+      </trans-unit>
+      <trans-unit id="P5yZH2O" resname="Change password">
+        <source>Change password</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="tLPcshW" resname="Success | Password recovery">
+        <source>Success | Password recovery</source>
+        <target>Success | Password recovery</target>
+      </trans-unit>
+      <trans-unit id="sfPIr9." resname="Successfully">
+        <source>Successfully</source>
+        <target>Successfully</target>
+      </trans-unit>
+      <trans-unit id="t4E.zV6" resname="Now you can Login">
+        <source>Now you can Login</source>
+        <target>Now you can Login</target>
+      </trans-unit>
+      <trans-unit id="nWMiwfT" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="fblEHs5" resname="Sign Up in Shell Cards">
+        <source>Sign Up in Shell Cards</source>
+        <target>Sign Up in Shell Cards</target>
+      </trans-unit>
+      <trans-unit id="cC75Ie0" resname="First name">
+        <source>First name</source>
+        <target>First name</target>
+      </trans-unit>
+      <trans-unit id="e0iIBJR" resname="Last name">
+        <source>Last name</source>
+        <target>Last name</target>
+      </trans-unit>
+      <trans-unit id="EUU8qfN" resname="Middle name">
+        <source>Middle name</source>
+        <target>Middle name</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="Y9zriAC" resname="Phone">
+        <source>Phone</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="sXHOYhl" resname="Legal company name">
+        <source>Legal company name</source>
+        <target>Legal company name</target>
+      </trans-unit>
+      <trans-unit id="g1kkHhB" resname="Success | Sign Up">
+        <source>Success | Sign Up</source>
+        <target>Success | Sign Up</target>
+      </trans-unit>
+      <trans-unit id=".ScRM2M" resname="Now you can sing in">
+        <source>Now you can sing in</source>
+        <target>Now you can sing in</target>
+      </trans-unit>
+      <trans-unit id="7NBThlz" resname="To authorization">
+        <source>To authorization</source>
+        <target>To authorization</target>
+      </trans-unit>
+      <trans-unit id="jbXpoNI" resname="404 - Error page">
+        <source>404 - Error page</source>
+        <target>404 - Error page</target>
+      </trans-unit>
+      <trans-unit id=".G4QeQj" resname="Sorry, page no found">
+        <source>Sorry, page no found</source>
+        <target>Sorry, page no found</target>
+      </trans-unit>
+      <trans-unit id=".V4Xc1h" resname="... The page you requested may have been moved or deleted. You may also have made a small typo when typing the address - even happens with us;)">
+        <source>... The page you requested may have been moved or deleted. You may also have made a small typo when typing the address - even happens with us;)</source>
+        <target>... The page you requested may have been moved or deleted. You may also have made a small typo when typing the address - even happens with us;)</target>
+      </trans-unit>
+      <trans-unit id="IP942of" resname="To main">
+        <source>To main</source>
+        <target>To main</target>
+      </trans-unit>
+      <trans-unit id="auqmpT0" resname="Show password">
+        <source>Show password</source>
+        <target>Show password</target>
+      </trans-unit>
+      <trans-unit id="pgpWxYS" resname="Hide password">
+        <source>Hide password</source>
+        <target>Hide password</target>
+      </trans-unit>
+      <trans-unit id="1mj.joy" resname="Shell Cards">
+        <source>Shell Cards</source>
+        <target>Shell Cards</target>
+      </trans-unit>
+      <trans-unit id="R9KlFe8" resname="Loading...">
+        <source>Loading...</source>
+        <target>Loading...</target>
+      </trans-unit>
+      <trans-unit id="oQ2LyhH" resname="Loading translations">
+        <source>Loading translations</source>
+        <target>Loading translations</target>
+      </trans-unit>
+      <trans-unit id="J0sD.YU" resname="Load profile data">
+        <source>Load profile data</source>
+        <target>Load profile data</target>
+      </trans-unit>
+      <trans-unit id="2zL.hI9" resname="Page error">
+        <source>Page error</source>
+        <target>Page error</target>
+      </trans-unit>
+      <trans-unit id="V4yMqSB" resname="Redirect to portal">
+        <source>Redirect to portal</source>
+        <target>Redirect to portal</target>
+      </trans-unit>
+      <trans-unit id="TVyUOTG" resname="You are offline">
+        <source>You are offline</source>
+        <target>You are offline</target>
+      </trans-unit>
+      <trans-unit id="qVU8nlA" resname="Transactions_of_the_cards">
+        <source>Transactions_of_the_cards</source>
+        <target>Transactions_of_the_cards</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

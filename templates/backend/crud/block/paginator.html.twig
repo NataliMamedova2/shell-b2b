@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="table-info" style="margin: 25px 0;">
+           <div class="pull-left">
+               {% set limit =  app.request.query.all.limit ?? 25%}
+               {% set selected='selected' %}
+               <select class="form-control" id="change-page-limit">
+                   <option value="25" {% if limit == 25 %} {{ selected}} {% endif %}> 25</option>
+                   <option value="50" {% if limit == 50 %} {{ selected }}{% endif %}>50</option>
+                   <option value="100" {% if limit == 100 %} {{ selected }}{% endif %}>100</option>
+                   <option value="200" {% if limit == 200 %} {{ selected }}{% endif %}>200</option>
+               </select>
+           </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="pull-right">
+            {{ pagerfanta(view.paginator, 'twitter_bootstrap4', {
+                routeName: app.request.get('_route'),
+                routeParams: app.request.query.all
+            }) }}
+        </div>
+    </div>
+</div>

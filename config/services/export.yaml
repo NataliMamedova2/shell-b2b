@@ -1,0 +1,39 @@
+## export
+services:
+    App\Export\Action\Command\ExportCommand:
+        arguments:
+            - '@App\Export\Infrastructure\Service\Filename1CGenerator'
+            - '@app.export.infrastructure.export.repository'
+            - '@oneup_flysystem.default_filesystem'
+            - '@oneup_flysystem.export_1s_filesystem'
+            - '@oneup_flysystem.sync_pc_source_filesystem'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.clients.infrastructure.card.repository'
+            - '@app.clients.infrastructure.card.limits.repository'
+            - '@app.clients.infrastructure.invoice.repository'
+            - '@app.clients.infrastructure.card.stop_list.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+        tags:
+            - { name: console.command }
+    App\Export\Action\Command\ClientInfoRequestCommand:
+        arguments:
+            - '@oneup_flysystem.default_filesystem'
+            - '@oneup_flysystem.sync_pc_source_filesystem'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.export.infrastructure.export.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+        tags:
+            - { name: console.command }
+
+    app.export.infrastructure.export.repository:
+        class: Infrastructure\Repository\DoctrineRepository
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Export\Domain\Export\Export
+
+    App\Export\Infrastructure\Service\Filename1CGenerator:
+        arguments: ['@app.export.infrastructure.export.repository']

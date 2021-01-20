@@ -1,0 +1,70 @@
+## fuel
+services:
+    App\Api\Action\Api\V1\Search\FuelAction\QueryRequest:
+        autowire: false
+    App\Api\Action\Api\V1\Search\GoodsAction\QueryRequest:
+        autowire: false
+    App\Api\Action\Api\V1\Search\ServicesAction\QueryRequest:
+        autowire: false
+
+    app.clients.infrastructure.fuel.type.repository:
+        public: true
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Fuel\Type\Type
+
+    app.api.fuel_type.list_service:
+        public: true
+        class: App\Api\Crud\Service\ListService
+        arguments: ['@app.clients.infrastructure.fuel.type.repository']
+
+    app.api.resource.fuel_type.list_data_transformer:
+        public: true
+        class: App\Api\Crud\DataTransformer\ListDataTransformer
+        arguments:
+            - '@App\Api\Resource\FuelTypeSearch'
+    ## supplies
+    app.api.action.api.v1.supplies.list_action.list_service:
+        public: true
+        class: App\Api\Action\Api\V1\Supplies\ListAction\ListService
+        arguments:
+            - '@app.clients.infrastructure.fuel.type.repository'
+            - '@app.clients.infrastructure.fuel.price.repository'
+
+
+    # ---------  Replacement fuel type --------
+
+    app.clients.infrastructure.fuel.replacement_type.repository:
+        public: true
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Fuel\Type\ReplacementFuelType
+
+    app.clients.infrastructure.fuel.replacement_type.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Fuel\Type\ReplacementFuelType
+
+    app.clients.domain.fuel.replacement_typ.use_case.create.handler:
+        public: true
+        class: App\Clients\Domain\Fuel\Type\UseCase\CreateReplacementFuelType\Handler
+        arguments:
+            - '@app.clients.infrastructure.fuel.replacement_type.repository'
+            - '@doctrine.orm.entity_manager'
+
+    app.clients.domain.fuel.replacement_typ.use_case.delete.handler:
+        public: true
+        class: App\Clients\Domain\Fuel\Type\UseCase\DeleteReplacementFuelType\Handler
+        arguments:
+            - '@app.clients.infrastructure.fuel.replacement_type.repository'
+            - '@doctrine.orm.entity_manager'
+    # --------- End Replacement fuel type --------

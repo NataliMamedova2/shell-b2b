@@ -1,0 +1,42 @@
+## invoice
+services:
+  ## actions
+  app.api.action.api.v1.partners.invoice.credit_debt_action.credit_debt_service:
+    public: true
+    class: App\Api\Action\Api\V1\Partners\Invoice\CreditDebtAction\CreditDebtService
+    arguments:
+      - '@App\Security\Partners\MySelf'
+  app.api.action.api.v1.partners.invoice.amount_action.handler_request:
+    public: true
+    class: App\Partners\Domain\Invoice\UseCase\CreateFromAmount\HandlerRequest
+    factory: '@App\Api\Action\Api\V1\Partners\Invoice\AmountAction\HandlerRequestFactory'
+    arguments:
+      - '@request_stack'
+      - '@partnerMyself'
+      - '@serializer'
+  App\Partners\Domain\Invoice\UseCase\CreateFromAmount\Handler:
+    public: true
+    class: App\Partners\Domain\Invoice\UseCase\CreateFromAmount\Handler
+    arguments:
+      - '@app.clients.infrastructure.invoice.repository'
+      - '@App\Clients\Domain\Invoice\Service\NumberGenerator'
+      - '@App\Clients\Domain\Invoice\Service\InvoiceSettings'
+      - '@App\Partners\Infrastructure\Document\Service\CreateInvoiceFileService'
+      - '@app.clients.infrastructure.fuel.price.repository'
+      - '@app.clients.infrastructure.document.repository'
+      - '@doctrine.orm.entity_manager'
+  App\Partners\Infrastructure\Document\Service\CreateInvoiceFileService:
+    arguments:
+      - '@app.clients.infrastructure.shell_info.repository'
+      - '@app.partners.infrastructure.partner.repository'
+      - '@app.clients.infrastructure.fuel.type.repository'
+      - '@knp_snappy.pdf'
+      - '@twig'
+      - '@FilesUploader\File\PathGeneratorInterface'
+      - '%kernel.project_dir%'
+      - '%kernel.project_dir%/storage/source/'
+  App\Api\DataTransformer\PartnerDownloadDocumentDataTransformer:
+    public: true
+    class: App\Api\DataTransformer\PartnerDownloadDocumentDataTransformer
+    arguments:
+      - '@router'

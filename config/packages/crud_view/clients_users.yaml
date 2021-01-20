@@ -1,0 +1,74 @@
+## clients
+crud:
+    view:
+        contents:
+            ## Client User
+            admin_clients_user_list:
+                template: '/backend/clients/user/list.html.twig'
+                data:
+                    static:
+                        title: 'header.users_list'
+                        icon: 'users'
+                    global:
+                        'result': 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Clients\View\User\Form\UserFilterFormType
+                    table:
+                        template: '/backend/clients/user/table.html.twig'
+                        data:
+                            parent: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+            admin_clients_user_read:
+                template: '/backend/crud/content/read.html.twig'
+                data:
+                    static:
+                        title: 'header.users_update'
+                        icon: 'user'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Clients\View\User\Form\UpdateUserFormType
+                            form_data_mapper: 'app.clients.view.user.form.data_mapper.form_data_mapper'
+                            data:
+                                parent:
+                                    'result:result': 'result'
+                                static:
+                                    actionRoute: 'admin_clients_user_update'
+                        template: '/backend/clients/user/form.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_user_update'
+                        children:
+                            actions:
+                                children:
+                                    button-save:
+                                        template: '/backend/crud/block/submit-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_edit'
+                                                color: 'success'
+                                                icon: 'save'
+                                    button-save-redirect:
+                                        template: '/backend/crud/block/submit-redirect-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_back'
+                                                color: 'info'
+                                                icon: 'save'
+                                                redirect: 'admin_clients_user_list'
+                                    button-cancel:
+                                        template: '/backend/crud/block/link-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.back'
+                                                color: 'default'
+                                                icon: 'list'
+                                                routeName: 'admin_clients_user_list'
+            admin_clients_user_update:
+                extend: 'admin_clients_user_read'
+            ## end users_user

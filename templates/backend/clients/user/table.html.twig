@@ -1,0 +1,134 @@
+{% import "backend/crud/macros/link.twig" as link %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack" id="clients-users-list">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.email'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.full_name'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.company'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.role'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.status'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist" class="date">
+            {{ 'label.created_at'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist" class="date">
+            {{ 'label.last_logged_at'|trans }}
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ entity.id }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>
+                {{ link.email(entity.email) }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ entity.name.fullName }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ entity.company.client.fullName }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.role, {
+                    'ROLE_ADMIN': 'admin',
+                    'ROLE_MANAGER': 'manager',
+                    'ROLE_ACCOUNTANT': 'accountant'
+                }, {
+                    'ROLE_ADMIN': 'success',
+                    'ROLE_MANAGER': 'info',
+                    'ROLE_ACCOUNTANT': 'danger'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.status, {
+                    '0': 'blocked',
+                    '1': 'active'
+                }, {
+                    '0': 'danger',
+                    '1': 'success'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.createdAt|localizeddate('medium', 'medium') }}</td>
+            <td data-tablesaw-no-labels>
+                {% if entity.lastLoggedAt is not empty %}
+                    {{ entity.lastLoggedAt|localizeddate('medium', 'medium') }}
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>
+                <div class="btn-group">
+                    <a href="{{ path('admin_clients_user_read', { id: entity.id }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'label.edit'|trans }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        {{ 'label.edit'|trans }}
+                    </a>
+                    <button class="btn btn-xs btn-danger delete_link"
+                            title="{{ 'label.delete'|trans }}"
+                            data-toggle="modal"
+                            data-target="#delete-confirm-modal"
+                            data-href="{{ path('admin_clients_user_delete', {id: entity.id}) }}"
+                            data-redirect="{{ target_url('admin_clients_user_list') }}"
+                            data-id="{{ entity.id }}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        {{ 'label.delete'|trans }}
+                    </button>
+                    <button class="btn btn-xs btn-success send-restore-pass-link"
+                            title="{{ 'label.send-restore-pass-link'|trans }}"
+                            data-href="{{ path('api_v1_password_recovery') }}"
+                            data-username="{{ entity.username }}">
+                        {{ 'label.send-restore-pass-link'|trans }}
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="modal" tabindex="-1" role="dialog" id="success-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'label.send-restore-pass-link-successful'|trans }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'label.close'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="error-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'label.send-restore-pass-link-error'|trans }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'label.close'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

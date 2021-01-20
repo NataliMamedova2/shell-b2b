@@ -1,0 +1,94 @@
+@import "../../shared";
+
+.c-tabs {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &.is-pending {
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  &--full {
+    width: 100%;
+
+    .c-tabs__item {
+      width: 100%;
+      flex: 1;
+      max-width: 360px;
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  &--auto {
+    width: auto;
+
+    .c-tabs__item {
+      width: auto;
+
+
+      .c-text {
+        font: {
+          size: $font-link;
+          weight: $weight-medium;
+        };
+        text-transform: none;
+        letter-spacing: normal;
+      }
+    }
+  }
+
+  &__item {
+    width: auto;
+    padding: 0 30px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint-hover() {
+      &:not(.is-disabled):not(.is-active):hover {
+        background-color: $palette-fill-grey-d1;
+      }
+
+      &.is-active:hover {
+        background-color: $palette-warning-d1;
+      }
+    }
+
+    &.is-active {
+      background-color: $palette-warning;
+      cursor: auto;
+    }
+
+    &.is-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    &--full {
+      flex-direction: column;
+      .c-tabs__item {
+        flex: none;
+
+        &:not(:last-child) {
+          margin: 0;
+          margin-bottom: 15px;
+        }
+
+      }
+    }
+
+    &--auto {
+      .c-tabs__item {
+        padding: 0 15px;
+      }
+    }
+  }
+}

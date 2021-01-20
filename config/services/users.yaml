@@ -1,0 +1,79 @@
+## users_user
+services:
+    app.users.application.listener.user_logged_in_subscriber:
+        class: App\Users\Application\Listener\UserLoggedInSubscriber
+        arguments: ['@app.users.infrastructure.user.repository', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app.users.application.validator.constraints.user_exist_validator:
+        class: App\Users\Application\Validator\Constraints\UserExistValidator
+        arguments: ['@app.users.infrastructure.user.repository']
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.users.application.validator.constraints.manager_id_exist_validator:
+        class: App\Users\Application\Validator\Constraints\ManagerIdExistValidator
+        arguments: ['@app.users.infrastructure.user.repository']
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.users.infrastructure.user.repository:
+        public: true
+        class: App\Users\Infrastructure\Repository\UserRepository
+        factory: '@App\Users\Infrastructure\Repository\UserRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+    App\Users\Domain\User\Repository\UserRepository: '@app.users.infrastructure.user.repository'
+
+    app.partners.infrastructure.user.repository:
+        public: true
+        class: App\Partners\Infrastructure\Repository\UserRepository
+        factory: '@App\Partners\Infrastructure\Repository\UserRepositoryFactory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+    App\Partners\Domain\User\Repository\UserRepository: '@app.partners.infrastructure.user.repository'
+
+    'App\Users\Action\Backend\ListAction\QueryRequest':
+        autowire: false
+    app.users.action.backend.list_action.query_request:
+        public: true
+        class: App\Users\Action\Backend\ListAction\QueryRequest
+        factory: '@App\Users\Action\Backend\ListAction\QueryRequestFactory'
+        arguments: ['@request_stack']
+
+    app.users.infrastructure.user.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - 'App\Users\Domain\User\User'
+
+    app.users.domain.create.handler:
+        public: true
+        class: App\Users\Domain\User\UseCase\Create\Handler
+        arguments:
+            - '@app.users.infrastructure.user.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@App\Users\Infrastructure\Service\HashPasswordService'
+
+    app.users.domain.update.handler:
+        public: true
+        class: App\Users\Domain\User\UseCase\Update\Handler
+        arguments:
+            - '@app.users.infrastructure.user.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@App\Users\Infrastructure\Service\HashPasswordService'
+
+    app.users.domain.delete.handler:
+        public: true
+        class: App\Users\Domain\User\UseCase\Delete\Handler
+        factory: '@App\Users\Action\Backend\DeleteAction\DeleteHandlerFactory'
+        arguments:
+            - '@app.users.infrastructure.user.repository'
+            - '@doctrine.orm.entity_manager'
+            - '@Symfony\Component\Security\Core\Security'
+    ## End Users

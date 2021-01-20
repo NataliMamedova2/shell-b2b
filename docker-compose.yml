@@ -1,0 +1,77 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:delegated
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - .:/var/www:delegated
+      - ./docker/.data/logs/nginx:/var/log/nginx:delegated
+    environment:
+      PHP_IDE_CONFIG: "serverName=symfony.cx"
+    ports:
+      - "8088:80"
+    depends_on:
+      - php-fpm
+    networks:
+      - frontend
+      - backend
+
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - .:/var/www:delegated
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini:delegated
+      - composer:/root/.composer:cached
+    networks:
+      - backend
+    environment:
+      XDEBUG_CONFIG: "remote_host=172.20.0.1 remote_autostart=on var_display_max_depth=10 idekey=PHPSTORM"
+      PHP_IDE_CONFIG: "serverName=symfony.cx"
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker/redis:/var/lib/redis
+  postgresql:
+    image: postgres:alpine
+    volumes:
+      - ./docker/.data/postgres:/var/lib/postgresql/data:delegated
+      - ./docker/postgres/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: shell_b2b
+      POSTGRES_USER: shell_b2b
+      POSTGRES_PASSWORD: 111
+    ports:
+      - "54322:5432"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shell_b2b"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  node:
+    image: node:10-alpine
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - "1080:80"
+      - "1025:25"
+    networks:
+      - backend
+
+volumes:
+  composer:
+  postgresql:
+
+networks:
+  frontend:
+  backend:

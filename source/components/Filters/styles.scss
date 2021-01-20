@@ -1,0 +1,55 @@
+@import "../../shared";
+.m-filters {
+  width: 100%;
+  height: auto;
+  padding: 15px 30px;
+  background-color: $palette-light;
+  display: flex;
+  align-items: flex-start;
+
+  &__list {
+    width: 100%;
+    flex: 1;
+    padding-right: 20px;
+  }
+  &__buttons {
+    width: auto;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+
+    .c-button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    flex-direction: column;
+    padding: 20px;
+
+    &__list {
+      width: 100%;
+      flex: none;
+      padding-right: 0;
+    }
+    &__buttons {
+      width: 100%;
+      flex: none;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      padding: 0;
+
+      .c-button {
+        margin-top: 10px;
+
+        &:not(:last-child) {
+          margin-right: 0;
+        }
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

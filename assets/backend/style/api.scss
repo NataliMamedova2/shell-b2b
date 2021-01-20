@@ -1,0 +1,16 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "../themes/css/api-style.css";
+@import "../themes/css/colors/default.css";
+
+redoc {
+  display: block;
+  padding-top: 80px;
+}
+
+.redoc-wrap .menu-content {
+  top: 60px !important;
+  height: calc(100vh - 90px)!important;
+}
+.redoc-wrap .menu-content img {
+  padding: 25px;
+}

@@ -1,0 +1,114 @@
+## clients_client
+services:
+    app.clients.infrastructure.client.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Client\Client
+    app.clients.infrastructure.contract.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Client\Contract
+    app.clients.infrastructure.client_info.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\ClientInfo\ClientInfo
+    app.clients.infrastructure.balance_history.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\ClientInfo\BalanceHistory
+    app.clients.infrastructure.client.paginator:
+        public: true
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Client\Client
+
+    App\Clients\Action\Backend\Client\ListAction\QueryRequest:
+        public: true
+        class: App\Clients\Action\Backend\Client\ListAction\QueryRequest
+        arguments:
+            - '@request_stack'
+            - '@security.token_storage'
+            - '@security.authorization_checker'
+
+    App\Clients\Action\Backend\Client\ListAction\ListAction:
+        arguments:
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@app.clients.infrastructure.user.repository'
+            - '@crud.service.target_route'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Infrastructure\ClientInfo\Service\Balance\MyBalanceService:
+        arguments:
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@myself'
+    App\Clients\Infrastructure\ClientInfo\Service\Balance\BalanceService: '@App\Clients\Infrastructure\ClientInfo\Service\Balance\MyBalanceService'
+
+    App\Clients\Action\Backend\Client\ProfileAction\ProfileAction:
+        arguments:
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.clients.infrastructure.refill_balance.repository'
+            - '@crud.service.target_route'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Client\UpdateProfileAction\UpdateAction:
+        arguments:
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.users.infrastructure.user.repository'
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.clients.infrastructure.refill_balance.repository'
+            - '@validator'
+            - '@App\Clients\Domain\Client\UseCase\UpdateProfile\Handler'
+            - '@session.flash_bag'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Domain\Client\UseCase\UpdateProfile\Handler:
+        arguments:
+            - '@app.clients.infrastructure.client.repository'
+            - '@doctrine.orm.entity_manager'
+
+    app.clients.domain.client.use_case.update_profile.handler_request:
+        public: true
+        class: 'App\Clients\Domain\Client\UseCase\UpdateProfile\HandlerRequest'
+        factory: '@App\Clients\Action\Backend\Client\UpdateProfileAction\UpdateProfileHandlerRequestFactory'
+    App\Clients\Action\Backend\Client\UpdateProfileAction\UpdateProfileHandlerRequestFactory:
+        arguments:
+            - '@request_stack'
+            - '@serializer'
+
+    App\Clients\Action\Backend\Client\DocumentAction\DocumentAction:
+        arguments:
+            - '@app.clients.infrastructure.client.repository'
+        tags:
+            - { name: controller.service_arguments }
+
+    App\Clients\Action\Backend\Client\DocumentAction\UploadAction:
+        arguments:
+            - '@request_stack'
+            - '@app.clients.infrastructure.client.repository'
+            - '@App\Clients\Domain\Document\Service\UploadDocumentFileService'
+            - '@App\Clients\Domain\Document\UseCase\UploadDocument\Handler'
+            - '@validator'
+            - '@session.flash_bag'
+        tags:
+            - { name: controller.service_arguments }
+

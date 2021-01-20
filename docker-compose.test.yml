@@ -1,0 +1,50 @@
+version: '3'
+services:
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - .:/var/www
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+      - composer:/root/.composer/cache
+    networks:
+      - backend
+    depends_on:
+      - postgresql
+      - selenium.chrome
+
+  postgresql-test:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: shell_b2b_test
+      POSTGRES_USER: shell_b2b_test
+      POSTGRES_PASSWORD: 111
+    ports:
+      - "54323:5432"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shell_b2b_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  selenium.chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2g
+    ports:
+      - 4444:4444
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - postgresql-test
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  composer:
+
+networks:
+  frontend:
+  backend:

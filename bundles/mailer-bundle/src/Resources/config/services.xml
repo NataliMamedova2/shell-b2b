@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="mailer">[]</parameter>
+    </parameters>
+
+    <services>
+        <service id="MailerBundle\Service\Sender" class="MailerBundle\Service\Sender" public="false">
+            <argument type="service" id="Symfony\Component\Mailer\MailerInterface"/>
+            <argument type="service" id="MailerBundle\TemplateBuilder"/>
+            <argument type="service" id="Psr\Log\LoggerInterface"/>
+        </service>
+        <service id="MailerBundle\Interfaces\Sender" alias="MailerBundle\Service\Sender"/>
+
+        <service id="MailerBundle\TemplateBuilder" class="MailerBundle\TemplateBuilder" public="false">
+            <argument type="service" id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface"/>
+            <argument type="service" id="Twig\Environment"/>
+        </service>
+
+        <service id="MailerBundle\EventListener\MailerFromSubscriber" class="MailerBundle\EventListener\MailerFromSubscriber" public="false">
+            <argument type="service" id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+    </services>
+
+</container>

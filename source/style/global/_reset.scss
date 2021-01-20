@@ -1,0 +1,112 @@
+*,
+*:after,
+*:before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+html,
+body {
+  font: {
+    family: $family-main;
+    size: 16px;
+  }
+  color: #404040;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+
+  &:any-link {
+    text-decoration: none;
+  }
+}
+
+header, main, footer {
+  display: block;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+  user-select: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  outline: none;
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+input,
+textarea,
+select {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: $family-main;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-ms-clear {
+    display: none;
+  }
+
+  /* All Input elements */
+  &::-moz-focus-inner {
+    outline: 0;
+  }
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear {
+  display: none;
+}
+
+[aria-hidden="true"],
+[hidden] {
+  @include visuallyhidden();
+}

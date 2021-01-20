@@ -1,0 +1,56 @@
+{% import "backend/crud/macros/link.twig" as link %}
+
+{% set form = view.variable('form') %}
+
+{% set params = app.request.get('_route_params') %}
+
+{% set result = view.variable('result') %}
+
+{{ form_start(form, {'action': path(view.actionRoute, params)}) }}
+<div class="row">
+    <div class="col-md-4 col-xs-12">
+        <div class="white-box">
+            <div class="user-bg">
+                <img width="100%" alt="user" src="{{ asset('media/_temp/img5.jpg') }}"/>
+                <div class="overlay-box">
+                    <div class="user-content">
+                        {{ form_row(form.avatar) }}
+
+                        {% if result is defined and result is not empty %}
+                            <h4 class="text-white">
+                                {{ result.name }}
+                            </h4>
+                            <h5 class="text-white">
+                                {{ link.email(result.email) }}
+                            </h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-xs-12">
+        <div class="white-box">
+            {{ form_row(form.manager1CId) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.username, { attr: { autocomplete: 'off' } }) }}
+            {{ form_row(form.email, { attr: { autocomplete: 'off' } }) }}
+            {{ form_row(form.password, { attr: { autocomplete: 'off' } }) }}
+            {{ form_row(form.repeatPassword) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.role) }}
+            {{ form_row(form.status) }}
+            {% if view.hasChildrenByCapture('actions') %}
+                <hr/>
+                <div class="form-group">
+                    {% for data in view.getChildrenByCaptureTo('actions')[0] %}
+                        {{ view_render(data.captureTo, data) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+

@@ -1,0 +1,72 @@
+{% extends 'frontend/_layout/base.html.twig' %}
+{% trans_default_domain 'frontend' %}
+
+{% block title %}{% trans %}Password recovery{% endtrans %}{% endblock %}
+{% set fill_image = "/media/_temp/sign.jpg" %}
+
+{% block body %}
+
+    <div class="m-sign__content">
+        <div class="m-sign__info">
+            <h1 class="c-text c-text--h1 a-color-light m-sign__title">
+                {% trans %}Pass recovery page{% endtrans %}
+            </h1>
+        </div>
+        <div class="m-sign__form">
+            <div class="c-paper">
+                <h2 class="c-text c-text--h4 a-color-dark m-sign__form-title">
+                    {% trans %}Recovery password{% endtrans %}
+                </h2>
+
+                <p class="c-text c-text--paragraph a-color-dark m-sign__form-tip">
+                    * - {% trans %}Required fields{% endtrans %}
+                </p>
+
+                <form class="c-form" method="post">
+
+                    <div class="c-form__groups">
+                        <div class="c-form__group">
+                            <div class="c-form__row has-cols-2">
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                        <span class="c-field__label">{% trans %}Password{% endtrans %}*</span>
+
+                                        <span class="c-password">
+                                            <input class="c-password__input" type="password" autocomplete="off" name="{{ form.password.vars.full_name }}" required minlength="6">
+                                            <span class="c-password__button" title="Show password" role="button">
+                                                <img alt=" " class="c-password__icon" src="/media/eye.svg">
+                                            </span>
+                                        </span>
+                                        <span class="c-text c-text--caption a-color-error">{{ form_errors(form.password) }}</span>
+                                    </label>
+                                </div>
+                                <div class="c-form__col">
+                                    <label class="c-field">
+                                        <span class="c-field__label">{% trans %}Re-enter password{% endtrans %}*</span>
+                                        <span class="c-password">
+                                            <input class="c-password__input" type="password" autocomplete="off" name="{{ form.repeatPassword.vars.full_name }}" required minlength="6">
+                                            <span class="c-password__button" title="Show password" role="button">
+                                                <img alt=" " class="c-password__icon" src="/media/eye.svg">
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-form__actions">
+                        <button class="c-button c-button--primary" type="submit">
+                            <span class="c-button__label">
+                                {% trans %}Change password{% endtrans %}
+                            </span>
+                        </button>
+                    </div>
+                    {{ form_widget(form._token) }}
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

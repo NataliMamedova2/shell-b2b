@@ -1,0 +1,68 @@
+{% extends 'backend/crud/content/read.html.twig' %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% block content %}
+    <div class="row p-b-20">
+        <div class="col-sm-12">
+            <a href="{{ path('admin_clients_card_list', { clientId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.view_cards'|trans }}">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                {{ 'btn.view_cards'|trans }}
+            </a>
+            <a href="{{ path('admin_transaction_card_list', { clientId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.transactions'|trans }}">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                {{ 'btn.transactions'|trans }}
+            </a>
+            <a href="{{ path('admin_clients_user_list', { client1cId: view.client.client1CId }) }}"
+               class="btn btn-info" title="{{ 'btn.clients_user'|trans }}">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                {{ 'btn.clients_user'|trans }}
+            </a>
+            <a href="{{ path('admin_clients_client_document', { id: view.client.id }) }}"
+               class="btn btn-info" title="{{ 'btn.upload_file'|trans }}">
+                <span class="btn-label">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                </span>
+                {{ 'btn.upload_file'|trans }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <span><b>Назва компанії в 1С:</b> {{ view.client.fullName }}</span>
+                        </p>
+                        <p>
+                            <span><b>Менеджер:</b> {{ view.manager.getName }}({{ view.client.manager1CId }})</span>
+                        </p>
+                        <p>
+                            <span><b>Кредитний ліміт:</b> {{ ui.render_number(view.clintInfo ? view.clintInfo.creditLimit : 0) }} грн.</span>
+                        </p>
+                        <p>
+                            <span><b>Поточний баланс:</b> {{ ui.render_number(view.clintInfo ? view.clintInfo.balance : 0) }} грн.</span>
+                        </p>
+                        <p>
+                            <span><b>Доступно:</b> {{ ui.render_number(view.availableBalance) }} грн.</span>
+                        </p>
+                        <p>
+                            {% if view.balanceUpdate is not empty %}
+                                <span><b>Час та дата оновлення балансу:</b>
+                                    {{ view.balanceUpdate.balance.sign }}{{ ui.render_number(view.balanceUpdate.balance.value) }} грн.
+                                    {{ view.balanceUpdate.dateTime|date('d.m.Y H:i') }}
+                                </span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if view.variable('company') is not empty %}
+        {{ view_render('form', view) }}
+    {% endif %}
+{% endblock %}

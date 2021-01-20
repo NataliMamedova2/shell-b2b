@@ -1,0 +1,6 @@
+{% extends 'backend/_layout/api_doc.html.twig' %}
+
+{% block content %}
+    <redoc spec-url='{{ path('admin_api_doc_generate')}}'></redoc>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
+{% endblock %}

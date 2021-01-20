@@ -1,0 +1,40 @@
+@import "../../shared";
+
+.c-select {
+  width: 100%;
+  height: $input-base-height;
+  position: relative;
+
+  &.is-error {
+    .c-select__native {
+      border-color: $palette-attention;
+    }
+  }
+
+  &__arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: $corner-default;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    z-index: 9;
+    background: {
+      image: linear-gradient(90deg, $palette-clear 0, $palette-light 30%);
+    }
+
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .c-icon {
+      font-size: 32px;
+    }
+  }
+
+  &__native {
+    @include input-base;
+    padding: 2px 28px 2px 12px;
+  }
+}

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="uk" trgLang="en">
+  <file id="messages.en">
+    <unit id="JpTvVYe" name="menu.dashboard_label">
+      <segment>
+        <source>menu.dashboard_label</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="UfIPxPh" name="menu.user_label">
+      <segment>
+        <source>menu.user_label</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="g.1WTi0" name="menu.translations_label">
+      <segment>
+        <source>menu.translations_label</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="iB1vVmX" name="menu.api_doc_label">
+      <segment>
+        <source>menu.api_doc_label</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="LDhDPrF" name="label.username">
+      <segment>
+        <source>label.username</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="LI5HeF5" name="menu.documents_esp">
+      <segment>
+        <source>menu.documents_esp</source>
+        <target>Esp documents</target>
+      </segment>
+    </unit>
+    <unit id="D2N6_cP" name="label.email">
+      <segment>
+        <source>label.email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="9lbD3Vs" name="label.full_name">
+      <segment>
+        <source>label.full_name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="9pvowqn" name="label.password">
+      <segment>
+        <source>label.password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="WxAnbP0" name="label.password_repeat">
+      <segment>
+        <source>label.password_repeat</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="g03c_vw" name="label.phone">
+      <segment>
+        <source>label.phone</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="O59lP5d" name="label.role">
+      <segment>
+        <source>label.role</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="hzhzbqw" name="label.status">
+      <segment>
+        <source>label.status</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="ZDNlJ7M" name="+80976544433">
+      <segment>
+        <source>+80976544433</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="6_gBi2x" name="label.key">
+      <segment>
+        <source>label.key</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="zB7DGiM" name="label.translation">
+      <segment>
+        <source>label.translation</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="NS4ikNF" name="btn.add_item">
+      <segment>
+        <source>btn.add_item</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Wp0eJEy" name="label.frontend_homepage.link">
+      <segment>
+        <source>label.frontend_homepage.link</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="ejSYtDx" name="logout.link">
+      <segment>
+        <source>logout.link</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="DdjpYAg" name="shown %currentPage% to %totalOnPage% of %totalCount% entries">
+      <segment>
+        <source>shown %currentPage% to %totalOnPage% of %totalCount% entries</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="v5SWCuI" name="label.created_at">
+      <segment>
+        <source>label.created_at</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="tn0mjNL" name="label.last_logged_at">
+      <segment>
+        <source>label.last_logged_at</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="DXNFV9R" name="label.edit">
+      <segment>
+        <source>label.edit</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="BiPY0TX" name="label.delete">
+      <segment>
+        <source>label.delete</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="EElE89U" name="no_result">
+      <segment>
+        <source>no_result</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="qP8TKMm" name="modal_header.delete_entity">
+      <segment>
+        <source>modal_header.delete_entity</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="iOWo5Gx" name="modal_delete.are_you_sure_text?">
+      <segment>
+        <source>modal_delete.are_you_sure_text?</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Jd_qITE" name="btn.close">
+      <segment>
+        <source>btn.close</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Kx69suG" name="btn.delete">
+      <segment>
+        <source>btn.delete</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="S_Vw6L1" name="label.yes">
+      <segment>
+        <source>label.yes</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="bdYD32t" name="label.no">
+      <segment>
+        <source>label.no</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="hqDZF8R" name="dashboard.heading">
+      <segment>
+        <source>dashboard.heading</source>
+        <target></target>
+      </segment>
+    </unit>
+   <unit id="lqTZL7R" name="partners.dashboard.heading">
+      <segment>
+        <source>partners.dashboard.heading</source>
+        <target></target>
+      </segment>
+   </unit>
+    <unit id="Rg.OcpV" name="translations.heading">
+      <segment>
+        <source>translations.heading</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Rd0n9wc" name="filter.title">
+      <segment>
+        <source>filter.title</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="nkLSi.t" name="btn.filter">
+      <segment>
+        <source>btn.filter</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="2ONZ_fh" name="link.reset_filter">
+      <segment>
+        <source>link.reset_filter</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="lCAp4Qe" name="btn.show_all">
+      <segment>
+        <source>btn.show_all</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="ufVoaGF" name="btn.show_empty">
+      <segment>
+        <source>btn.show_empty</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="nh_gBtE" name="btn_save">
+      <segment>
+        <source>btn_save</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="W44pzD_" name="label.company_name">
+      <segment>
+        <source>label.company_name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="pnGDFmf" name="label.type">
+      <segment>
+        <source>label.type</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="zakc3lT" name="menu.companies_label">
+      <segment>
+        <source>menu.companies_label</source>
+        <target></target>
+      </segment>
+    </unit>
+     <unit id="zwkc9lP" name="menu.partners_users">
+      <segment>
+        <source>menu.partners_users</source>
+        <target>Partners</target>
+      </segment>
+     </unit>
+    <unit id="eIQEeT7" name="menu.feedback_label">
+      <segment>
+        <source>menu.feedback_label</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="iZ2qN5k" name="menu.import_files">
+      <segment>
+        <source>menu.import_files</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="7jfRn_1" name="label.company">
+      <segment>
+        <source>label.company</source>
+        <target>label.company</target>
+      </segment>
+    </unit>
+    <unit id="DZM47Ka" name="label.1c_id">
+      <segment>
+        <source>label.1c_id</source>
+        <target>label.1c_id</target>
+      </segment>
+    </unit>
+    <unit id="0O3Bzl5" name="label.manager">
+      <segment>
+        <source>label.manager</source>
+        <target>label.manager</target>
+      </segment>
+    </unit>
+    <unit id="YgvLzSx" name="label.updated_at">
+      <segment>
+        <source>label.updated_at</source>
+        <target>label.updated_at</target>
+      </segment>
+    </unit>
+    <unit id="V2A5cgs" name="prepayment">
+      <segment>
+        <source>prepayment</source>
+        <target>prepayment</target>
+      </segment>
+    </unit>
+    <unit id="9X4Ur4V" name="credit-line">
+      <segment>
+        <source>credit-line</source>
+        <target>credit-line</target>
+      </segment>
+    </unit>
+    <unit id="7MSHOha" name="credit">
+      <segment>
+        <source>credit</source>
+        <target>credit</target>
+      </segment>
+    </unit>
+    <unit id="u6ZrgqI" name="in-work">
+      <segment>
+        <source>in-work</source>
+        <target>in-work</target>
+      </segment>
+    </unit>
+    <unit id="xcgzHvg" name="in-blacklist">
+      <segment>
+        <source>in-blacklist</source>
+        <target>in-blacklist</target>
+      </segment>
+    </unit>
+    <unit id=".VNJYXp" name="label.registered">
+      <segment>
+        <source>label.registered</source>
+        <target>label.registered</target>
+      </segment>
+    </unit>
+    <unit id="F6D1doQ" name="btn.resend_link">
+      <segment>
+        <source>btn.resend_link</source>
+        <target>btn.resend_link</target>
+      </segment>
+    </unit>
+    <unit id="_q1QD62" name="btn.register_new">
+      <segment>
+        <source>btn.register_new</source>
+        <target>btn.register_new</target>
+      </segment>
+    </unit>
+    <unit id="A9JlQ5K" name="label.category">
+      <segment>
+        <source>label.category</source>
+        <target>label.category</target>
+      </segment>
+    </unit>
+    <unit id="WqTho4C" name="label.comment">
+      <segment>
+        <source>label.comment</source>
+        <target>label.comment</target>
+      </segment>
+    </unit>
+    <unit id="XMsOCmS" name="general-question">
+      <segment>
+        <source>general-question</source>
+        <target>general-question</target>
+      </segment>
+    </unit>
+    <unit id="QM127tg" name="financial-issue">
+      <segment>
+        <source>financial-issue</source>
+        <target>financial-issue</target>
+      </segment>
+    </unit>
+    <unit id="SmuLs.2" name="new-card-order">
+      <segment>
+        <source>new-card-order</source>
+        <target>new-card-order</target>
+      </segment>
+    </unit>
+    <unit id="h9zwx_Q" name="complaints">
+      <segment>
+        <source>complaints</source>
+        <target>complaints</target>
+      </segment>
+    </unit>
+    <unit id="NW7J2ed" name="label.file_name">
+      <segment>
+        <source>label.file_name</source>
+        <target>label.file_name</target>
+      </segment>
+    </unit>
+    <unit id="txiunCw" name="label.success_count">
+      <segment>
+        <source>label.success_count</source>
+        <target>label.success_count</target>
+      </segment>
+    </unit>
+    <unit id="DPmL1fU" name="label.errors_count">
+      <segment>
+        <source>label.errors_count</source>
+        <target>label.errors_count</target>
+      </segment>
+    </unit>
+    <unit id="PuOsEOC" name="label.elapsed">
+      <segment>
+        <source>label.elapsed</source>
+        <target>label.elapsed</target>
+      </segment>
+    </unit>
+    <unit id="7NfWx5U" name="label.client_1c_id">
+      <segment>
+        <source>label.client_1c_id</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="8pNrKPC" name="label.manager_1c_id">
+      <segment>
+        <source>label.manager_1c_id</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="aglwuCV" name="label.last_name">
+      <segment>
+        <source>label.last_name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="H7kee_F" name="label.first_name">
+      <segment>
+        <source>label.first_name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="OCP8N4X" name="label.middle_name">
+      <segment>
+        <source>label.middle_name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="fQexnoM" name="label.client">
+      <segment>
+        <source>label.client</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="wdgeAR6" name="placeholder.choose_client">
+      <segment>
+        <source>placeholder.choose_client</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="mEDsKHk" name="label.locale">
+      <segment>
+        <source>label.locale</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="WaOmymj" name="menu.api_log_label">
+      <segment>
+        <source>menu.api_log_label</source>
+        <target></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -1,0 +1,53 @@
+crud:
+    view:
+        blocks:
+            symfony_form:
+                view_model: 'crud.view_view_model.form_view_model'
+                template: '/backend/crud/block/form.html.twig'
+                options:
+                    form_data_mapper: 'crud.view_view_model.normalizer_form_data_mapper'
+                    form_options:
+                        method: 'post'
+                data:
+                    global:
+                        data: data
+                        result: result
+                        errors: errors
+                children:
+                    actions:
+                        children:
+                            button-save:
+                                template: '/backend/crud/block/submit-button.html.twig'
+                                data:
+                                    static:
+                                        title: 'btn.save'
+                                        color: 'success'
+                                        icon: 'save'
+            pagerfanta_paginator:
+                template: '/backend/crud/block/paginator.html.twig'
+                data:
+                    global:
+                        result: 'paginator'
+            form_filter:
+                view_model: 'crud.view_view_model.form_view_model'
+                options:
+                    form_options:
+                        method: 'get'
+                template: '/backend/crud/block/filter.html.twig'
+                data:
+                    global: 'data'
+                children:
+                    form-button-submit:
+                        template: '/backend/crud/block/submit-button.html.twig'
+                        data:
+                            static:
+                                title: 'btn.filter'
+                                color: 'primary'
+                                icon: 'filter'
+            button_new_entity:
+                template: '/backend/crud/block/link-button.html.twig'
+                data:
+                    static:
+                        title: 'btn.new_entity'
+                        color: 'success'
+                        icon: 'plus'

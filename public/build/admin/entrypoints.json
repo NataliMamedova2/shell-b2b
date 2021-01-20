@@ -1,0 +1,64 @@
+{
+  "entrypoints": {
+    "js/modules/cards/block-card": {
+      "js": [
+        "/build/admin/js/modules/cards/block-card.js"
+      ]
+    },
+    "js/app": {
+      "js": [
+        "/build/admin/js/app.js"
+      ]
+    },
+    "js/crud/read": {
+      "js": [
+        "/build/admin/js/crud/read.js"
+      ]
+    },
+    "js/crud/list": {
+      "js": [
+        "/build/admin/js/crud/list.js"
+      ]
+    },
+    "js/modules/translations": {
+      "js": [
+        "/build/admin/js/modules/translations.js"
+      ]
+    },
+    "js/modules/site-config": {
+      "js": [
+        "/build/admin/js/modules/site-config.js"
+      ]
+    },
+    "js/api": {
+      "js": [
+        "/build/admin/js/api.js"
+      ]
+    },
+    "js/modules/clients/users/send-restore-pass-link": {
+      "js": [
+        "/build/admin/js/modules/clients/users/send-restore-pass-link.js"
+      ]
+    },
+    "js/modules/clients/users/change-status": {
+      "js": [
+        "/build/admin/js/modules/clients/users/change-status.js"
+      ]
+    },
+    "js/modules/clients/transaction/export": {
+      "js": [
+        "/build/admin/js/modules/clients/transaction/export.js"
+      ]
+    },
+    "css/app": {
+      "css": [
+        "/build/admin/css/app.css"
+      ]
+    },
+    "css/api": {
+      "css": [
+        "/build/admin/css/api.css"
+      ]
+    }
+  }
+}

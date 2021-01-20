@@ -1,0 +1,13 @@
+<table class="m-bill__payer">
+    <tr>
+        <td class="cl-1-2"></td>
+        <td class="cl-1 is-bold is-underlined">Платник</td>
+        {% if client.fullName ?? false %}
+        <td class="cl-5-5">{{ client.fullName }}</td>
+        {% else%}
+            {% if partner.title ?? false %}
+                <td class="cl-5-5">{{ partner.title }}</td>
+            {% endif %}
+        {% endif %}
+    </tr>
+</table>

@@ -1,0 +1,20 @@
+@import "../../shared";
+.m-view {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 35px 35px 35px 30px;
+  @include min-screen-height-except($header-height);
+  max-width: 1370px;
+  margin: 0 auto;
+
+  @include breakpoint-across-tablet-small() {
+    min-height: auto;
+    padding: 35px 30px 60px;
+  }
+
+  @include breakpoint-mobile() {
+    padding: 25px 10px 60px;
+  }
+}
+

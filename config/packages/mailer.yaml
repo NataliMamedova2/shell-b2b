@@ -1,0 +1,21 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+
+mailer:
+    from_email: '%env(MAILER_FROM_EMAIL)%'
+    from_name: 'ShellCard B2B'
+
+    templates:
+        - key: !php/const App\Mailer\Template::REGISTRATION
+          subject: 'Реєстрація на порталі ShellCards'
+          template: 'emails/templates/registration.html.twig'
+        - key: !php/const App\Mailer\Template::FEEDBACK
+          subject: 'Feedback'
+          template: 'emails/templates/feedback.html.twig'
+        - key: !php/const App\Mailer\Template::FORGOT_PASS
+          subject: 'Відновлення паролю ShellCards'
+          template: 'emails/templates/forgot_pass.html.twig'
+        - key: !php/const App\Mailer\Template::ORDER_NEW_CARD
+          subject: 'Order new card'
+          template: 'emails/templates/order_new_card.html.twig'

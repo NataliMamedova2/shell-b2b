@@ -1,0 +1,48 @@
+{% trans_default_domain 'frontend' %}
+{% set current_route = app.request.get('_route') %}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Turn off telephone number detection. -->
+    <meta name="format-detection" content="telephone=no">
+    <title>{% block title %}{% endblock %}</title>
+    {% include "frontend/_layout/_favicons.html.twig" %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('style/app.css') }}">
+    {% endblock %}
+
+    <script nonce="{{ csp_nonce() }}">
+        window.__i18n__ = {
+        	showPassword: "{{ "Show password"|trans }}",
+        	hidePassword: "{{ "Hide password"|trans }}",
+        }
+    </script>
+</head>
+<body>
+<div class="m-sign m-sign--static {{ yellow_style|default(false) == true ? 'm-sign--yellow' : '' }}" style="background-image: url({{ fill_image|default('') }})">
+
+    <header class="m-sign__header">
+
+        <div class="m-header">
+            <div class="m-header__section">
+                <div class="c-logo">
+                    <img src="/media/logo.svg" class="c-logo__image" alt="shell logo" />
+                    <span class="c-text c-text--h4 a-color-dark">Business</span>
+                </div>
+            </div>
+
+            <div class="m-header__section">
+                {{ locale_switcher('frontend/components/lang-selector.component.twig') }}
+            </div>
+        </div>
+    </header>
+
+    {% block body %}{% endblock %}
+</div>
+
+<script src="{{ asset('scripts/utils.js') }}" nonce="{{ csp_nonce() }}"></script>
+</body>
+</html>

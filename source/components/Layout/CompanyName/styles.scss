@@ -1,0 +1,17 @@
+@import "../../../shared";
+
+.c-company-name {
+  padding: 0 14px;
+  margin-left: 14px;
+  height: 30px;
+  border-left: 1px solid $palette-line;
+  user-select: none;
+
+  .c-text {
+    line-height: 30px;
+    @include ellipsis;
+  }
+
+  max-width: 240px;
+}
+

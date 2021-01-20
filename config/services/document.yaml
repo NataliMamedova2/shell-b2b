@@ -1,0 +1,146 @@
+## document
+services:
+    app.clients.infrastructure.document.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Document\Document
+
+    app.clients.infrastructure.document.paginator:
+        class: 'Infrastructure\Paginator\PagerfantaPaginator'
+        factory: '@crud.factory.paginator_factory'
+        arguments:
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Document\Document
+
+    App\Clients\Infrastructure\Document\Service\UploadDocumentFileService:
+        arguments:
+            - '@FilesUploader\File\PathGeneratorInterface'
+            - '@oneup_flysystem.default_filesystem'
+    App\Clients\Domain\Document\Service\UploadDocumentFileService: '@App\Clients\Infrastructure\Document\Service\UploadDocumentFileService'
+
+    App\Clients\Infrastructure\Document\FileGenerator\ActCheckingFileGenerator:
+        arguments:
+            - '@App\Clients\Infrastructure\ShellInformation\Repository\ShellInfoRepository'
+            - '%kernel.project_dir%'
+
+    App\Clients\Infrastructure\Document\Service\ActCheckingFileService:
+        arguments:
+            - '@App\Clients\Infrastructure\Document\FileGenerator\ActCheckingFileGenerator'
+            - '@app.clients.infrastructure.transaction_card.repository'
+            - '@app.clients.infrastructure.discount.repository'
+            - '@app.clients.infrastructure.balance_history.repository'
+            - '@App\TwigBundle\Service\AmountSpellOut'
+            - '@FilesUploader\File\PathGenerator'
+            - '@oneup_flysystem.default_filesystem'
+    App\Partners\Infrastructure\Document\Service\ActCheckingFileService:
+        arguments:
+            - '@App\Clients\Infrastructure\Document\FileGenerator\ActCheckingFileGenerator'
+            - '@app.partners.infrastructure.transaction.repository'
+            - '@app.clients.infrastructure.discount.repository'
+            - '@App\TwigBundle\Service\AmountSpellOut'
+            - '@FilesUploader\File\PathGenerator'
+            - '@oneup_flysystem.default_filesystem'
+
+    App\Clients\Domain\Document\UseCase\ActChecking\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.document.repository'
+            - '@App\Clients\Infrastructure\Document\Service\ActCheckingFileService'
+            - '@doctrine.orm.entity_manager'
+    App\Partners\Domain\Document\UseCase\ActChecking\Handler:
+        public: true
+        arguments:
+            - '@app.clients.infrastructure.document.repository'
+            - '@App\Partners\Infrastructure\Document\Service\ActCheckingFileService'
+            - '@doctrine.orm.entity_manager'
+    App\Clients\Domain\Document\UseCase\UploadDocument\Handler:
+        arguments:
+            - '@app.clients.infrastructure.document.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    ## actions
+    App\Api\Action\Api\V1\Documents\DownloadAction\DownloadFileAction:
+        arguments:
+        - '@myself'
+        - '@app.clients.infrastructure.document.repository'
+        - '@oneup_flysystem.default_filesystem'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Partners\Documents\DownloadAction\DownloadFileAction:
+        arguments:
+            - '@partnerMyself'
+            - '@app.clients.infrastructure.document.repository'
+            - '@oneup_flysystem.default_filesystem'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Documents\SotaIntegration\SotaIntegrationAction:
+        arguments:
+         - '@myself'
+         - '@app.api.crud.json_response'
+         - '@app.clients.domain.sota.use_case.update.handler'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Partners\Documents\SotaIntegration\Action\QueryRequest:
+        arguments:
+            - '@partnerMyself'
+            - '@app.api.crud.json_response'
+            - '@app.partners.domain.partner.sota.use_case.update.handler'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Documents\SotaIntegration\Api\QueryRequest:
+        arguments:
+            - '@request_stack'
+            - '@app.api.crud.json_response'
+            - '@app.clients.infrastructure.client.repository'
+            - '@app.clients.infrastructure.user.repository'
+            - '@router.default'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Users\Documents\QueryRequest:
+        arguments:
+            - '@request_stack'
+            - '@app.api.crud.json_response'
+            - '@app.users.infrastructure.user.repository'
+            - '@router.default'
+        tags:
+            - { name: controller.service_arguments }
+    App\Api\Action\Api\V1\Partners\Documents\SotaIntegration\QueryRequest:
+        arguments:
+            - '@request_stack'
+            - '@app.api.crud.json_response'
+            - '@app.partners.infrastructure.partner.repository'
+            - '@app.partners.infrastructure.user.repository'
+        tags:
+            - { name: controller.service_arguments }
+    app.api.action.api.documents.list_action.list_service:
+        public: true
+        class: App\Api\Crud\Service\PaginatorService
+        arguments: ['@app.clients.infrastructure.document.paginator']
+
+    app.api.action.api.v1.documents.act_checking_action.handler_request:
+        public: true
+        class: App\Clients\Domain\Document\UseCase\ActChecking\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Documents\ActCheckingAction\HandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@myself'
+    app.api.action.api.v1.partners.documents.act_checking_action.handler_request:
+        public: true
+        class: App\Partners\Domain\Document\UseCase\ActChecking\HandlerRequest
+        factory: '@App\Api\Action\Api\V1\Partners\Documents\ActCheckingAction\HandlerRequestFactory'
+        arguments:
+            - '@request_stack'
+            - '@partnerMyself'
+
+    App\Import\Action\Command\MigrateBalanceHistory:
+        arguments:
+            - '@oneup_flysystem.default_filesystem'
+            - '@app.clients.infrastructure.client_info.repository'
+            - '@app.clients.infrastructure.balance_history.repository'
+            - '@doctrine.orm.default_entity_manager'
+            - '@logger'
+        tags:
+            - { name: console.command }

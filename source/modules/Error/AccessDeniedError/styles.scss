@@ -1,0 +1,32 @@
+@import "../../../shared";
+
+.m-access-error {
+
+  width: 100%;
+  height: auto;
+  @include min-screen-height;
+  background-color: $palette-warning;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 100px 10px;
+
+  .c-text {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  &__title {
+    margin-bottom: 15px;
+    line-height: 1.1;
+  }
+  &__lead {
+
+  }
+
+  .c-button {
+    margin-top: 40px;
+  }
+}

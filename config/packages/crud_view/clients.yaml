@@ -1,0 +1,128 @@
+## clients
+crud:
+    view:
+        contents:
+            admin_clients_client_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.companies_list'
+                        icon: 'briefcase'
+                    global:
+                        'result': 'result'
+                        'result:paginator': 'paginator'
+                children:
+                    filter:
+                        extend: 'form_filter'
+                        options:
+                            form_type: App\Clients\View\Form\Client\FilterFormType
+                        template: '/backend/clients/client/list_filter.html.twig'
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_client_list'
+                    table:
+                        template: '/backend/clients/client/table.html.twig'
+                        data:
+                            parent:
+                                'result:paginator': 'paginator'
+                                'result:clientInfo': 'clientInfo'
+                                'result:managers': 'managers'
+                                'result:adminsInCompanyCount': 'adminsInCompanyCount'
+                    paginator:
+                        extend: 'pagerfanta_paginator'
+                        data:
+                            global:
+                                'result:paginator': 'paginator'
+            admin_clients_client_profile:
+                template: '/backend/clients/client/profile.html.twig'
+                data:
+                    static:
+                        title: 'header.client_profile'
+                        icon: 'briefcase'
+                    global:
+                        'result:client': 'client'
+                        'result:company': 'company'
+                        'result:clintInfo': 'clintInfo'
+                        'result:manager': 'manager'
+                        'result:balanceUpdate': 'balanceUpdate'
+                        'result:availableBalance': 'availableBalance'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Clients\View\Profile\UpdateFormType
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_profile_update'
+                        children:
+                            actions:
+                                children:
+                                    button-save:
+                                        template: '/backend/crud/block/submit-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_edit'
+                                                color: 'success'
+                                                icon: 'save'
+                                    button-save-redirect:
+                                        template: '/backend/crud/block/submit-redirect-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_back'
+                                                color: 'info'
+                                                icon: 'save'
+                                                redirect: 'admin_clients_client_list'
+                                    button-cancel:
+                                        template: '/backend/crud/block/link-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.back'
+                                                color: 'default'
+                                                icon: 'list'
+                                                routeName: 'admin_clients_client_list'
+            admin_clients_profile_update:
+                extend: 'admin_clients_client_profile'
+            admin_clients_client_document:
+                template: 'backend/clients/client/document.html.twig'
+                data:
+                    static:
+                        title: 'header.document_upload'
+                        icon: 'upload'
+                    global:
+                        'result:client': 'client'
+                children:
+                    form:
+                        extend: 'symfony_form'
+                        options:
+                            form_type: App\Clients\View\Profile\UploadDocumentFormType
+                        data:
+                            static:
+                                actionRoute: 'admin_clients_client_document_upload'
+                        children:
+                            actions:
+                                children:
+                                    button-save:
+                                        template: '/backend/crud/block/submit-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_edit'
+                                                color: 'success'
+                                                icon: 'save'
+                                    button-save-redirect:
+                                        template: '/backend/crud/block/submit-redirect-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.save_and_back'
+                                                color: 'info'
+                                                icon: 'save'
+                                                redirect: 'admin_clients_client_profile'
+                                    button-cancel:
+                                        template: '/backend/crud/block/link-button.html.twig'
+                                        data:
+                                            static:
+                                                title: 'btn.back'
+                                                color: 'default'
+                                                icon: 'list'
+                                                routeName: 'admin_clients_client_list'
+            admin_clients_client_document_upload:
+                extend: 'admin_clients_client_document'

@@ -1,0 +1,14 @@
+# Expose your documentation as JSON swagger compliant
+#app.swagger:
+#    path: /admin/api/doc.json
+#    methods: GET
+#    defaults: { _controller: nelmio_api_doc.controller.swagger }
+
+## Requires the Asset component and the Twig bundle
+## $ composer require twig asset
+admin_api_doc:
+    path: /admin/api/doc
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    methods: [GET]
+    defaults:
+        template: 'backend/api/doc.html.twig'

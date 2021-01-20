@@ -1,0 +1,106 @@
+@import "../../../shared";
+@import "c-limits-field";
+
+.m-cards-edit {
+
+  &__info {
+    width: 100%;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &__number {
+    margin-bottom: 20px;
+  }
+
+  &__owner {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .c-icon {
+      margin-top: 10px;
+    }
+  }
+
+  &__owner-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+
+    > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &__name {
+    margin: 10px 0;
+  }
+
+  &__status {
+    margin-bottom: 5px;
+  }
+
+  .c-form {
+    background-color: $palette-light;
+    border-radius: $corner-default;
+    padding: 40px 0 45px;
+
+    .c-button {
+      margin-top: 20px;
+    }
+  }
+
+  .c-form__group,
+  .c-form__actions {
+    padding: {
+      left: 35px;
+      right: 35px;
+    };
+  }
+
+  .c-field__array-item {
+    display: block;
+    position: relative;
+
+    .c-icon--close {
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $palette-light;
+      }
+    }
+  }
+
+  .c-field--array {
+    .c-button {
+      margin-left: 15px;
+    }
+  }
+
+  @include breakpoint-mobile() {
+    .c-form__group,
+    .c-form__actions {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .c-form-layout__aside {
+      padding-left: 20px;
+    }
+    .m-cards-edit__number {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+  }
+}
+
+

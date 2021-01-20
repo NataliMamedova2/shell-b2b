@@ -1,0 +1,39 @@
+@import "../../shared";
+
+.c-popover {
+  width: auto;
+  height: auto;
+  position: relative;
+
+
+  &__content {
+    width: auto;
+    height: auto;
+    display: block;
+    position: absolute;
+    z-index: 99;
+    background-color: $palette-light;
+    border-radius: 3px;
+    box-shadow: $shadow-tooltip;
+
+    // vertical
+    &[class*="is-to-top-"] {
+      bottom: calc(100% - 5px);
+    }
+    &[class*="is-to-bottom-"] {
+      top: calc(100% - 5px);
+    }
+
+    // horizontal
+    &[class*="-left"] {
+      right: calc(100% - 5px);
+    }
+    &[class*="-right"] {
+      left: calc(100% - 5px);
+    }
+    &[class*="-center"] {
+      left: calc(50% - 3px);
+      transform: translateX(-50%);
+    }
+  }
+}

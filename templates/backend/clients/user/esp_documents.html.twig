@@ -1,0 +1,26 @@
+{% extends 'backend/_layout/layout.html.twig' %}
+{% block page_header %}
+    <div class="row bg-title">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <h4 class="page-title">
+                    <span class="fa fa-files-o text-info m-r-5"></span>
+                {% block title %}
+                    {% block page_title %}
+                        Документи ЕЦП
+                    {% endblock %}
+                {% endblock %}
+            </h4>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="white-box m-documents-for-sign__iframe-wrapper">
+                    <iframe title=" " class="m-documents-for-sign__iframe" src="https://test.sota-buh.com.ua/account/portallogin?code=34430873&amp;token={{ token }}" width="100%" height="100vh"></iframe>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

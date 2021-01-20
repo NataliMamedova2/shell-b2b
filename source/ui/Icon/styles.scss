@@ -1,0 +1,190 @@
+@import "../../shared";
+
+.c-icon {
+  font-family: "icomoon", sans-serif !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  @include improve-font-rendering;
+
+  &.is-pending {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+
+    animation: {
+      name: spin;
+      duration: 1s;
+      timing-function: linear;
+      iteration-count: infinite;
+      fill-mode: forwards;
+    }
+  }
+}
+
+.c-icon {
+  outline: none;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.c-icon--checkbox-unchecked:before {
+  content: "\e922";
+}
+.c-icon--checkbox-checked:before {
+  content: "\e923";
+}
+.c-icon--logout:before {
+  content: "\e924";
+}
+
+.c-icon--pending:before {
+  content: "\e920";
+}
+.c-icon--info:before {
+  content: "\e91f";
+}
+.c-icon--burger:before {
+  content: "\e900";
+}
+.c-icon--menu:before {
+  content: "\e900";
+}
+.c-icon--chevron-down:before {
+  content: "\e901";
+}
+.c-icon--chevron-left:before {
+  content: "\e902";
+}
+.c-icon--chevron-right:before {
+  content: "\e903";
+}
+.c-icon--chevron-up:before {
+  content: "\e904";
+}
+.c-icon--close:before {
+  content: "\e905";
+}
+.c-icon--triangle-down:before {
+  content: "\e906";
+}
+.c-icon--triangle-up:before {
+  content: "\e907";
+}
+.c-icon--outside:before {
+  content: "\e908";
+}
+.c-icon--check-square:before {
+  content: "\e909";
+}
+.c-icon--list-square:before {
+  content: "\e90a";
+}
+.c-icon--add-square:before {
+  content: "\e90b";
+}
+.c-icon--heart:before {
+  content: "\e90c";
+}
+.c-icon--favorite:before {
+  content: "\e90c";
+}
+.c-icon--more:before {
+  content: "\e90d";
+}
+.c-icon--dots:before {
+  content: "\e90d";
+}
+.c-icon--calendar:before {
+  content: "\e90e";
+}
+.c-icon--card:before {
+  content: "\e90f";
+}
+.c-icon--trash:before {
+  content: "\e910";
+}
+.c-icon--delete:before {
+  content: "\e910";
+}
+.c-icon--doc:before {
+  content: "\e911";
+}
+.c-icon--edit:before {
+  content: "\e912";
+}
+.c-icon--email:before {
+  content: "\e913";
+}
+.c-icon--export:before {
+  content: "\e914";
+}
+.c-icon--upload:before {
+  content: "\e914";
+}
+.c-icon--feedback:before {
+  content: "\e915";
+}
+.c-icon--comment:before {
+  content: "\e915";
+}
+.c-icon--filter:before {
+  content: "\e916";
+}
+.c-icon--limit:before {
+  content: "\e917";
+}
+.c-icon--lock:before {
+  content: "\e918";
+}
+.c-icon--news:before {
+  content: "\e919";
+}
+.c-icon--cols:before {
+  content: "\e919";
+}
+.c-icon--phone:before {
+  content: "\e91a";
+}
+.c-icon--profile:before {
+  content: "\e91b";
+}
+.c-icon--cog:before {
+  content: "\e91c";
+}
+.c-icon--ticket:before {
+  content: "\e91d";
+}
+.c-icon--transaction:before {
+  content: "\e91e";
+}
+.c-icon--reorder:before {
+  content: "\e91e";
+}
+
+.c-icon--home:before  {
+  content: "\e921";
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

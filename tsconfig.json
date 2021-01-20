@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "baseUrl": "source",
+    "paths": {
+      "@app-interfaces/*": [ "app-interfaces/*"],
+      "@app-types/*": [ "app-types/*"]
+    },
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "inlineSources": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react"
+  },
+  "include": [
+    "source"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/__mocks__",
+    "source/vendors/modernizr.js"
+  ]
+}

@@ -1,0 +1,9 @@
+## refill_balance
+services:
+    app.clients.infrastructure.refill_balance.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\RefillBalance\RefillBalance

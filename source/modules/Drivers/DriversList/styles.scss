@@ -1,0 +1,38 @@
+@import "../../../shared";
+
+.m-drivers-list {
+
+  &__tabs {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+
+    .c-tabs {
+      margin-left: 30px;
+    }
+  }
+
+  @include breakpoint-across-mobile-tablet {
+
+    &__tabs {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-bottom: 20px;
+      .c-tabs {
+        margin-top: 10px;
+        margin-left: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        @include zero-scrollbar();
+
+        &__item {
+          flex: none;
+        }
+      }
+    }
+  }
+}

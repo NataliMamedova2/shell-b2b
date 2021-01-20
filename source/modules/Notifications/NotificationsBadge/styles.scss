@@ -1,0 +1,9 @@
+@import "../../../shared";
+
+.c-notifications-badge {
+  margin-right: 20px;
+
+  @include breakpoint-mobile() {
+    margin-right: 10px;
+  }
+}

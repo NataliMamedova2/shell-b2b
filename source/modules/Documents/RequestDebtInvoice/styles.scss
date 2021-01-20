@@ -1,0 +1,9 @@
+@import "../../../shared";
+
+.m-bill-create-custom {
+  @include breakpoint-tablet() {
+    .c-paper {
+      padding: 20px 85px 40px;
+    }
+  }
+}

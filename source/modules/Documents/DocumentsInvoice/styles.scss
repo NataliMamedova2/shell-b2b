@@ -1,0 +1,7 @@
+@import "../../../shared";
+
+.m-bill-create {
+  @include breakpoint-tablet-up() {
+    @include min-screen-height-except(250px);
+  }
+}

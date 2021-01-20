@@ -1,0 +1,107 @@
+@import "../../../shared";
+
+.c-discount-history {
+  height: auto;
+  $padding-right: 20px;
+
+  &__header {
+    height: 145px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid $palette-line;
+
+    .c-text--label {
+      font-size: 14px;
+      margin-top: 20px;
+    }
+  }
+
+  &__icon {
+    width: 57px;
+    height: 52px;
+    display: block;
+  }
+
+  &__stick {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 $padding-right 0 60px;
+    position: relative;
+
+    &:before {
+      content: "";
+      width: 100%;
+      height: 15px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      z-index: 1;
+      background-image: linear-gradient(0deg, $palette-clear, $palette-light);
+    }
+  }
+
+  &__date {
+    width: 120px;
+  }
+  &__value {
+    width: calc(100% - 120px);
+  }
+
+  &__item {
+    height: 36px;
+    padding: 0 20px 0 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @include breakpoint-hover() {
+      &:hover {
+        background-color: $palette-fill-grey;
+      }
+    }
+  }
+
+  &__load {
+    padding: 20px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .c-button {
+      width: 200px;
+      justify-content: center !important;
+    }
+    .c-icon {
+      margin: 0 5px 0 0 !important;
+    }
+  }
+
+  &__list {
+    height: 320px;
+    width: 100%;
+    @include vertical-scroll();
+    @include styled-scrollbar();
+
+    .c-icon {
+      margin: 20px auto;
+    }
+  }
+
+
+  @include breakpoint-mobile() {
+
+    .c-popup__wrapper {
+      border-radius: 0;
+    }
+
+    &__list {
+      @include screen-height-except(185px);
+    }
+  }
+}

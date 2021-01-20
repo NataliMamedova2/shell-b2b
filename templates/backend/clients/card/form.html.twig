@@ -1,0 +1,93 @@
+{% set form = view.variable('form') %}
+
+{% set params = app.request.get('_route_params') %}
+{% set disabled = (view.card.exportStatus.onModeration == true or view.haveLimitsOnModeration == true) ? true : false %}
+
+{{ form_start(form, {'action': path(view.variable('actionRoute'), params) }) }}
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="white-box">
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_label(form.totalLimits) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.totalLimits.day) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.totalLimits.week) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.totalLimits.month) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    {{ form_row(form.serviceDays) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-3">
+                    {{ form_row(form.startUseTime) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.endUseTime) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_label(form.fuelLimits) }}
+                </div>
+                <div class="col-md-10">
+                    {{ form_row(form.fuelLimits, { label: false }) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_label(form.goodsLimits) }}
+                </div>
+                <div class="col-md-10">
+                    {{ form_row(form.goodsLimits, { label: false }) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_label(form.servicesLimits) }}
+                </div>
+                <div class="col-md-10">
+                    {{ form_row(form.servicesLimits, { label: false }) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="form-group">
+                {% include 'backend/crud/block/submit-button.html.twig' with { view: {
+                    title: 'btn.save_and_edit',
+                    color: 'success',
+                    icon: 'save',
+                    disabled: disabled
+                } } %}
+                {% include 'backend/crud/block/submit-redirect-button.html.twig' with { view: {
+                    title: 'btn.save_and_back',
+                    color: 'info',
+                    icon: 'save',
+                    disabled: disabled,
+                    redirect: 'admin_clients_card_list'
+                } } %}
+                {% include 'backend/crud/block/link-button.html.twig' with { view: {
+                    title: 'btn.back',
+                    color: 'default',
+                    icon: 'list',
+                    routeName: 'admin_clients_card_list'
+                } } %}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}

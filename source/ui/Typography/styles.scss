@@ -1,0 +1,56 @@
+@import "../../shared";
+
+.c-text {
+  font-family: $family-main;
+
+  &--h1 {
+    @include style-h1();
+
+    @include breakpoint-across-mobile-tablet() {
+      font-size: 20px;
+    }
+  }
+  &--h2 {
+    @include style-h2();
+  }
+  &--h3 {
+    @include style-h3();
+  }
+  &--h4 {
+    @include style-h4();
+  }
+  &--h5 {
+    @include style-h5();
+  }
+  &--paragraph {
+    @include style-paragraph();
+  }
+  &--caption {
+    @include style-caption();
+  }
+  &--link {
+    @include style-link();
+  }
+  &--label {
+    @include style-label();
+  }
+  &--note {
+    @include style-note();
+  }
+
+
+  &.is-underlined {
+    text-decoration: underline;
+  }
+
+  &.is-bold {
+    font-weight: $weight-bold;
+  }
+}
+
+@include breakpoint-hover() {
+  .c-text a:hover,
+  a.c-text:hover {
+    color: $palette-attention;
+  }
+}

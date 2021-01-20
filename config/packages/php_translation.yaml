@@ -1,0 +1,21 @@
+translation:
+    locales: "%locales%"
+    auto_add_missing_translations:
+        config_name: 'frontend'
+    edit_in_place:
+        enabled: false
+        config_name: frontend
+    configs:
+        frontend:
+            dirs: ["%kernel.project_dir%/templates", "%kernel.project_dir%/src"]
+            output_dir: "%kernel.project_dir%/translations"
+            excluded_names: ["*TestCase.php", "*Test.php", "*Fixtures.php", "Backend"]
+            excluded_dirs: [cache, data, logs, backend, src/DataFixtures]
+        jsonfile:
+            dirs: ["%kernel.project_dir%/source"]
+            output_dir: "%kernel.project_dir%/translations"
+        backend:
+            dirs: ["%kernel.project_dir%/templates/backend", "%kernel.project_dir%/src"]
+            output_dir: "%kernel.project_dir%/translations"
+            excluded_names: ["*TestCase.php", "*Test.php", "*Fixtures.php", "Frontend"]
+            excluded_dirs: [cache, data, logs, frontend, src/DataFixtures]

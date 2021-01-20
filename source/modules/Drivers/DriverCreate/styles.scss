@@ -1,0 +1,43 @@
+@import "../../../shared";
+
+.m-create-driver-inline {
+  .c-form {
+    background-color: $palette-light;
+    border-radius: $corner-default;
+    padding: 40px 0 45px;
+  }
+}
+
+.m-create-driver-popup,
+.m-create-driver-inline{
+  .c-form__group,
+  .c-form__actions {
+    padding: {
+      left: 35px;
+      right: 35px;
+    };
+  }
+
+
+  .c-field__array-item {
+    .c-field__error {
+      position: static;
+      display: block;
+    }
+  }
+}
+
+
+@include breakpoint-mobile() {
+  .m-create-driver-popup,
+  .m-create-driver-inline{
+    .c-form__group,
+    .c-form__actions {
+      padding: {
+        left: 10px;
+        right: 10px;
+      };
+    }
+  }
+}
+

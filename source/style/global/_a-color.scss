@@ -1,0 +1,18 @@
+@import "../shared/palette";
+
+.a-color-dark {
+  color: $palette-dark;
+}
+.a-color-light {
+  color: $palette-light;
+}
+.a-color-disable {
+  color: $palette-disable;
+}
+.a-color-darkgrey {
+  color: $palette-darkgrey;
+}
+
+.a-color-error {
+  color: $palette-attention;
+}

@@ -1,0 +1,7 @@
+export const STAFF_ACTION_CHANGE_STATUS = "STAFF_CHANGE_STATUS";
+export const STAFF_ACTION_DELETE = "STAFF_DELETE";
+export const STAFF_ACTION_UPDATE = "STAFF_UPDATE";
+export const STAFF_ACTION_CREATE = "STAFF_CREATE";
+
+export const STAFF_STATE_ERROR = "error";
+export const STAFF_STATE_SUCCESS = "success";

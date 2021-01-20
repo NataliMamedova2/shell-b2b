@@ -1,0 +1,4 @@
+
+{% for data in view.iterator %}
+    {{ view_render(data.captureTo, data) }}
+{% endfor %}

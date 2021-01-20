@@ -1,0 +1,34 @@
+@import "../../shared";
+
+.c-password {
+
+  width: 100%;
+  height: auto;
+  position: relative;
+
+  &__input {
+    @include input-base;
+  }
+
+  &.is-error {
+    .c-password__input {
+      border-color: $palette-attention;
+    }
+  }
+
+  &__button {
+    width: 36px;
+    height: 36px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__icon {
+    margin: 5px;
+    width: 26px;
+    height: 26px;
+  }
+}

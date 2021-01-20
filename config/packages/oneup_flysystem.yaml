@@ -1,0 +1,40 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
+oneup_flysystem:
+    adapters:
+        local_adapter:
+            local:
+                directory: "%kernel.project_dir%/storage/source"
+        local_cache_adapter:
+            local:
+                directory: "%kernel.project_dir%/storage/cache"
+        import_1s_adapter:
+            local:
+                directory: '%env(resolve:IMPORT_1S_DIRECTORY)%'
+        export_1s_adapter:
+            local:
+                directory: '%env(resolve:EXPORT_1S_DIRECTORY)%'
+        import_documents_adapter:
+            local:
+                directory: '%env(resolve:IMPORT_DOCUMENTS_DIRECTORY)%'
+        pc_sftp_adapter:
+            sftp:
+                host: '%env(PC_SERVER_HOST)%'
+                port: '%env(PC_SERVER_PORT)%'
+                username: '%env(PC_SERVER_USERNAME)%'
+                password: '%env(PC_SERVER_PASSWORD)%'
+                root: '%env(PC_SERVER_ROOT_DIRECTORY)%'
+                timeout: 900
+    filesystems:
+        default:
+            adapter: local_adapter
+            alias: League\Flysystem\Filesystem
+        cache:
+            adapter: local_cache_adapter
+        import_1s:
+            adapter: import_1s_adapter
+        export_1s:
+            adapter: export_1s_adapter
+        import_documents:
+            adapter: import_documents_adapter
+        sync_pc_source:
+            adapter: pc_sftp_adapter

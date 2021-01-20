@@ -1,0 +1,164 @@
+{% extends 'backend/_layout/layout.html.twig' %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+{% set days = [
+    'mon'|trans,
+    'tue'|trans,
+    'wed'|trans,
+    'thu'|trans,
+    'fri'|trans,
+    'sat'|trans,
+    'sun'|trans
+]
+%}
+
+{% block content %}
+    {% set type = app.request.get('type', 'fuel') %}
+    {% set moneyLimit = view.moneyLimits %}
+    <div class="row p-b-20">
+        <div class="col-sm-12">
+            <a href="{{ target_url('admin_clients_card_list') }}" class="btn waves-effect waves-light btn-default">
+                <span class="btn-label">
+                    <i class="fa fa-list"></i>
+                </span>
+                {{ 'btn.list'|trans }}
+            </a>
+            {% if view.card.exportStatus.onModeration == false and view.haveLimitsOnModeration == false and view.card.isBlocked == false %}
+                <a href="{{ path('admin_clients_card_read', { id: view.card.id }) }}" class="btn waves-effect waves-light btn-info">
+                    <span class="btn-label">
+                        <i class="fa fa-pencil"></i>
+                    </span>
+                    {{ 'btn.edit'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>{{ view.card.cardNumber }}</h2>
+                        {{ ui.labeled(view.card.status, {
+                            '0': 'blocked'|trans,
+                            '1': 'active'|trans
+                        }, {
+                            '0': 'default',
+                            '1': 'success'
+                        }) }}
+                        {% if view.card.exportStatus.onModeration == true or view.haveLimitsOnModeration == true %}
+                            <i class="fa fa-circle text-purple m-r-5"></i>{{ 'label.on_moderation'|trans }}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <label>{{ 'label.work_days'|trans }}:</label><br/>
+                        <span>
+                            {% for k, value in view.card.serviceSchedule|split('') %}
+                                {% if value == 1 and days[k] is defined %}
+                                    {{ days[k] }}{% if loop.last == false %},{% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    <div class="col-md-2">
+                        <label>{{ 'label.work_hours'|trans }}:</label><br/>
+                        <span>{{ view.card.timeUseFrom|date("H:i") }} - {{ view.card.timeUseTo|date("H:i") }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                {% if view.haveFuelLimits == true or view.haveGoodsLimits == true or view.haveServicesLimits == true %}
+                    <ul class="nav nav-pills m-b-30 ">
+                        {% if view.haveFuelLimits == true %}
+                            <li class="{% if type == 'fuel' %}active{% endif %}">
+                                <a href="{{ path('admin_clients_card_limits_list', { id: view.card.id, type: 'fuel' }) }}">
+                                    {{ 'tab.fuel'|trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if view.haveGoodsLimits == true %}
+                            <li class="{% if type == 'goods' %}active{% endif %}">
+                                <a href="{{ path('admin_clients_card_limits_list', { id: view.card.id, type: 'goods' }) }}">
+                                    {{ 'tab.goods'|trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if view.haveServicesLimits == true %}
+                            <li class="{% if type == 'service' %}active{% endif %}">
+                                <a href="{{ path('admin_clients_card_limits_list', { id: view.card.id, type: 'service' }) }}">
+                                    {{ 'tab.services'|trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+
+                <table class="table table-bordered tablesaw table-striped table-hover color-table muted-table vertical-middle" data-tablesaw-mode="stack">
+                    <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+                            {{ 'label.limit'|trans }}
+                        </th>
+                        <th scope="col" data-tablesaw-priority="persist">
+                            {{ 'label.per_day'|trans }}
+                        </th>
+                        <th scope="col" data-tablesaw-priority="persist">
+                            {{ 'label.per_week'|trans }}
+                        </th>
+                        <th scope="col" data-tablesaw-priority="persist">
+                            {{ 'label.per_month'|trans }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-tablesaw-no-labels>
+                                {{ moneyLimit.name }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(moneyLimit.day.total) }} {{ 'label.uah'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(moneyLimit.day.left) }} {{ 'label.uah'|trans }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(moneyLimit.week.total) }} {{ 'label.uah'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(moneyLimit.week.left) }} {{ 'label.uah'|trans }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(moneyLimit.month.total) }} {{ 'label.uah'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(moneyLimit.month.left) }} {{ 'label.uah'|trans }}
+                            </td>
+                        </tr>
+                    {% for limit in view.limits %}
+                        <tr>
+                            <td data-tablesaw-no-labels>
+                                {{ limit.name }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(limit.day.total) }} {{ 'label.volume_l'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(limit.day.left) }} {{ 'label.volume_l'|trans }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(limit.week.total) }} {{ 'label.volume_l'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(limit.week.left) }} {{ 'label.volume_l'|trans }}
+                            </td>
+                            <td data-tablesaw-no-labels>
+                                {{ ui.render_number(limit.month.total) }} {{ 'label.volume_l'|trans }}<br/>
+                                {{ 'label.left'|trans }}: {{ ui.render_number(limit.month.left) }} {{ 'label.volume_l'|trans }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/admin/js/crud/list.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% set expand = false %}
+{% if view.variable('data') | length > 1 %}
+    {% set expand = true %}
+{% endif %}
+<div class="row">
+    <div class="col-xs-12 col-md-12" id="filter-container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="fa fa-filter m-r-5"></span>
+                <span data-perform="panel-collapse" style="cursor: pointer">
+                    {{ view.variable('title', 'filter.title')|trans }}
+                </span>
+                <div class="pull-right">
+                    <a href="#" data-perform="panel-collapse"><i class="ti-{{ expand == true ? 'minus' : 'plus' }}"></i></a>
+                </div>
+            </div>
+
+            <div class="panel-wrapper collapse {{ expand == true ? 'in' : '' }}">
+                <div class="panel-body">
+
+                    {% set form = view.variable('form') %}
+
+                    {% set params = app.request.get('_route_params') %}
+
+                    {{ form_start(form, { 'action': path(view.variable('actionRoute', app.request.get('_route')), app.request.query.all)}) }}
+                    {% block form_body %}
+                        {{ form_widget(form) }}
+                    {% endblock %}
+
+                    <hr/>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% block add_actions %}
+                            {% endblock %}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right">
+
+                                {{ view_render('form-button-submit', view) }}
+
+                                <a href="{{ path(app.request.get('_route')) }}" class="btn waves-effect waves-light btn-default">
+                            <span class="btn-label">
+                                <i class="fa fa-refresh"></i>
+                            </span>
+                                    {{ 'link.reset_filter'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form, {'render_rest': false}) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

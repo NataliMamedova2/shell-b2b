@@ -1,0 +1,14 @@
+@function strip-value($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@function to-rem($value, $root: 16px) {
+  $result: strip-value($value) / strip-value($root);
+
+  @return round($result * 1000) / 1000 * 1rem;
+}
+
+
+@function with-header-height($value) {
+  @return $value + 56px;
+}

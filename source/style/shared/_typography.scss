@@ -1,0 +1,88 @@
+@import "functions";
+
+// Font font families,
+$family-main: "Futura PT", sans-serif;
+$family-icon: "iconmoon";
+
+// Font size types
+$font-h1: to-rem(30px); // page title, bold
+$font-h2: to-rem(28px); // large block or widget title, bold
+$font-h3: to-rem(24px); // card titles
+$font-h4: to-rem(20px); // block title, bold
+$font-h5: to-rem(18px); // aka large paragraph
+
+$font-paragraph: to-rem(16px); // default text side
+$font-caption: to-rem(15px); // default text side
+$font-link: to-rem(14px); // some links or subchapters
+$font-note: to-rem(12px); // tooltip description
+$font-label: to-rem(11px); // label with uppercase transform
+
+
+// Font weight types
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-bold: 700;
+
+// Line height
+$lh-text: 1.5; // paragraphs
+$lh-title: 1.2; // titles. h1-h2 group
+$lh-subtitle: 1.15; // titles. h3
+$lh-notes: 1.35; // notes
+$lh-label: 1.15; // label
+
+@mixin style-h1 {
+  font-size: $font-h1;
+  font-weight: $weight-bold;
+  line-height: $lh-title;
+}
+@mixin style-h2 {
+  font-size: $font-h2;
+  font-weight: $weight-bold;
+  line-height: $lh-title;
+
+  @include breakpoint-mobile() {
+    font-size: 20px;
+  }
+}
+@mixin style-h3 {
+  font-size: $font-h3;
+  font-weight: $weight-medium;
+  line-height: $lh-subtitle;
+}
+@mixin style-h4 {
+  font-size: $font-h4;
+  font-weight: $weight-bold;
+  line-height: $lh-title;
+}
+@mixin style-h5 {
+  font-size: $font-h5;
+  font-weight: $weight-regular;
+  line-height: $lh-text;
+}
+@mixin style-paragraph {
+  font-size: $font-paragraph;
+  font-weight: $weight-regular;
+  line-height: $lh-text;
+}
+@mixin style-caption {
+  font-size: $font-caption;
+  font-weight: $weight-regular;
+  line-height: $lh-text;
+}
+@mixin style-link{
+  font-size: $font-link;
+  font-weight: $weight-regular;
+  line-height: 1;
+}
+@mixin style-note {
+  font-size: $font-note;
+  font-weight: $weight-regular;
+  line-height: $lh-notes;
+}
+@mixin style-label {
+  font-size: $font-label;
+  font-weight: $weight-bold;
+  line-height: $lh-label;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

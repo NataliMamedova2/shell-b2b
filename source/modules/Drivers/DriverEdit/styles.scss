@@ -1,0 +1,35 @@
+@import "../../../shared";
+
+.m-edit-driver {
+
+  .c-form {
+    background-color: $palette-light;
+    border-radius: $corner-default;
+    padding: 40px 0 45px;
+  }
+
+  .c-form__group,
+  .c-form__actions {
+    padding: {
+      left: 35px;
+      right: 35px;
+    };
+  }
+
+  .c-form-layout__info-wrapper {
+    .c-badge {
+      margin-top: 10px;
+    }
+  }
+
+  .c-field__array-item {
+    .c-field__error {
+      position: static;
+      display: block;
+    }
+  }
+
+  &__description {
+    margin-top: 40px;
+  }
+}

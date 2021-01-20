@@ -1,0 +1,10 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'backend/form/pixeladmin_layout.html.twig'
+        - 'backend/form/cropper_fields.html.twig'
+        - 'backend/form/fields.html.twig'
+    paths:
+        '%kernel.project_dir%/public/media': media

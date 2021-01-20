@@ -1,0 +1,48 @@
+@import "../../../shared";
+
+.c-lang-selector {
+  width: auto;
+  height: auto;
+  position: relative;
+  background-color: $palette-light;
+
+  &__list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    padding-top: 36px;
+    flex-direction: column;
+
+    &:before {
+      content: "";
+      @include absolute-fill(1);
+      box-shadow: $shadow-select;
+      pointer-events: none;
+    }
+  }
+
+  &__item {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $palette-light;
+    position: relative;
+    z-index: 9;
+
+    @include breakpoint-hover() {
+      &:hover {
+        background-color: $palette-fill-grey;
+      }
+    }
+  }
+
+  .c-text {
+    text-transform: uppercase;
+  }
+}
+
+

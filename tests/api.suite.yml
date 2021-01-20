@@ -1,0 +1,25 @@
+actor: ApiTester
+bootstrap: _bootstrap.php
+modules:
+    enabled:
+        - Db
+        - Doctrine2
+        - Filesystem
+        - DataFactory
+        - REST
+        - PhpBrowser
+        - Tests\Helper\Api
+        - Tests\Helper\Factories
+    config:
+        Doctrine2:
+            cleanup: true
+            connection_callback: [\Tests\DoctrineConnectionClass, createEntityManager]
+        DataFactory:
+            depends: Doctrine2
+        REST:
+            depends: PhpBrowser
+            timeout: 90
+        PhpBrowser:
+            url: '%WEB_DRIVER_URL%'
+            curl:
+                CURLOPT_TIMEOUT: 90

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}API | ShellCard B2B{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+        {{ encore_entry_link_tags('css/api') }}
+    {% endblock %}
+
+    <!-- HTML5 Shim
+    and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header">
+{% block body %}
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <ul class="nav navbar-top-links navbar-left">
+                    <li>
+                        <a href="{{ path('admin_homepage') }}">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </li>
+                    <li class="in navbar-text">
+                        <h4 style="margin: 4px 0; color: #ffffff">
+                            <i class="fa fa-file-text"></i>
+                            API. Documentation
+                        </h4>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <a href="{{ path('frontend_homepage') }}" target="_blank">
+                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                            <span class="hidden-xs">{{ 'label.frontend_homepage.link'|trans }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('js/api') }}
+{% endblock %}
+</body>
+</html>

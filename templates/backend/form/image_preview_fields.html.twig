@@ -1,0 +1,33 @@
+{% block image_preview_widget %}
+    <div id="image_block_{{ id }}">
+        <input type="file" class="dropify dropify-image image-element__{{ id }}" title=""
+               data-default-file="{{ default_file }}"
+               data-show-remove="false"
+               accept="image/*"
+               name="{{ full_name }}"
+        />
+
+        <div class="hidden">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+    <div class="errors__block has-error">
+        {% if form.parent.vars.errors is not empty %}
+            {% for error in form.parent.vars.errors %}
+                {% if error.origin.name == name %}
+                    <span class="help-block">
+                        <span class="form-error-message">
+                            {{error.message}}
+                        </span>
+                    </span>
+                {% endif %}
+            {%endfor%}
+        {% endif %}
+    </div>
+
+    <script>
+        window.__UPLOAD_IMAGE_CONFIG__ = {
+            uploadUrl: '{{ upload_url }}'
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,25 @@
+namespace: Tests
+actor_suffix: Tester
+paths:
+  tests: tests
+  output: tests/_output
+  data: tests/_data
+  support: tests/_support
+  envs: tests/_envs
+params:
+  - .env.test
+settings:
+  colors: true
+  memory_limit: 1024M
+  strict_xml: true
+coverage:
+  enabled: true
+  include:
+    - src/*
+modules:
+  config:
+    Db:
+      dsn: 'pgsql:host=%DB_HOSTNAME%;port=%DB_PORT%;dbname=%DB_NAME%'
+      user: '%DB_USERNAME%'
+      password: '%DB_PASSWORD%'
+      cleanup: true # run clean before each test

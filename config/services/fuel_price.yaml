@@ -1,0 +1,9 @@
+## fuel_price
+services:
+    app.clients.infrastructure.fuel.price.repository:
+        class: 'Infrastructure\Repository\DoctrineRepository'
+        factory: '@crud.factory.repository_factory'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@infrastructure.criteria.criteria_factory'
+            - App\Clients\Domain\Fuel\Price\Price

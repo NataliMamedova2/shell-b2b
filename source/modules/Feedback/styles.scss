@@ -1,0 +1,42 @@
+@import "../../shared";
+
+.m-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 75px;
+
+  &__body,
+  &__header {
+    width: 100%;
+    max-width: 630px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+
+    .c-text {
+      text-align: center;
+    }
+
+    .c-page-icon {
+      margin-bottom: 20px;
+    }
+  }
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  .c-form__actions {
+    justify-content: center;
+  }
+
+  @include breakpoint-mobile-up() {
+    .c-paper {
+      padding: 40px 50px;
+    }
+  }
+}

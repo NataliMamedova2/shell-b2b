@@ -1,0 +1,36 @@
+<button type="button" id="btn__submit-and-redirect"
+        class="btn waves-effect waves-light btn-{{ view.color|default('default') }} {{ view.size|default('') }}"
+        data-redirect="{{ target_url(view.redirect|default('#')) }}"
+        {% if view.disabled is defined and view.disabled == true %}disabled="disabled"{% endif %}>
+    {% if view.icon is defined %}
+        <span class="btn-label">
+            <i class="fa fa-{{ view.icon }}"></i>
+        </span>
+    {% endif %}
+    {{ view.title|trans }}
+</button>
+
+<script>
+    const button = document.getElementById('btn__submit-and-redirect');
+    if (button) {
+        button.addEventListener('click', function (e) {
+            const self = e.target;
+
+            const form = self.closest('form');
+            const redirectUrl = self.getAttribute('data-redirect');
+
+            let formAction = form.getAttribute('action');
+
+            if (formAction.indexOf('://') === -1) {
+                formAction = window.location.protocol + '//' + window.location.host + formAction;
+            }
+            const parsedUrl = new URL(formAction);
+            parsedUrl.searchParams.set('redirect', redirectUrl);
+
+            const newUrl = decodeURIComponent(parsedUrl.toString());
+            form.setAttribute('action', newUrl);
+
+            form.submit();
+        });
+    }
+</script>

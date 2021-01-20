@@ -1,0 +1,149 @@
+{% import "backend/crud/macros/link.twig" as link %}
+{% import "backend/crud/macros/ui.twig" as ui %}
+
+<table class="table table-bordered tablesaw table-striped table-hover color-table muted-table"
+       data-tablesaw-mode="stack" id="clients-list">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+            {{ 'label.1c_id'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.company_name'|trans }}
+        </th>
+        {% if not is_granted('ROLE_MANAGER') %}
+            <th scope="col" data-tablesaw-priority="persist">
+                {{ 'label.manager'|trans }}
+            </th>
+        {% endif %}
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.balance'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.type'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist">
+            {{ 'label.status'|trans }}
+        </th>
+        <th scope="col" data-tablesaw-priority="persist"></th>
+        <th scope="col" data-tablesaw-priority="persist" class="date">
+            {{ 'label.updated_at'|trans }}
+        </th>
+        {% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_MANAGER') == true or is_granted('ROLE_MANAGER_CALL_CENTER') == true %}
+            <th scope="col" data-tablesaw-priority="persist"></th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% set item = view.paginator.currentPageOffsetStart %}
+    {% for key, entity in view.paginator %}
+        <tr data-key="{{ key }}">
+            <td>{{ item }}</td>
+            <td data-tablesaw-no-labels>
+                {{ entity.client1CId }}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.fullName }}</td>
+            {% if not is_granted('ROLE_MANAGER') %}
+                <td data-tablesaw-no-labels>
+                    {% if view.managers[entity.manager1CId] is defined and view.managers[entity.manager1CId] is not empty %}
+                        {{ view.managers[entity.manager1CId].name }}
+                        ({{ entity.manager1CId }})
+                    {% else %}
+                        {{ entity.manager1CId }}
+                    {% endif %}
+                </td>
+            {% endif %}
+            <td data-tablesaw-no-labels>
+                {% if view.clientInfo[entity.clientPcId] is defined and view.clientInfo[entity.clientPcId] is not empty %}
+                    {{ ui.render_number(view.clientInfo[entity.clientPcId].balance) }}
+                {% else %}
+                    0
+                {% endif %}
+                грн.
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.type, {
+                    '0': 'prepayment'|trans,
+                    '1': 'credit-line'|trans,
+                    '2': 'credit'|trans
+                }, {
+                    '0': 'purple',
+                    '1': 'success',
+                    '2': 'info'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {{ ui.labeled(entity.status, {
+                    '0': 'in-work'|trans,
+                    '1': 'in-blacklist'|trans
+                }, {
+                    '0': 'success',
+                    '1': 'default'
+                }) }}
+            </td>
+            <td data-tablesaw-no-labels>
+                {%
+                    if entity.company is not empty
+                    and view.adminsInCompanyCount[entity.company.id] is defined
+                    and view.adminsInCompanyCount[entity.company.id] > 0
+                %}
+                    <span class="label label-info">
+                        {% trans %}label.registered{% endtrans %}
+                    </span>
+                {% else %}
+                    {% if entity.registerToken is not empty %}
+                        <button class="btn btn-xs btn-primary"
+                                id="send_register_link"
+                                data-client="{{ entity.fullName }}"
+                                data-email="{{ entity.registerToken[0].email }}"
+                                data-path="{{ path('admin_api_company_resend_register_link', { id: entity.registerToken[0].id }) }}">
+                            <i class="fa fa-external-link-square" aria-hidden="true"></i>
+                            {% trans %}btn.resend_link{% endtrans %}
+                        </button>
+                    {% else %}
+                        <button class="btn btn-xs btn-success"
+                            id="send_register_link"
+                            data-client="{{ entity.fullName }}"
+                            data-path="{{ path('admin_api_company_send_register_link', { clientId: entity.id }) }}">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            {% trans %}btn.register_new{% endtrans %}
+                        </button>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td data-tablesaw-no-labels>{{ entity.updatedAt|localizeddate('medium', 'medium') }}</td>
+
+            {% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_MANAGER') == true or is_granted('ROLE_MANAGER_CALL_CENTER') == true %}
+                <td data-tablesaw-no-labels>
+
+                    <a href="{{ path('admin_clients_card_list', { clientId: entity.client1CId }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'btn.view_cards'|trans }}">
+                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                        {{ 'btn.view_cards'|trans }}
+                    </a>
+
+                    <a style="margin-top: 3px" href="{{ path('admin_clients_client_profile', { id: entity.id }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'btn.profile'|trans }}">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        {{ 'btn.profile'|trans }}
+                    </a>
+
+                    <a style="margin-top: 3px" href="{{ path('admin_transaction_card_list', { clientId: entity.client1CId }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'btn.transactions'|trans }}">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        {{ 'btn.transactions'|trans }}
+                    </a>
+
+                    <a style="margin-top: 3px" href="{{ path('admin_clients_user_list', { client1cId: entity.client1CId }) }}"
+                       class="btn btn-xs btn-info" title="{{ 'btn.clients_user'|trans }}">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        {{ 'btn.clients_user'|trans }}
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+        {% set item = item + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

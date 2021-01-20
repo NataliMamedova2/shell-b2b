@@ -1,0 +1,20 @@
+## clients
+crud:
+    view:
+        contents:
+            admin_feedback_list:
+                template: '/backend/crud/content/list.html.twig'
+                data:
+                    static:
+                        title: 'header.feedback_list'
+                        icon: 'link'
+                    global:
+                        result: 'paginator'
+                children:
+                    table:
+                        template: '/backend/feedback/table.html.twig'
+                        data:
+                            global:
+                                result: 'paginator'
+                    paginator:
+                        extend: 'pagerfanta_paginator'

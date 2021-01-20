@@ -1,0 +1,44 @@
+@import "../../shared";
+
+.c-badge {
+  width: auto;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $palette-dark;
+  flex: none;
+
+  &--primary {
+    background-color: $palette-attention;
+    color: $palette-light;
+  }
+  &--alt {
+    background-color: $palette-fill-grey;
+  }
+  &--attention {
+    background-color: $palette-warning;
+  }
+
+  &--darkgrey {
+    background-color: $palette-fill-darkgrey;
+  }
+
+  &--normal {
+    height: 30px;
+    min-width: 60px;
+    padding: 0 10px;
+    @include style-paragraph;
+    line-height: 1;
+  }
+  &--small {
+    height: 18px;
+    padding: 0 6px;
+
+    font: {
+      size: 10px;
+      weight: $weight-medium;
+    };
+    line-height: 1;
+  }
+}
